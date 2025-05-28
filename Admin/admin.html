@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de Galería de Plantas</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <h1>Editor de Galería</h1>
+  <form id="plant-form">
+    <label>
+      Imagen desde el repositorio:
+      <button type="button" id="repo-image-btn">Elegir imagen del repositorio</button>
+      <select id="repo-image-list" style="display:none"></select>
+    </label>
+    <div style="margin-top:10px; margin-bottom:10px;">
+      <b>¿Quieres agregar una imagen nueva?</b>  
+      <br>Puedes subir la foto a la carpeta <code>imagenes</code> del proyecto en GitHub, luego recarga esta página.<br>
+      <button type="button" onclick="window.open('https://github.com/aleotromundo/tu-repo/tree/main/imagenes', '_blank')">Abrir carpeta de imágenes en GitHub</button>
+    </div>
+    <label>
+      Nombre:
+      <input type="text" id="plant-name" required>
+    </label>
+    <label>
+      Descripción:
+      <textarea id="plant-description" required></textarea>
+    </label>
+    <button type="submit">Agregar Planta</button>
+  </form>
+  <h2>Vista previa:</h2>
+  <div id="preview"></div>
+  <h2>JSON actualizado:</h2>
+  <textarea id="json-output" rows="10" style="width:100%;"></textarea>
+  <button id="update-gallery-btn">Actualizar Galería</button>
+  <script src="admin.js"></script>
+</body>
+</html>
