@@ -1,862 +1,120 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a Otro Mundo - Tienda de Cactus Online</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-<!-- index.html -->
-<section>
-  <h2>Galería de Suculentas</h2>
-  <div class="galeria">
-    {% for item in site.coleccion %}
-      <div class="sucu-card">
-        <img src="{{ item.image }}" alt="{{ item.title }}">
-        <h3>{{ item.title }}</h3>
-        <p>{{ item.content | markdownify | truncatewords: 20 }}</p>
-      </div>
-    {% endfor %}
-  </div>
-</section>
-<style>
-.galeria { display: flex; flex-wrap: wrap; gap: 2rem; }
-.sucu-card {
-  width: 220px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #f9f9f9;
-  box-shadow: 0 2px 6px #0001;
-  text-align: center;
-}
-.sucu-card img { max-width: 100%; border-radius: 5px; }
-.sucu-card h3 { margin: 0.5rem 0 0.2rem 0; }
-.sucu-card p { font-size: 0.9rem; color: #333; }
-</style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo::before {
-            content: "🌵";
-            font-size: 2.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #90EE90;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: #90EE90;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(45, 90, 39, 0.7), rgba(74, 124, 89, 0.7)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%234a7c59" width="1200" height="600"/><circle cx="200" cy="150" r="80" fill="%232d5a27" opacity="0.3"/><circle cx="900" cy="300" r="120" fill="%2390EE90" opacity="0.2"/><circle cx="600" cy="450" r="60" fill="%234a7c59" opacity="0.4"/></svg>');
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            animation: fadeInUp 1s ease 0.3s both;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #90EE90, #98FB98);
-            color: #2d5a27;
-            padding: 15px 40px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease 0.6s both;
-            box-shadow: 0 5px 20px rgba(144, 238, 144, 0.4);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(144, 238, 144, 0.6);
-        }
-
-        /* Featured Products */
-        .featured-section {
-            padding: 100px 0;
-            background: white;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            color: #2d5a27;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(45deg, #90EE90, #98FB98);
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-
-        .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .featured-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .featured-card:hover {
-            transform: translateY(-10px);
-            border-color: #90EE90;
-            box-shadow: 0 20px 60px rgba(144, 238, 144, 0.2);
-        }
-
-        .featured-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .featured-card h3 {
-            font-size: 1.8rem;
-            color: #2d5a27;
-            margin-bottom: 1rem;
-        }
-
-        .featured-card p {
-            color: #666;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        /* Products Section */
-        .products-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-        }
-
-        .product-image {
-            height: 250px;
-            background: linear-gradient(45deg, #4a7c59, #90EE90);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%);
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-info h3 {
-            font-size: 1.5rem;
-            color: #2d5a27;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #4a7c59;
-            margin-bottom: 1rem;
-        }
-
-        .product-info p {
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-button {
-            width: 100%;
-            background: linear-gradient(45deg, #2d5a27, #4a7c59);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .product-button:hover {
-            background: linear-gradient(45deg, #4a7c59, #2d5a27);
-            transform: translateY(-2px);
-        }
-
-        /* About Section */
-        .about-section {
-            padding: 100px 0;
-            background: white;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: 2.5rem;
-            color: #2d5a27;
-            margin-bottom: 2rem;
-        }
-
-        .about-text p {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-        }
-
-        .about-image {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #4a7c59, #90EE90);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
-            color: white;
-            position: relative;
-        }
-
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 15px;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%);
-            color: white;
-        }
-
-        .contact-content {
-            text-align: center;
-        }
-
-        .contact-section h2 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-        }
-
-        .contact-section p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .contact-card {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .contact-card i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .contact-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #1a3d1a;
-            color: white;
-            text-align: center;
-            padding: 3rem 0;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #90EE90;
-        }
-
-        .footer-section a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #90EE90;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #4a7c59;
-            padding-top: 2rem;
-            margin-top: 2rem;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .featured-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
-        }
-
-        /* Cart Icon */
-        .cart-icon {
-            position: fixed;
-            top: 50%;
-            right: 2rem;
-            background: linear-gradient(45deg, #90EE90, #98FB98);
-            color: #2d5a27;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(144, 238, 144, 0.4);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .cart-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 30px rgba(144, 238, 144, 0.6);
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff4757;
-            color: white;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Colección de Suculentas & Cactus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">Otro Mundo</div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#productos">Productos</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Cart Icon -->
-    <div class="cart-icon" onclick="toggleCart()">
-        🛒
-        <span class="cart-count" id="cartCount">0</span>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a class="navbar-logo" href="#inicio">
+        <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=48&q=80" alt="Cactus logo">
+        Suculentas & Cactus
+      </a>
+      <ul class="navbar-links">
+        <li><a href="#inicio" class="nav-link">Inicio</a></li>
+        <li><a href="#coleccion" class="nav-link">Colección</a></li>
+        <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="#testimonios" class="nav-link">Testimonios</a></li>
+        <li><a href="#contacto" class="nav-link">Contacto</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" id="inicio">
-            <div class="hero-content">
-                <h1>Bienvenido a Otro Mundo</h1>
-                <p>Descubre nuestra colección única de cactus y suculentas que transformarán tu espacio en un oasis verde</p>
-                <a href="#productos" class="cta-button">Explorar Colección</a>
-            </div>
-        </section>
+  <header id="inicio">
+    <div class="hero">
+      <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80" alt="Cactus limpio" class="hero-img">
+      <h1>
+        Bienvenido a la Colección<br>
+        <span class="hero-title-gradient">Suculentas & Cactus</span>
+      </h1>
+      <p class="hero-desc">
+        22 especies para admirar la belleza de la naturaleza en su forma más pura.
+      </p>
+    </div>
+  </header>
 
-        <!-- Featured Section -->
-        <section class="featured-section">
-            <div class="container">
-                <h2 class="section-title">¿Por qué elegir nuestros cactus?</h2>
-                <div class="featured-grid">
-                    <div class="featured-card fade-in">
-                        <span class="featured-icon">🌵</span>
-                        <h3>Cactus Únicos</h3>
-                        <p>Explora nuestra colección única de cactus, perfectos para cualquier aficionado a las plantas. Cada especie ha sido cuidadosamente seleccionada por su belleza y resistencia.</p>
-                    </div>
-                    <div class="featured-card fade-in">
-                        <span class="featured-icon">🌿</span>
-                        <h3>Suculentas Exóticas</h3>
-                        <p>Descubre nuestras suculentas exóticas que añadirán un toque especial a tu espacio. Plantas de formas fascinantes que requieren mínimo cuidado.</p>
-                    </div>
-                    <div class="featured-card fade-in">
-                        <span class="featured-icon">🏺</span>
-                        <h3>Macetas Decorativas</h3>
-                        <p>Elige entre una variedad de macetas decorativas que complementarán perfectamente tus plantas. Diseños únicos para cada estilo de decoración.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Products Section -->
-        <section class="products-section" id="productos">
-            <div class="container">
-                <h2 class="section-title">Nuestros Productos Destacados</h2>
-                <div class="products-grid">
-                    <div class="product-card">
-                        <div class="product-image">🌵</div>
-                        <div class="product-info">
-                            <h3>Cactus Barrel Dorado</h3>
-                            <div class="product-price">€29.99</div>
-                            <p>Un hermoso cactus barrel con espinas doradas que brilla bajo la luz del sol.</p>
-                            <button class="product-button" onclick="addToCart('Cactus Barrel Dorado', 29.99)">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">🌿</div>
-                        <div class="product-info">
-                            <h3>Suculenta Jade</h3>
-                            <div class="product-price">€19.99</div>
-                            <p>Planta de la suerte tradicional, perfecta para principiantes en el mundo de las suculentas.</p>
-                            <button class="product-button" onclick="addToCart('Suculenta Jade', 19.99)">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">🌺</div>
-                        <div class="product-info">
-                            <h3>Cactus Flor Rosa</h3>
-                            <div class="product-price">€34.99</div>
-                            <p>Cactus floreciente con hermosas flores rosas que aparecen en primavera.</p>
-                            <button class="product-button" onclick="addToCart('Cactus Flor Rosa', 34.99)">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">🏺</div>
-                        <div class="product-info">
-                            <h3>Maceta Artesanal</h3>
-                            <div class="product-price">€24.99</div>
-                            <p>Maceta de cerámica artesanal con diseños únicos, perfecta para tus suculentas.</p>
-                            <button class="product-button" onclick="addToCart('Maceta Artesanal', 24.99)">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">🌵</div>
-                        <div class="product-info">
-                            <h3>Set Cactus Mini</h3>
-                            <div class="product-price">€39.99</div>
-                            <p>Conjunto de 6 mini cactus variados, ideal para escritorios y espacios pequeños.</p>
-                            <button class="product-button" onclick="addToCart('Set Cactus Mini', 39.99)">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">🌿</div>
-                        <div class="product-info">
-                            <h3>Suculenta Echeveria</h3>
-                            <div class="product-price">€22.99</div>
-                            <p>Hermosa suculenta en forma de rosa, disponible en varios colores pastel.</p>
-                            <button class="product-button" onclick="addToCart('Suculenta Echeveria', 22.99)">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="about-section" id="nosotros">
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h2>Nuestra Pasión por los Cactus</h2>
-                        <p>En "Otro Mundo" somos apasionados cultivadores y coleccionistas de cactus y suculentas. Durante más de 15 años hemos dedicado nuestro tiempo a encontrar las especies más hermosas y resistentes.</p>
-                        <p>Creemos que cada cactus tiene su propia personalidad y historia. Nuestro objetivo es ayudarte a encontrar la planta perfecta que se adapte a tu estilo de vida y espacio.</p>
-                        <p>Todas nuestras plantas son cultivadas con amor y cuidado, garantizando que lleguen a tu hogar en las mejores condiciones posibles.</p>
-                    </div>
-                    <div class="about-image">
-                        🌵
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="contact-section" id="contacto">
-            <div class="container">
-                <div class="contact-content">
-                    <h2>Contacta con Nosotros</h2>
-                    <p>¿Tienes alguna pregunta sobre nuestros cactus o necesitas consejos de cuidado? ¡Estamos aquí para ayudarte!</p>
-                    <div class="contact-info">
-                        <div class="contact-card">
-                            <i>📧</i>
-                            <h3>Email</h3>
-                            <p>info@otromundo-cactus.com</p>
-                        </div>
-                        <div class="contact-card">
-                            <i>📱</i>
-                            <h3>Teléfono</h3>
-                            <p>+34 123 456 789</p>
-                        </div>
-                        <div class="contact-card">
-                            <i>📍</i>
-                            <h3>Ubicación</h3>
-                            <p>Vivero Cactus<br>Calle Verde, 123<br>28001 Madrid</p>
-                        </div>
-                        <div class="contact-card">
-                            <i>🕒</i>
-                            <h3>Horarios</h3>
-                            <p>Lun-Vie: 9:00-18:00<br>Sáb: 10:00-14:00<br>Dom: Cerrado</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Navegación</h3>
-                    <a href="#inicio">Inicio</a>
-                    <a href="#productos">Productos</a>
-                    <a href="#nosotros">Nosotros</a>
-                    <a href="#contacto">Contacto</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Productos</h3>
-                    <a href="#">Cactus</a>
-                    <a href="#">Suculentas</a>
-                    <a href="#">Macetas</a>
-                    <a href="#">Accesorios</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Servicios</h3>
-                    <a href="#">Envío a Domicilio</a>
-                    <a href="#">Consultoría</a>
-                    <a href="#">Cuidado de Plantas</a>
-                    <a href="#">Diseño de Jardines</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Síguenos</h3>
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Pinterest</a>
-                    <a href="#">YouTube</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Bienvenido a Otro Mundo - Tienda de Cactus Online. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Cart functionality
-        let cart = [];
-        let cartCount = 0;
-
-        function addToCart(productName, price) {
-            cart.push({ name: productName, price: price });
-            cartCount++;
-            document.getElementById('cartCount').textContent = cartCount;
-            
-            // Show confirmation
-            alert(`¡${productName} añadido al carrito!\nTotal de productos: ${cartCount}`);
-        }
-
-        function toggleCart() {
-            if (cart.length === 0) {
-                alert('Tu carrito está vacío. ¡Añade algunos cactus hermosos!');
-                return;
-            }
-
-            let cartContent = 'Productos en tu carrito:\\n\\n';
-            let total = 0;
-            
-            cart.forEach((item, index) => {
-                cartContent += `${index + 1}. ${item.name} - €${item.price}\\n`;
-                total += item.price;
-            });
-            
-            cartContent += `\\nTotal: €${total.toFixed(2)}`;
-            cartContent += '\\n\\n¿Deseas proceder al checkout?';
-            
-            if (confirm(cartContent)) {
-                alert('¡Gracias por tu compra! Te contactaremos pronto para confirmar tu pedido.');
-                cart = [];
-                cartCount = 0;
-                document.getElementById('cartCount').textContent = cartCount;
-            }
-        }
-
-        // Fade in animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationDelay = '0s';
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.featured-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Header background change on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(45, 90, 39, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%)';
-                header.style.backdropFilter = 'none';
-            }
-        });
-
-        // Product card hover effects
-        document.querySelectorAll('.product-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = '
-
-<!-- index.html o index.md -->
-<section>
-  <h2>Galería de Suculentas</h2>
-  <div class="galeria">
-    {% for item in site.coleccion limit:6 %}
-      <div class="sucu-card">
-        <img src="{{ item.image }}" alt="{{ item.title }}">
-        <h3>{{ item.title }}</h3>
-        <p>{{ item.content | markdownify | truncatewords: 20 }}</p>
+  <main>
+    <section id="coleccion" class="section">
+      <h2>Colección</h2>
+      <div class="gallery">
+        <!-- 22 imágenes limpias de suculentas/cactus -->
+        <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&q=80" alt="Cactus 1">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Cactus 2">
+        <img src="https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=400&q=80" alt="Cactus 3">
+        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Cactus 4">
+        <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=400&q=80" alt="Cactus 5">
+        <img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=400&q=80" alt="Cactus 6">
+        <img src="https://images.unsplash.com/photo-1444392069729-5c1e6a4b8afd?auto=format&fit=crop&w=400&q=80" alt="Cactus 7">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Cactus 8">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Cactus 9">
+        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=400&q=80" alt="Cactus 10">
+        <img src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=400&q=80" alt="Cactus 11">
+        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=400&q=80" alt="Cactus 12">
+        <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=400&q=80" alt="Cactus 13">
+        <img src="https://images.unsplash.com/photo-1439122955806-6c6a0def9945?auto=format&fit=crop&w=400&q=80" alt="Cactus 14">
+        <img src="https://images.unsplash.com/photo-1468421870903-4df1664ac249?auto=format&fit=crop&w=400&q=80" alt="Cactus 15">
+        <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b86?auto=format&fit=crop&w=400&q=80" alt="Cactus 16">
+        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=400&q=80" alt="Cactus 17">
+        <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80" alt="Cactus 18">
+        <img src="https://images.unsplash.com/photo-1470163395405-d2b80e7450ed?auto=format&fit=crop&w=400&q=80" alt="Cactus 19">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Cactus 20">
+        <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b86?auto=format&fit=crop&w=400&q=80" alt="Cactus 21">
+        <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80" alt="Cactus 22">
       </div>
-    {% endfor %}
-    <a href="/galeria.html" class="ver-mas">Ver más...</a>
-  </div>
-</section>
-<style>
-.galeria { display: flex; flex-wrap: wrap; gap: 2rem; }
-.sucu-card {
-  width: 220px; border: 1px solid #ddd; border-radius: 8px;
-  padding: 1rem; background: #f9f9f9; text-align: center;
-}
-.sucu-card img { max-width: 100%; border-radius: 5px; }
-.ver-mas { display: block; margin-top: 2rem; text-align: right; }
-</style>
+    </section>
+
+    <section id="nosotros" class="section alt">
+      <h2>Nosotros</h2>
+      <p>
+        Exponemos esta colección porque creemos en el poder de los pequeños detalles. Cada planta es un recordatorio de que la vida florece donde menos lo imaginas, y que la belleza puede ser tan simple como una hoja, una espina, o un instante de contemplación.<br>
+        <span class="firma">— Aleotromundo</span>
+      </p>
+    </section>
+
+    <section id="testimonios" class="section">
+      <h2>Testimonios</h2>
+      <div class="testimonios">
+        <blockquote>
+          “La armonía de formas y colores es única. Esta colección me inspira calma cada día.”
+          <span>— Valeria V.</span>
+        </blockquote>
+        <blockquote>
+          “Aquí descubrí que lo más pequeño puede ser lo más extraordinario.”
+          <span>— Gerardo M.</span>
+        </blockquote>
+        <blockquote>
+          “Ver esta galería es como un paseo por un jardín silencioso y lleno de sorpresas.”
+          <span>— Sofía R.</span>
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="contacto" class="section alt">
+      <h2>Contacto</h2>
+      <form class="contact-form" id="contactForm" autocomplete="off">
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <textarea name="mensaje" placeholder="Tu mensaje" rows="3" required></textarea>
+        <button type="submit">Enviar mensaje</button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
+      <div class="contact-info">
+        <p>Email: <a href="mailto:suculentas@aleotromundo.com">suculentas@aleotromundo.com</a></p>
+        <p>Instagram: <a href="https://instagram.com/aleotromundo.suculentas" target="_blank">@aleotromundo.suculentas</a></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <span>
+      &copy; 2025 Aleotromundo | Suculentas & Cactus<br>
+      <span style="font-size:0.95em;">Cuidar una planta es cuidar un instante de vida.</span>
+    </span>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
