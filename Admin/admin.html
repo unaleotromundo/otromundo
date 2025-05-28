@@ -16,9 +16,10 @@
       O imagen desde URL:
       <input type="url" id="plant-image-url" placeholder="https://...">
     </label>
-    <label>
+    <label style="display:flex; align-items:center; gap:6px;">
       Nombre:
-      <input type="text" id="plant-name" required>
+      <input type="text" id="plant-name" required style="flex:1;">
+      <button type="button" id="suggest-name-btn" title="Sugerir nombre y descripción usando IA" style="padding:2px 7px; font-size:1em;">🤖</button>
     </label>
     <label>
       Descripción:

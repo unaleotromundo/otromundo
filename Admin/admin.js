@@ -122,3 +122,108 @@ document.getElementById('plant-image-url').addEventListener('input', function() 
 document.getElementById('update-gallery-btn').addEventListener('click', function() {
   alert('¡Copia el JSON y reemplaza tu archivo data.json en el repositorio para actualizar la galería!');
 });
+
+// ---- IA para sugerir nombre y descripción de la planta ----
+document.getElementById('suggest-name-btn').addEventListener('click', async function() {
+  const fileInput = document.getElementById('plant-file');
+  const urlInput = document.getElementById('plant-image-url');
+  let imageBase64 = null;
+
+  if (fileInput.files && fileInput.files[0]) {
+    // Convertir imagen local a base64
+    imageBase64 = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        // Quitar el prefijo data:image/...;base64,
+        const base64 = e.target.result.split(',')[1];
+        resolve(base64);
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    });
+  } else if (urlInput.value.trim() !== '') {
+    // Descargar imagen desde URL y convertir a base64
+    try {
+      const response = await fetch(urlInput.value.trim());
+      const blob = await response.blob();
+      imageBase64 = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const base64 = e.target.result.split(',')[1];
+          resolve(base64);
+        };
+        reader.readAsDataURL(blob);
+      });
+    } catch (err) {
+      alert('No se pudo descargar la imagen de la URL.');
+      return;
+    }
+  } else {
+    alert('Primero selecciona una imagen (archivo o URL).');
+    return;
+  }
+
+  if (!imageBase64) {
+    alert('No se pudo cargar la imagen.');
+    return;
+  }
+
+  // --- Llama a la API de Plant.id ---
+  const btn = document.getElementById('suggest-name-btn');
+  const oldBtn = btn.innerText;
+  btn.innerText = "🤖...";
+
+  try {
+    const res = await fetch("https://api.plant.id/v2/identify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Api-Key": "7ZaHtxmUPEQjKnesvDLHFmJulKSerxpuGLs8ZDuS29p6yG1kl0" // ← PON AQUÍ TU API KEY DE PLANT.ID
+      },
+      body: JSON.stringify({
+        images: [imageBase64]
+      })
+    });
+    const data = await res.json();
+    if (data.suggestions && data.suggestions.length > 0) {
+      // Preferir español si está disponible
+      let nombre = "";
+      let descripcion = "";
+      const suggestion = data.suggestions[0];
+
+      // Buscar nombre común en español
+      if (suggestion.plant_details && suggestion.plant_details.common_names) {
+        // Busca nombre común en español
+        let foundES = suggestion.plant_details.common_names.find(n => /[áéíóúñü]/i.test(n) || n.match(/\bde\b|\bdel\b|\bla\b|\bel\b|\blos\b|\blas\b/));
+        if (foundES) nombre = foundES;
+        else nombre = suggestion.plant_name;
+      } else {
+        nombre = suggestion.plant_name;
+      }
+
+      // Buscar descripción en español
+      if (
+        suggestion.plant_details &&
+        suggestion.plant_details.wiki_description &&
+        suggestion.plant_details.wiki_description.value
+      ) {
+        // Si hay varios idiomas, buscar español
+        if (suggestion.plant_details.wiki_description.language === "es") {
+          descripcion = suggestion.plant_details.wiki_description.value;
+        } else if (suggestion.plant_details.wiki_description.value_es) {
+          descripcion = suggestion.plant_details.wiki_description.value_es;
+        } else {
+          descripcion = suggestion.plant_details.wiki_description.value;
+        }
+      } else {
+        descripcion = "Sin descripción disponible.";
+      }
+      document.getElementById('plant-name').value = nombre;
+      document.getElementById('plant-description').value = descripcion;
+    } else {
+      alert('No se pudo identificar la planta.');
+    }
+  } catch (err) {
+    alert('Error al contactar la IA de Plant.id');
+  }
+  btn.innerText = oldBtn;
+});
