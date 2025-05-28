@@ -23,18 +23,33 @@ function updatePreview() {
 
 function clearForm() {
   document.getElementById('plant-form').reset();
+  document.getElementById('plant-image-url').value = '';
+  document.getElementById('plant-file').value = '';
 }
 
 document.getElementById('plant-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  const fileInput = document.getElementById('plant-file');
+  const urlInput = document.getElementById('plant-image-url');
   let imageSrc = '';
-  const repoSelect = document.getElementById('repo-image-list');
-  if (repoSelect.style.display !== "none" && repoSelect.value) {
-    imageSrc = repoSelect.value;
+
+  // Si se seleccionó un archivo local, lo usamos como DataURL
+  if (fileInput.files && fileInput.files[0]) {
+    const file = fileInput.files[0];
+    imageSrc = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result);
+      reader.readAsDataURL(file);
+    });
+  } else if (urlInput.value.trim() !== '') {
+    // Si hay URL, la usamos
+    imageSrc = urlInput.value.trim();
   } else {
-    alert('Debes seleccionar una imagen del repositorio.');
+    alert('Debes seleccionar una imagen (archivo o URL)');
     return;
   }
+
   const plant = {
     image: imageSrc,
     name: document.getElementById('plant-name').value,
@@ -44,44 +59,52 @@ document.getElementById('plant-form').addEventListener('submit', async (e) => {
   updateJSON();
   updatePreview();
   clearForm();
-  repoSelect.selectedIndex = 0;
 });
 
-document.getElementById('repo-image-btn').addEventListener('click', async function() {
-  const select = document.getElementById('repo-image-list');
-  if (select.options.length === 0) {
-    const repoURL = 'https://api.github.com/repos/aleotromundo/tu-repo/contents/imagenes';
-    const res = await fetch(repoURL);
-    const files = await res.json();
-    select.innerHTML = '';
-    files.filter(f => f.type === "file" && /\.(jpe?g|png|gif|webp)$/i.test(f.name)).forEach(f => {
-      const option = document.createElement('option');
-      option.value = f.download_url;
-      option.textContent = f.name;
-      select.appendChild(option);
-    });
-  }
-  select.style.display = select.style.display === "none" ? "inline" : "none";
-});
-
-document.getElementById('repo-image-list').addEventListener('change', function() {
-  const imgSrc = this.value;
-  document.getElementById('preview').innerHTML = `
-    <div class="preview-card">
-      <img src="${imgSrc}" alt="">
-      <div class="preview-info">
-        <div class="preview-name">${document.getElementById('plant-name').value || ''}</div>
-        <div class="preview-description">${document.getElementById('plant-description').value || ''}</div>
+// Permite previsualizar una imagen al seleccionarla antes de agregarla
+document.getElementById('plant-file').addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  document.getElementById('plant-image-url').value = '';
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('preview').innerHTML = `
+      <div class="preview-card">
+        <img src="${e.target.result}" alt="">
+        <div class="preview-info">
+          <div class="preview-name">${document.getElementById('plant-name').value || ''}</div>
+          <div class="preview-description">${document.getElementById('plant-description').value || ''}</div>
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  };
+  reader.readAsDataURL(file);
 });
 
-// Nombre y descripción: actualiza preview si hay imagen seleccionada
+// Permite previsualizar una imagen desde URL antes de agregarla
+document.getElementById('plant-image-url').addEventListener('input', function() {
+  if (this.value.trim() !== '') {
+    document.getElementById('plant-file').value = '';
+    document.getElementById('preview').innerHTML = `
+      <div class="preview-card">
+        <img src="${this.value.trim()}" alt="">
+        <div class="preview-info">
+          <div class="preview-name">${document.getElementById('plant-name').value || ''}</div>
+          <div class="preview-description">${document.getElementById('plant-description').value || ''}</div>
+        </div>
+      </div>
+    `;
+  }
+});
+
+// Al cambiar nombre o descripción, actualiza la vista previa si hay imagen seleccionada
 ['plant-name', 'plant-description'].forEach(id => {
   document.getElementById(id).addEventListener('input', function() {
-    const repoSelect = document.getElementById('repo-image-list');
-    const imgSrc = (repoSelect.style.display !== "none" && repoSelect.value) ? repoSelect.value : '';
+    const imgSrc =
+      document.getElementById('plant-image-url').value.trim() ||
+      (document.getElementById('plant-file').files[0]
+        ? URL.createObjectURL(document.getElementById('plant-file').files[0])
+        : '');
     if (imgSrc) {
       document.getElementById('preview').innerHTML = `
         <div class="preview-card">

@@ -9,15 +9,13 @@
   <h1>Editor de Galería</h1>
   <form id="plant-form">
     <label>
-      Imagen desde el repositorio:
-      <button type="button" id="repo-image-btn">Elegir imagen del repositorio</button>
-      <select id="repo-image-list" style="display:none"></select>
+      Imagen desde tu dispositivo:
+      <input type="file" id="plant-file" accept="image/*">
     </label>
-    <div style="margin-top:10px; margin-bottom:10px;">
-      <b>¿Quieres agregar una imagen nueva?</b>  
-      <br>Puedes subir la foto a la carpeta <code>imagenes</code> del proyecto en GitHub, luego recarga esta página.<br>
-      <button type="button" onclick="window.open('https://github.com/aleotromundo/aleotromundo.github.io/tree/main/imagenes', '_blank')">Abrir carpeta de imágenes en GitHub</button>
-    </div>
+    <label>
+      O imagen desde URL:
+      <input type="url" id="plant-image-url" placeholder="https://...">
+    </label>
     <label>
       Nombre:
       <input type="text" id="plant-name" required>
