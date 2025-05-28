@@ -10,7 +10,34 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+<!-- index.html -->
+<section>
+  <h2>Galería de Suculentas</h2>
+  <div class="galeria">
+    {% for item in site.coleccion %}
+      <div class="sucu-card">
+        <img src="{{ item.image }}" alt="{{ item.title }}">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.content | markdownify | truncatewords: 20 }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+<style>
+.galeria { display: flex; flex-wrap: wrap; gap: 2rem; }
+.sucu-card {
+  width: 220px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #f9f9f9;
+  box-shadow: 0 2px 6px #0001;
+  text-align: center;
+}
+.sucu-card img { max-width: 100%; border-radius: 5px; }
+.sucu-card h3 { margin: 0.5rem 0 0.2rem 0; }
+.sucu-card p { font-size: 0.9rem; color: #333; }
+</style>
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
@@ -809,3 +836,27 @@
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transform = '
+
+<!-- index.html o index.md -->
+<section>
+  <h2>Galería de Suculentas</h2>
+  <div class="galeria">
+    {% for item in site.coleccion limit:6 %}
+      <div class="sucu-card">
+        <img src="{{ item.image }}" alt="{{ item.title }}">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.content | markdownify | truncatewords: 20 }}</p>
+      </div>
+    {% endfor %}
+    <a href="/galeria.html" class="ver-mas">Ver más...</a>
+  </div>
+</section>
+<style>
+.galeria { display: flex; flex-wrap: wrap; gap: 2rem; }
+.sucu-card {
+  width: 220px; border: 1px solid #ddd; border-radius: 8px;
+  padding: 1rem; background: #f9f9f9; text-align: center;
+}
+.sucu-card img { max-width: 100%; border-radius: 5px; }
+.ver-mas { display: block; margin-top: 2rem; text-align: right; }
+</style>
