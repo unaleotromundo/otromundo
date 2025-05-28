@@ -1,0 +1,1 @@
+import { config } from 'dotenv';config();import '@/ai/flows/generate-plant-description.ts';import '@/ai/flows/generate-plant-name.ts';import '@/ai/flows/generate-pdf-background.ts';
