@@ -227,3 +227,100 @@ document.getElementById('suggest-name-btn').addEventListener('click', async func
   }
   btn.innerText = oldBtn;
 });
+// ... resto de tu código igual ...
+
+// ---- IA para sugerir nombre y descripción de la planta ----
+document.getElementById('suggest-name-btn').addEventListener('click', async function() {
+  const fileInput = document.getElementById('plant-file');
+  const urlInput = document.getElementById('plant-image-url');
+  let imageBase64 = null;
+
+  if (fileInput.files && fileInput.files[0]) {
+    imageBase64 = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const base64 = e.target.result.split(',')[1];
+        resolve(base64);
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    });
+  } else if (urlInput.value.trim() !== '') {
+    try {
+      const response = await fetch(urlInput.value.trim());
+      const blob = await response.blob();
+      imageBase64 = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const base64 = e.target.result.split(',')[1];
+          resolve(base64);
+        };
+        reader.readAsDataURL(blob);
+      });
+    } catch (err) {
+      alert('No se pudo descargar la imagen de la URL.');
+      return;
+    }
+  } else {
+    alert('Primero selecciona una imagen (archivo o URL).');
+    return;
+  }
+
+  if (!imageBase64) {
+    alert('No se pudo cargar la imagen.');
+    return;
+  }
+
+  const btn = document.getElementById('suggest-name-btn');
+  const oldBtn = btn.innerText;
+  btn.innerText = "🤖...";
+
+  try {
+    const res = await fetch("https://api.plant.id/v2/identify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Api-Key": "7ZaHtxmUPEQjKnesvDLHFmJulKSerxpuGLs8ZDuS29p6yG1kl0" // <-- pon aquí tu clave de Plant.id
+      },
+      body: JSON.stringify({
+        images: [imageBase64]
+      })
+    });
+    const data = await res.json();
+    if (data.suggestions && data.suggestions.length > 0) {
+      const suggestion = data.suggestions[0];
+      let nombre = suggestion.plant_name;
+      if (
+        suggestion.plant_details &&
+        suggestion.plant_details.common_names &&
+        suggestion.plant_details.common_names.length > 0
+      ) {
+        nombre = suggestion.plant_details.common_names[0];
+      }
+      document.getElementById('plant-name').value = nombre;
+
+      // Ahora busca la descripción en Google automáticamente
+      // OJO: aquí solo muestro la integración, necesitarás un backend/proxy para consultas reales o usar fetch a un endpoint tuyo
+      // Aquí solo muestro cómo llamar a Bing Search API o similar
+
+      // Ejemplo simulado:
+      const descripcion = await buscarDescripcionPlanta(nombre);
+      document.getElementById('plant-description').value = descripcion;
+    } else {
+      alert('No se pudo identificar la planta.');
+    }
+  } catch (err) {
+    alert('Error al contactar la IA de Plant.id');
+  }
+  btn.innerText = oldBtn;
+});
+
+// Función que busca la descripción en Google (simulada, deberás implementarla con tu backend o Bing Search API)
+async function buscarDescripcionPlanta(nombrePlanta) {
+  // Aquí deberías hacer un fetch a tu backend o servicio de búsqueda
+  // Este ejemplo usa una descripción fija para Monstera deliciosa
+  if (nombrePlanta.toLowerCase().includes("monstera")) {
+    return "La Monstera deliciosa es una planta trepadora perenne de origen tropical, reconocida por sus grandes hojas con perforaciones, ideal para interiores luminosos.";
+  }
+  // ... puedes agregar más ejemplos o integrar un servicio real ...
+  return "Planta de origen desconocido.";
+}
