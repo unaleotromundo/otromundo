@@ -1,81 +1,170 @@
-// Desplazamiento suave personalizado con compensación por el navbar fijo
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', function(e) {
-    const href = link.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        const navbar = document.querySelector('.navbar');
-        const navbarHeight = navbar ? navbar.offsetHeight : 0;
-        const targetTop = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight + 1;
-        window.scrollTo({
-          top: targetTop,
-          behavior: 'smooth'
-        });
-      }
-    }
-  });
-});
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Suculentas & Cactus - Editor Visual Directo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Fuentes de Google ampliadas -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,700|Lato:400,700|Open+Sans:400,700|Merriweather:400,700|Oswald:400,700|Raleway:400,700|Poppins:400,700|Nunito:400,700|Quicksand:400,700|Bebas+Neue|Pacifico|Playfair+Display:400,700|Fira+Sans:400,700|Abril+Fatface|Arvo:400,700|Josefin+Sans:400,700|Caveat:400,700|Dancing+Script:400,700|Rubik:400,700|Fjalla+One|Titillium+Web:400,700|Ubuntu:400,700|Indie+Flower&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a class="navbar-logo" href="#inicio">
+        <span class="navbar-logo-img-wrap" id="logo-img-wrap">
+          <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=48&q=80" alt="Cactus logo" id="logo-img">
+          <input type="file" accept="image/*" id="logo-img-file" style="display:none;">
+        </span>
+        <span id="nav-title" class="editable" contenteditable="true">Suculentas & Cactus</span>
+      </a>
+      <ul class="navbar-links" id="navbar-links">
+        <li>
+          <a href="#inicio" class="nav-link editable" contenteditable="true">Inicio</a>
+        </li>
+        <li>
+          <a href="#coleccion" class="nav-link editable" contenteditable="true">Colección</a>
+        </li>
+        <li>
+          <a href="#nosotros" class="nav-link editable" contenteditable="true">Nosotros</a>
+        </li>
+        <li>
+          <a href="#testimonios" class="nav-link editable" contenteditable="true">Testimonios</a>
+        </li>
+        <li>
+          <a href="#contacto" class="nav-link editable" contenteditable="true">Contacto</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-// Lightbox para galería
-document.querySelectorAll('.gallery img').forEach(img => {
-  img.addEventListener('click', function() {
-    if (document.getElementById('gallery-modal')) return;
-    const modal = document.createElement('div');
-    modal.id = 'gallery-modal';
-    modal.style.position = 'fixed';
-    modal.style.top = 0;
-    modal.style.left = 0;
-    modal.style.width = '100vw';
-    modal.style.height = '100vh';
-    modal.style.background = 'rgba(34,48,38,0.82)';
-    modal.style.display = 'flex';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.style.zIndex = 2000;
-    modal.innerHTML = '<img src="' + img.src + '" style="max-width:90vw;max-height:85vh;border-radius:1.2em;box-shadow:0 8px 42px #2228;"><span style=\'position:fixed;top:22px;right:32px;font-size:2.1em;color:#fff;cursor:pointer;font-family:sans-serif;\'>&times;</span>';
-    modal.onclick = () => document.body.removeChild(modal);
-    document.body.appendChild(modal);
-  });
-});
+  <div id="editor-bar">
+    <label>Fuente:
+      <select id="font-family">
+        <option value="Montserrat" style="font-family:'Montserrat'">Montserrat</option>
+        <option value="Roboto" style="font-family:'Roboto'">Roboto</option>
+        <option value="Lato" style="font-family:'Lato'">Lato</option>
+        <option value="Open Sans" style="font-family:'Open Sans'">Open Sans</option>
+        <option value="Merriweather" style="font-family:'Merriweather'">Merriweather</option>
+        <option value="Oswald" style="font-family:'Oswald'">Oswald</option>
+        <option value="Raleway" style="font-family:'Raleway'">Raleway</option>
+        <option value="Poppins" style="font-family:'Poppins'">Poppins</option>
+        <option value="Nunito" style="font-family:'Nunito'">Nunito</option>
+        <option value="Quicksand" style="font-family:'Quicksand'">Quicksand</option>
+        <option value="Bebas Neue" style="font-family:'Bebas Neue'">Bebas Neue</option>
+        <option value="Pacifico" style="font-family:'Pacifico'">Pacifico</option>
+        <option value="Playfair Display" style="font-family:'Playfair Display'">Playfair Display</option>
+        <option value="Fira Sans" style="font-family:'Fira Sans'">Fira Sans</option>
+        <option value="Abril Fatface" style="font-family:'Abril Fatface'">Abril Fatface</option>
+        <option value="Arvo" style="font-family:'Arvo'">Arvo</option>
+        <option value="Josefin Sans" style="font-family:'Josefin Sans'">Josefin Sans</option>
+        <option value="Caveat" style="font-family:'Caveat'">Caveat</option>
+        <option value="Dancing Script" style="font-family:'Dancing Script'">Dancing Script</option>
+        <option value="Rubik" style="font-family:'Rubik'">Rubik</option>
+        <option value="Fjalla One" style="font-family:'Fjalla One'">Fjalla One</option>
+        <option value="Titillium Web" style="font-family:'Titillium Web'">Titillium Web</option>
+        <option value="Ubuntu" style="font-family:'Ubuntu'">Ubuntu</option>
+        <option value="Indie Flower" style="font-family:'Indie Flower'">Indie Flower</option>
+        <option value="Arial" style="font-family:'Arial'">Arial</option>
+        <option value="serif" style="font-family:'serif'">Serif</option>
+        <option value="sans-serif" style="font-family:'sans-serif'">Sans-serif</option>
+      </select>
+    </label>
+    <label>Tamaño:
+      <input type="number" min="8" max="200" id="font-size" value="16" step="1">
+    </label>
+    <label>
+      Color: <input type="color" id="font-color" value="#25352F">
+    </label>
+    <button type="button" id="bold-btn" title="Negrita"><b>B</b></button>
+    <button type="button" id="italic-btn" title="Cursiva"><i>I</i></button>
+    <button type="button" id="underline-btn" title="Subrayado"><u>U</u></button>
+    <label style="margin-left:2em;">Fondo:
+      <input type="color" id="bg-color-picker" value="#E6F2ED">
+      <button type="button" id="bg-gradient-btn" title="Fondo degradé">Degradé</button>
+    </label>
+  </div>
 
-// Validación de formulario de contacto
-const form = document.getElementById('contactForm');
-if (form) {
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const nombre = form.nombre.value.trim();
-    const email = form.email.value.trim();
-    const mensaje = form.mensaje.value.trim();
-    const status = document.getElementById('formStatus');
-    if (!nombre || !email || !mensaje) {
-      status.textContent = "Por favor, completa todos los campos.";
-      status.style.color = "#d32f2f";
-      return;
-    }
-    // Simulación de envío exitoso
-    status.textContent = "¡Gracias! Pronto te responderemos.";
-    status.style.color = "#1b7340";
-    form.reset();
-    setTimeout(() => { status.textContent = ""; }, 4000);
-  });
-}
+  <header id="inicio">
+    <div class="hero">
+      <div class="hero-img-wrap" id="hero-img-wrap" title="Haz click para cambiar la imagen">
+        <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80"
+          alt="Imagen central" class="hero-img" id="hero-img">
+        <input type="file" accept="image/*" id="hero-img-file" style="display:none;">
+      </div>
+      <h1>
+        <span id="header-main" class="editable" contenteditable="true">Bienvenido a la Colección<br></span>
+        <span class="hero-title-gradient editable" id="header-gradient" contenteditable="true">Suculentas & Cactus</span>
+      </h1>
+      <p class="hero-desc editable" id="hero-desc" contenteditable="true">
+        22 especies para admirar la belleza de la naturaleza en su forma más pura.
+      </p>
+    </div>
+  </header>
 
-// Menú activo según scroll
-const sections = ['inicio','coleccion','nosotros','testimonios','contacto'];
-const navLinks = Array.from(document.querySelectorAll(".navbar-links li a"));
-
-window.addEventListener('scroll', () => {
-  let current = 'inicio';
-  for (let id of sections) {
-    const el = document.getElementById(id);
-    if (el) {
-      const top = el.getBoundingClientRect().top - (document.querySelector('.navbar').offsetHeight + 12);
-      if (top <= 0) current = id;
-    }
-  }
-  navLinks.forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-  });
-});
+  <main>
+    <section id="coleccion" class="section">
+      <h2 id="gallery-title" class="editable" contenteditable="true">Colección</h2>
+      <input type="file" id="add-gallery-img-input" accept="image/*" multiple style="display:none;">
+      <div class="gallery" id="gallery">
+        <div class="gallery-img-wrap">
+          <span class="img-edit-btn" title="Cambiar imagen">
+            🖉
+            <input type="file" accept="image/*">
+          </span>
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&q=80" alt="Cactus 1">
+          <span class="del-img-btn" title="Eliminar imagen">🗑️</span>
+        </div>
+        <div class="gallery-img-wrap">
+          <span class="img-edit-btn" title="Cambiar imagen">
+            🖉
+            <input type="file" accept="image/*">
+          </span>
+          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Cactus 2">
+          <span class="del-img-btn" title="Eliminar imagen">🗑️</span>
+        </div>
+      </div>
+      <button class="add-img-btn" id="add-gallery-img-btn" style="display:block;">+ Añadir imagen</button>
+    </section>
+    <section id="nosotros" class="section alt">
+      <h2 id="about-title" class="editable" contenteditable="true">Nosotros</h2>
+      <p id="about-text" class="editable" contenteditable="true">
+        Exponemos esta colección porque creemos en el poder de los pequeños detalles. Cada planta es un recordatorio de que la vida florece donde menos lo imaginas, y que la belleza puede ser tan simple como una hoja, una espina, o un instante de contemplación.<br>
+        <span class="firma editable" contenteditable="true">— Aleotromundo</span>
+      </p>
+    </section>
+    <section id="testimonios" class="section">
+      <h2 id="testimonios-title" class="editable" contenteditable="true">Testimonios</h2>
+      <div class="testimonios" id="testimonios-list">
+        <blockquote class="editable" contenteditable="true">
+          “La armonía de formas y colores es única. Esta colección me inspira calma cada día.”
+          <span class="editable" contenteditable="true">— Valeria V.</span>
+        </blockquote>
+      </div>
+      <button class="add-img-btn" id="add-testimonial-btn" style="margin:1.2em auto 0 auto;display:block;">+ Añadir testimonio</button>
+    </section>
+    <section id="contacto" class="section alt">
+      <h2 id="contact-title" class="editable" contenteditable="true">Contacto</h2>
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/abcdxyz" method="POST">
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <textarea name="mensaje" placeholder="Tu mensaje" rows="3" required></textarea>
+        <button type="submit">Enviar mensaje</button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
+      <div class="contact-info" id="contact-info">
+        <p class="editable" contenteditable="true">Email: <a href="mailto:contralamaquinaok@gmail.com" id="contact-email" class="editable" contenteditable="true">contralamaquinaok@gmail.com</a></p>
+        <p class="editable" contenteditable="true">Instagram: <a href="https://instagram.com/aleotromundo.suculentas" id="contact-instagram" class="editable" contenteditable="true" target="_blank">@aleotromundo.suculentas</a></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <span id="footer-text" class="editable" contenteditable="true">
+      &copy; 2025 Aleotromundo | Suculentas & Cactus<br>
+      <span style="font-size:0.95em;">Cuidar una planta es cuidar un instante de vida.</span>
+    </span>
+  </footer>
+  <button class="save-btn" id="save-html-btn" title="Descargar HTML editable">Guardar página</button>
+  <script src="editor.js"></script>
+</body>
+</html>

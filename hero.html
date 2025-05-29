@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Colección de OtroMundo Suculentas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:700|Playfair+Display:700,400italic|Fjalla+One:400|Montserrat:700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      min-width: 100vw;
+      position: relative;
+      overflow-x: hidden;
+      color: #111;
+      background: #f9f9f6;
+    }
+    /* Fondo con imagen del cactus en maceta */
+    .bg-hero {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1150&q=80') center/cover no-repeat;
+      filter: brightness(0.67) blur(1px);
+      opacity: 0.93;
+      animation: moveSun 12s ease-in-out infinite alternate;
+      transition: background 1s;
+      pointer-events: none;
+    }
+    .sunlight {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 60% 30%, rgba(255,255,210,0.23) 0%, rgba(255,255,200,0.07) 62%, transparent 100%);
+      mix-blend-mode: lighten;
+      animation: sunlightMove 8s ease-in-out infinite alternate;
+    }
+    @keyframes moveSun {
+      to { background-position: 60% 40%; }
+    }
+    @keyframes sunlightMove {
+      0% { background-position: 60% 30%; }
+      100% { background-position: 50% 80%; }
+    }
+    .hero-center {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100vw;
+      pointer-events: none;
+      user-select: none;
+    }
+    .coleccion-titulo {
+      font-family: 'Dancing Script', 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-style: italic;
+      color: #111;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.12em;
+      text-shadow: 0 3px 24px #fff5, 0 1px 0px #fff9;
+    }
+    .coleccion-de {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: clamp(1.0rem, 2vw, 1.5rem);
+      color: #222;
+      margin-bottom: 0.2em;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+    .coleccion-otromundo {
+      font-family: 'Fjalla One', 'Montserrat', Arial, sans-serif;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      color: #111;
+      margin-bottom: 0.13em;
+      letter-spacing: 0.03em;
+      font-weight: 700;
+      text-shadow: 0 2px 12px #fff3;
+      text-transform: none;
+    }
+    .coleccion-suculentas {
+      font-family: 'Fjalla One', 'Montserrat', Arial, sans-serif;
+      font-size: clamp(1.3rem, 3vw, 2.5rem);
+      color: #111;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      opacity: 0.85;
+      margin-top: -0.1em;
+    }
+    main {
+      position: relative;
+      z-index: 2;
+      margin-top: -10vh;
+      padding-top: 8vh;
+      background: rgba(255,255,255,0.93);
+      border-top-left-radius: 2em;
+      border-top-right-radius: 2em;
+      box-shadow: 0 -6px 32px #cabfae27;
+      min-height: 60vh;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    section {
+      margin: 0 auto 3.5em auto;
+      padding: 2.8em 2em 2.8em 2em;
+      border-radius: 1.2em;
+      background: #fff;
+      border-bottom: 2px solid #f4ecd8;
+      box-shadow: 0 2px 12px #b7d8c410;
+      position: relative;
+      max-width: 700px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.1em;
+      color: #1b7340;
+      text-align: center;
+      margin-bottom: 1.1em;
+      letter-spacing: 1px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1.1em;
+      margin: 0 auto 1.9em auto;
+      max-width: 700px;
+    }
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 1em;
+      background: #EDF3F2;
+      box-shadow: 0 2px 18px #c3dbc518;
+      border: 2px solid #E6F2ED;
+      filter: grayscale(0.13) contrast(1.08);
+    }
+    .about-text {
+      font-size: 1.15em;
+      color: #5C7D6E;
+      text-align: center;
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0 auto 1em auto;
+      max-width: 600px;
+    }
+    .firma {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.2em;
+      color: #197850;
+      display: block;
+      margin-top: 1em;
+    }
+    .testimonios blockquote {
+      font-size: 1.17em;
+      color: #273c2e;
+      font-family: 'Playfair Display', serif;
+      border-left: 3.5px solid #B7D8C4;
+      margin: 0 0 1.2em 0;
+      padding: .7em 1em .7em 1.4em;
+      border-radius: 0.5em;
+      background: #f0f7f3;
+      line-height: 1.45;
+    }
+    .testimonios blockquote span {
+      display: block;
+      text-align: right;
+      font-size: 0.99em;
+      color: #197850;
+      margin-top: .7em;
+      font-family: 'Dancing Script', cursive;
+    }
+    .contact-info {
+      text-align: center;
+      color: #25352F;
+      font-size: 1.07em;
+      margin-top: 1.5em;
+    }
+    .contact-info a {
+      color: #197850;
+      text-decoration: none;
+    }
+    footer {
+      text-align: center;
+      font-size: 1em;
+      color: #5C7D6E;
+      background: #f3f9f6;
+      padding: 2.5em 1em 1.2em 1em;
+      margin-top: 2.5em;
+      border-top: 2.5px solid #E6F2ED;
+      border-radius: 2em 2em 0 0;
+      z-index: 2;
+      position: relative;
+    }
+    @media (max-width: 600px) {
+      .hero-center { padding: 2em 1em; }
+      .coleccion-titulo { font-size: 2.2em }
+      .coleccion-otromundo { font-size: 1.4em }
+      .coleccion-suculentas { font-size: 1em }
+      main, section { padding: 1.1em 0.7em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-hero"></div>
+  <div class="sunlight"></div>
+  <div class="hero-center">
+    <div class="coleccion-titulo">Colección</div>
+    <div class="coleccion-de">de</div>
+    <div class="coleccion-otromundo">OtroMundo</div>
+    <div class="coleccion-suculentas">Suculentas</div>
+  </div>
+
+  <main>
+    <section id="coleccion">
+      <h2>Colección</h2>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Cactus 1">
+        <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&q=80" alt="Cactus 2">
+      </div>
+    </section>
+    <section id="nosotros">
+      <h2>Nosotros</h2>
+      <div class="about-text">
+        Exponemos esta colección porque creemos en el poder de los pequeños detalles. Cada planta es un recordatorio de que la vida florece donde menos lo imaginas, y que la belleza puede ser tan simple como una hoja, una espina, o un instante de contemplación.
+        <span class="firma">— Aleotromundo</span>
+      </div>
+    </section>
+    <section id="testimonios">
+      <h2>Testimonios</h2>
+      <div class="testimonios">
+        <blockquote>
+          “La armonía de formas y colores es única. Esta colección me inspira calma cada día.”
+          <span>— Valeria V.</span>
+        </blockquote>
+      </div>
+    </section>
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <div class="contact-info">
+        <p>Email: <a href="mailto:contralamaquinaok@gmail.com">contralamaquinaok@gmail.com</a></p>
+        <p>Instagram: <a href="https://instagram.com/aleotromundo.suculentas" target="_blank">@aleotromundo.suculentas</a></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Aleotromundo | Suculentas & Cactus<br>
+    <span style="font-size:0.95em;">Cuidar una planta es cuidar un instante de vida.</span>
+  </footer>
+</body>
+</html>
