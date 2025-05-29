@@ -2,43 +2,45 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Colección de Suculentas & Cactus</title>
+  <title>Colección de OtroMundo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     body {
-      background-image: url('img/tyler-chandler-M7l_jPlbfOM-unsplash.jpg');
+      background-image: url('img/background.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      background-attachment: fixed;
       min-height: 100vh;
+      position: relative;
     }
-    /* Opcional: un fondo semitransparente para mejorar la lectura del contenido */
+    
+    /* Aseguramos que el contenido sea legible con el fondo */
     main, header, footer, .navbar {
-      background: rgba(255,255,255,0.92);
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
       margin: 0 auto;
       max-width: 1200px;
       box-sizing: border-box;
       padding-left: 8px;
       padding-right: 8px;
-    }
-    /* Elimina el borde y color de fondo del body por si styles.css lo pone */
-    body {
-      margin: 0;
-      padding: 0;
-      color: #222;
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
+  <!-- Elemento para el efecto de luz solar en movimiento -->
+  <div class="sunlight-effect"></div>
+  
   <nav class="navbar">
     <div class="navbar-container">
       <a class="navbar-logo" href="#inicio">
         <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=48&q=80" alt="Cactus logo">
-        Suculentas & Cactus
+        OtroMundo
       </a>
       <ul class="navbar-links">
         <li><a href="#inicio" class="nav-link">Inicio</a></li>
@@ -54,8 +56,8 @@
     <div class="hero">
       <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80" alt="Cactus limpio" class="hero-img">
       <h1>
-        Bienvenido a la Colección<br>
-        <span class="hero-title-gradient">Suculentas & Cactus</span>
+        Colección de<br>
+        <span class="hero-title-gradient">OtroMundo</span>
       </h1>
       <p class="hero-desc">
         22 especies para admirar la belleza de la naturaleza en su forma más pura.
@@ -105,15 +107,15 @@
       <h2>Testimonios</h2>
       <div class="testimonios">
         <blockquote>
-          “La armonía de formas y colores es única. Esta colección me inspira calma cada día.”
+          "La armonía de formas y colores es única. Esta colección me inspira calma cada día."
           <span>— Valeria V.</span>
         </blockquote>
         <blockquote>
-          “Aquí descubrí que lo más pequeño puede ser lo más extraordinario.”
+          "Aquí descubrí que lo más pequeño puede ser lo más extraordinario."
           <span>— Gerardo M.</span>
         </blockquote>
         <blockquote>
-          “Ver esta galería es como un paseo por un jardín silencioso y lleno de sorpresas.”
+          "Ver esta galería es como un paseo por un jardín silencioso y lleno de sorpresas."
           <span>— Sofía R.</span>
         </blockquote>
       </div>
