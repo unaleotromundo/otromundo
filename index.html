@@ -48,7 +48,6 @@
       box-sizing: border-box;
       box-shadow: 0 4px 24px rgba(0,0,0,0.02);
     }
-    /* LOGO MANDALA y texto Otromundo */
     .logo-barra-superior {
       display: flex;
       align-items: center;
@@ -74,9 +73,16 @@
       display: block;
       margin: auto;
     }
+
+    .logo-navbar-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.1;
+    }
     .logo-text-navbar {
       font-family: 'Cinzel', serif;
-      font-size: 2.1rem;
+      font-size: 1.1rem; /* más pequeño que antes */
       letter-spacing: 0.13em;
       font-weight: 700;
       color: var(--accent);
@@ -84,19 +90,36 @@
       text-shadow: 0 2px 10px #d6e7d9;
       line-height: 1;
     }
+    .logo-text-abajo {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      color: #4a6653;
+      margin-top: 2px;
+      margin-left: 2px;
+      letter-spacing: 0.02em;
+      opacity: 0.93;
+      font-weight: 400;
+    }
+    .logo-text-abajo sup {
+      font-size: 0.8em;
+      top: -0.2em;
+      position: relative;
+    }
     @media (max-width: 1200px) {
       .logo-barra-superior { height: 36px; }
       .mandala-navbar-img-wrap {
         height: 28px; width: 28px; padding: 1.5px;
       }
       .mandala-navbar-img { height: 20px; width: 20px; }
-      .logo-text-navbar { font-size: 1.25rem; }
+      .logo-navbar-wrap .logo-text-navbar { font-size: 0.8rem; }
+      .logo-navbar-wrap .logo-text-abajo { font-size: 0.6rem; }
     }
     @media (max-width: 700px) {
       .logo-barra-superior { height: 22px; }
       .mandala-navbar-img-wrap { height: 18px; width: 18px; padding: 1px;}
       .mandala-navbar-img { height: 12px; width: 12px; }
-      .logo-text-navbar { font-size: 0.95rem; }
+      .logo-navbar-wrap .logo-text-navbar { font-size: 0.65rem; }
+      .logo-navbar-wrap .logo-text-abajo { font-size: 0.49rem; }
     }
 
     .navbar-menu {
@@ -349,9 +372,12 @@
   <nav class="navbar">
     <div class="logo-barra-superior">
       <span class="mandala-navbar-img-wrap">
-        <img src="img/mandala.png" alt="Mandala Ojo de Horus" class="mandala-navbar-img" />
+        <img src="img/mandala.svg" alt="Mandala Ojo de Horus" class="mandala-navbar-img" />
       </span>
-      <span class="logo-text-navbar">OtroMundo</span>
+      <span class="logo-navbar-wrap">
+        <span class="logo-text-navbar">OtroMundo</span>
+        <span class="logo-text-abajo">Todos los derechos reservados <sup>®</sup></span>
+      </span>
     </div>
     <div class="navbar-menu">
       <ul id="menu">
