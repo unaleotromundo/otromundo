@@ -1,0 +1,87 @@
+/* Fondo para la sección "Colección" usando la imagen del museo */
+.coleccion-marcos {
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-marcos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Ajusta el número de columnas */
+  gap: 32px 24px;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 0 24px 0;
+  position: relative;
+  background: url('IMAGE_NUMBER_1_URL') center center/cover no-repeat;
+  border-radius: 18px;
+  min-height: 600px;
+  box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18);
+  /* Oscurece un poco para resaltar los marcos, puedes ajustar esto */
+  /* background-blend-mode: multiply; */
+}
+
+.gallery-marcos::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('IMAGE_NUMBER_1_URL') center center/cover no-repeat;
+  opacity: 1; /* Fondo visible */
+  z-index: 0;
+  border-radius: 18px;
+}
+
+.marco {
+  position: relative;
+  z-index: 1;
+  width: 220px;
+  height: 295px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Sombra para simular profundidad */
+  box-shadow: 0 4px 16px 0 rgba(70,60,40,0.09);
+  /* Un borde dorado elegante puede ayudar a simular el marco */
+  border: 10px solid #bfa76d;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.13);
+  overflow: hidden;
+}
+
+.marco img {
+  width: 88%;
+  height: 88%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s;
+  z-index: 2;
+  box-shadow: 0 2px 12px 0 rgba(70,60,40,0.11);
+}
+
+.marco:hover img {
+  transform: scale(1.04);
+  box-shadow: 0 4px 20px 0 rgba(70,60,40,0.19);
+}
+
+/* Responsive para pantallas chicas */
+@media (max-width: 1024px) {
+  .gallery-marcos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .marco {
+    width: 160px;
+    height: 215px;
+  }
+}
+@media (max-width: 600px) {
+  .gallery-marcos {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .marco {
+    width: 90vw;
+    height: 40vw;
+    max-width: 320px;
+    max-height: 220px;
+  }
+}

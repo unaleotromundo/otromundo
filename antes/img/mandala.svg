@@ -1,0 +1,48 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="mgrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#bfe8c9"/>
+      <stop offset="100%" stop-color="#238d51"/>
+    </radialGradient>
+  </defs>
+  <circle cx="256" cy="256" r="246" fill="url(#mgrad)" stroke="#23613d" stroke-width="12"/>
+  <!-- Mandala rays -->
+  <g stroke="#23613d" stroke-width="7" stroke-linecap="round">
+    <line x1="256" y1="40" x2="256" y2="105"/>
+    <line x1="256" y1="407" x2="256" y2="472"/>
+    <line x1="40" y1="256" x2="105" y2="256"/>
+    <line x1="407" y1="256" x2="472" y2="256"/>
+    <line x1="90" y1="90" x2="135" y2="135"/>
+    <line x1="422" y1="90" x2="377" y2="135"/>
+    <line x1="90" y1="422" x2="135" y2="377"/>
+    <line x1="422" y1="422" x2="377" y2="377"/>
+  </g>
+  <!-- Mandala petals -->
+  <g stroke="#23613d" stroke-width="5" fill="none">
+    <ellipse cx="256" cy="126" rx="38" ry="70"/>
+    <ellipse cx="256" cy="386" rx="38" ry="70"/>
+    <ellipse cx="126" cy="256" rx="70" ry="38" transform="rotate(-90 126 256)"/>
+    <ellipse cx="386" cy="256" rx="70" ry="38" transform="rotate(-90 386 256)"/>
+    <ellipse cx="166" cy="166" rx="28" ry="55" transform="rotate(-45 166 166)"/>
+    <ellipse cx="346" cy="166" rx="28" ry="55" transform="rotate(45 346 166)"/>
+    <ellipse cx="166" cy="346" rx="28" ry="55" transform="rotate(45 166 346)"/>
+    <ellipse cx="346" cy="346" rx="28" ry="55" transform="rotate(-45 346 346)"/>
+  </g>
+  <!-- Ojo de Horus central -->
+  <g>
+    <!-- Ojo exterior -->
+    <ellipse cx="256" cy="256" rx="68" ry="40" fill="#fff" stroke="#23613d" stroke-width="9"/>
+    <!-- Párpado superior -->
+    <path d="M190 245 Q256 185 322 245" stroke="#23613d" stroke-width="7" fill="none"/>
+    <!-- Párpado inferior -->
+    <path d="M190 267 Q256 305 322 267" stroke="#23613d" stroke-width="5" fill="none"/>
+    <!-- Iris -->
+    <circle cx="256" cy="256" r="22" fill="#23613d" stroke="#15924e" stroke-width="6"/>
+    <!-- Detalle Horus (raya abajo) -->
+    <path d="M232 278 Q217 296 232 314 Q237 322 246 319" stroke="#23613d" stroke-width="6" fill="none"/>
+    <!-- Detalle Horus (espiral) -->
+    <path d="M220 308 Q210 335 240 335 Q250 335 247 325" stroke="#23613d" stroke-width="5" fill="none"/>
+    <!-- Detalle Horus (ceja) -->
+    <path d="M196 230 Q256 160 316 230" stroke="#15924e" stroke-width="3" fill="none"/>
+  </g>
+</svg>

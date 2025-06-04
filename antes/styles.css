@@ -1,0 +1,287 @@
+/* Estilos para el efecto de luz solar en movimiento */
+@keyframes sunlight {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    background-position: 100% 100%;
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+}
+
+.sunlight-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(255, 255, 200, 0.8) 0%, rgba(255, 200, 100, 0) 70%);
+  background-size: 200% 200%;
+  pointer-events: none;
+  z-index: 1;
+  animation: sunlight 15s infinite ease-in-out;
+}
+
+/* Estilos generales para la página */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  position: relative;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #333;
+}
+
+.navbar-logo img {
+  height: 2rem;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin-left: 1.5rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #4CAF50;
+}
+
+header {
+  padding: 2rem 1rem;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title-gradient {
+  background: linear-gradient(45deg, #4CAF50, #8BC34A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 2.5rem;
+}
+
+.hero-desc {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  max-width: 600px;
+}
+
+.section {
+  padding: 3rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.section.alt {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+.testimonios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+blockquote {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 0;
+  position: relative;
+}
+
+blockquote::before {
+  content: '"';
+  font-size: 4rem;
+  position: absolute;
+  top: -1rem;
+  left: 0.5rem;
+  color: rgba(76, 175, 80, 0.2);
+}
+
+blockquote span {
+  display: block;
+  text-align: right;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.contact-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.contact-form button {
+  background: linear-gradient(45deg, #4CAF50, #8BC34A);
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.3s;
+}
+
+.contact-form button:hover {
+  transform: translateY(-2px);
+}
+
+.contact-info {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.contact-info a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.firma {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+  }
+  
+  .navbar-links {
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .navbar-links li {
+    margin: 0.5rem;
+  }
+  
+  .hero-title-gradient {
+    font-size: 6rem;
+  }
+  
+  .testimonios {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Contenedor principal con fondo semitransparente */
+main, header, footer, .navbar {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  margin: 0 auto;
+  max-width: 1200px;
+  box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 8px;
+  position: relative;
+  z-index: 2;
+}

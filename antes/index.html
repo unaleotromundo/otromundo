@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>OtroMundo | Colección de Cactus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-bg: #111;
+      --accent: #faf9f6;
+      --menu-bg: rgba(15,15,15,0.92);
+      --menu-btn-bg: #232323;
+      --menu-btn-bg-active: #238d51;
+      --menu-btn-bg-hover: #444;
+      --menu-btn-color: #e0e0e0;
+      --menu-btn-color-active: #fff;
+      --menu-border: #333;
+      --logo-font: 'Cinzel', serif;
+      --coleccion-font: 'Great Vibes', cursive;
+      --title-font: 'Lato', sans-serif;
+      --glass-bg: rgba(30,30,30,0.77);
+      --glass-border: rgba(250,250,250,0.06);
+      --overlay-back: linear-gradient(0deg, rgba(20,16,2,0.82) 70%, rgba(20,16,2,0.07) 100%);
+      --modern-shadow: 0 8px 40px #000d, 0 2px 12px #ccb06255;
+      --transition: 0.33s cubic-bezier(.7,1.7,.25,1);
+      --gap: 32px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--primary-bg);
+      color: var(--accent);
+      font-family: var(--title-font);
+      min-height: 100vh;
+    }
+    .navbar {
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--menu-bg);
+      padding: 12px 32px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .logo-barra-superior {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 56px;
+    }
+    .mandala-navbar-img-wrap {
+      display: flex; align-items: center; justify-content: center;
+      height: 48px; width: 48px;
+      background: #232323;
+      border-radius: 50%;
+      box-shadow: 0 2px 10px #2228;
+      padding: 2px;
+      overflow: hidden;
+    }
+    .mandala-navbar-img {
+      height: 38px; width: 38px;
+      object-fit: contain;
+      display: block;
+      margin: auto;
+      filter: invert(1);
+    }
+    .logo-navbar-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.1;
+    }
+    .logo-text-navbar {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.13em;
+      font-weight: 700;
+      color: var(--accent);
+      user-select: none;
+      text-shadow: 0 2px 10px #222;
+      line-height: 1;
+    }
+    .logo-text-abajo {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      color: #bbb;
+      margin-top: 2px;
+      margin-left: 2px;
+      letter-spacing: 0.02em;
+      opacity: 0.93;
+      font-weight: 400;
+    }
+    .logo-text-abajo sup {
+      font-size: 0.8em;
+      top: -0.2em;
+      position: relative;
+    }
+    .navbar-menu {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 0;
+      position: relative;
+    }
+    .navbar ul {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-family: var(--logo-font);
+      align-items: center;
+      position: relative;
+    }
+    .navbar li {
+      cursor: pointer;
+      font-size: 1.08rem;
+      padding: 9px 32px;
+      border-radius: 26px;
+      border: 1.8px solid var(--menu-border);
+      background: var(--menu-btn-bg);
+      color: var(--menu-btn-color);
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-family: var(--logo-font);
+      font-weight: 600;
+      position: relative;
+      transition:
+        color 0.18s,
+        background 0.18s,
+        box-shadow 0.22s,
+        border-color 0.18s,
+        transform 0.12s;
+      z-index: 1;
+      user-select: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 110px;
+      box-sizing: border-box;
+      height: 42px;
+      line-height: 1;
+      box-shadow: 0 1px 4px #111;
+      border-bottom-width: 2.5px;
+    }
+    .navbar li.active,
+    .navbar li:focus,
+    .navbar li:active {
+      background: var(--menu-btn-bg-active);
+      color: var(--menu-btn-color-active);
+      border-color: var(--menu-btn-bg-active);
+      box-shadow: 0 4px 18px 0 #15924e60, 0 1px 4px #111;
+      transform: translateY(-2px) scale(1.04);
+    }
+    .navbar li:hover:not(.active) {
+      background: var(--menu-btn-bg-hover);
+      color: #76edac;
+      border-color: #5dbd90;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 4px 18px 0 #15924e30, 0 1px 4px #222;
+    }
+    .menu-highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #444;
+      border-radius: 26px;
+      border: 2px solid #57b184;
+      box-shadow: 0 2px 20px 0 #111b;
+      transition:
+        transform 0.35s,
+        width 0.3s,
+        height 0.3s,
+        opacity 0.2s;
+      z-index: 0;
+      opacity: 0.85;
+      pointer-events: none;
+      height: 42px;
+      will-change: transform, width, height;
+      mix-blend-mode: lighten;
+    }
+    main { padding-top: 90px; }
+    section {
+      min-height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition:
+        opacity 0.7s,
+        transform 0.7s;
+      pointer-events: none;
+      position: relative;
+      background: transparent;
+    }
+    section.active { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); z-index: 2;}
+    .inicio-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: url('img/background.jpg') center center/cover no-repeat;
+    }
+    .inicio-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #faf9f6;
+      padding: 60px 24px 80px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      background: rgba(0,0,0,0.35);
+      border-radius: 36px;
+    }
+    .glass-title-bg {
+      background: var(--glass-bg);
+      border-radius: 36px;
+      border: 1.5px solid var(--glass-border);
+      padding: 40px 44px 32px 44px;
+      box-shadow: 0 4px 32px 0 #19181866;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 97vw;
+      margin-bottom: 30px;
+    }
+    .coleccion-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      width: 100%;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .coleccion-title {
+      font-family: var(--coleccion-font);
+      font-size: 90px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      color: #ccb062;
+      margin: 0;
+      text-shadow: 0 8px 32px #000d;
+      filter: drop-shadow(0 2px 14px #997a2a44);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .de-logo {
+      font-family: var(--logo-font);
+      font-size: 2rem;
+      font-weight: 400;
+      color: #f7edc9;
+      margin-bottom: 2.4rem;
+      margin-left: 6px;
+      letter-spacing: 0.09em;
+      white-space: nowrap;
+      position: relative;
+      top: 20px;
+      text-shadow: 0 2px 14px #000c;
+    }
+    .otromundo-logo-text-wrap {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .otromundo-logo-text {
+      font-family: var(--logo-font);
+      font-size: 2.1rem;
+      letter-spacing: 0.25em;
+      color: #f7edc9;
+      font-weight: 400;
+      margin-top: 0.2em;
+      margin-bottom: 0;
+      text-shadow: 0 1px 10px #000, 0 2px 30px #222;
+      display: block;
+      padding: 0 10px 0 10px;
+      border-bottom: 3px solid #ccb062;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .suculentas-underline {
+      font-family: var(--title-font);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ccb062;
+      display: block;
+      margin: 0 auto;
+      margin-top: 6px;
+      text-align: center;
+      width: 100%;
+      letter-spacing: 1.1em;
+      transition: letter-spacing 0.2s;
+      text-shadow: 0 2px 20px #0005;
+    }
+    .glass-title-bg .otromundo-logo-text,
+    .glass-title-bg .suculentas-underline {
+      max-width: 100%;
+    }
+    /* ----------- GALERÍA VERTICAL ----------- */
+    #galeria {
+      min-height: 100vh;
+      width: 100vw;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      box-sizing: border-box;
+      padding-top: 70px;
+      padding-bottom: 60px;
+    }
+    .galeria-title {
+      font-family: var(--coleccion-font);
+      font-size: 2.2rem;
+      color: #ccb062;
+      margin-bottom: 30px;
+      letter-spacing: 0.12em;
+      text-shadow: 0 2px 8px #0008;
+      text-align: left;
+      width: 100%;
+      max-width: 1200px;
+      padding-left: 48px;
+    }
+    .galeria-horizontal-wrapper {
+      width: 100vw;
+      max-width: 100vw;
+      overflow-x: auto;
+      overflow-y: hidden;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: #ccb062 #191818;
+      padding-bottom: 12px;
+    }
+    .galeria-horizontal {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: var(--gap);
+      min-height: 340px;
+      padding: 0 48px;
+      transition: gap 0.2s;
+      will-change: transform;
+    }
+    .cuadro-marco {
+      background: none;
+      border-radius: 30px;
+      padding: 0;
+      transition: transform var(--transition), box-shadow 0.22s;
+      cursor: pointer;
+      position: relative;
+      overflow: visible;
+      min-width: 330px;
+      max-width: 360px;
+      height: 320px;
+      box-shadow: none;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cuadro-marco img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 30px;
+      box-shadow: var(--modern-shadow);
+      background: #29200f;
+      transition: 
+        transform var(--transition),
+        box-shadow var(--transition),
+        filter 0.25s;
+      will-change: transform, box-shadow;
+    }
+    .cuadro-marco:hover img {
+      transform: scale(1.09) rotate(-1deg);
+      box-shadow: 0 24px 80px #000, 0 4px 32px #d0bd7a;
+      filter: brightness(1.13) contrast(1.08) saturate(1.12);
+      z-index: 2;
+    }
+    .cuadro-marco .overlay-info {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+      z-index: 3;
+      border-radius: 30px;
+      background: var(--overlay-back);
+    }
+    .cuadro-marco:hover .overlay-info,
+    .cuadro-marco:focus .overlay-info {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .overlay-info-content {
+      padding: 22px 12px 20px 12px;
+      width: 100%;
+      border-radius: 0 0 30px 30px;
+      text-align: center;
+      color: #ffecc7;
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-shadow: 0 4px 24px #000c, 0 2px 8px #ccb062;
+      letter-spacing: 0.07em;
+      background: none;
+      box-sizing: border-box;
+      transition: color 0.2s;
+    }
+    .overlay-info-content .desc {
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #ffe0a0;
+      margin-top: 0.5em;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 4px #0008;
+    }
+    /* ----------- PLANTA DETALLE ----------- */
+    #detalle-planta-section {
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-bg);
+      position: fixed;
+      left: 0; top: 0;
+      z-index: 999;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+    }
+    #detalle-planta-section.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .detalle-planta-container {
+      max-width: 480px;
+      width: 97vw;
+      background: rgba(16,16,16,0.96);
+      border-radius: 30px;
+      box-shadow: 0 8px 40px #000c, 0 2px 12px #ccb06244;
+      padding: 2vw 2vw 1vw 2vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto;
+      position: relative;
+      animation: detalle-in 0.6s cubic-bezier(.4,2.2,.22,1);
+    }
+    @keyframes detalle-in {
+      from { opacity: 0; transform: translateY(60px) scale(0.98);}
+      to { opacity: 1; transform: translateY(0) scale(1);}
+    }
+    .detalle-planta-img {
+      max-width: 97vw; width: 100%; max-height: 330px;
+      object-fit: cover;
+      border-radius: 22px;
+      box-shadow: var(--modern-shadow);
+      margin-bottom: 28px;
+      margin-top: 12px;
+    }
+    .detalle-planta-nombre {
+      font-family: var(--logo-font);
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-align: center;
+      color: #ffecc7;
+      text-shadow: 0 2px 16px #000a;
+      margin-bottom: 13px;
+    }
+    .detalle-planta-desc {
+      font-family: 'Lato', sans-serif;
+      font-size: 1.1rem;
+      color: #ffecc7;
+      opacity: 0.92;
+      text-align: center;
+      letter-spacing: 0.03em;
+      margin-bottom: 26px;
+      margin-top: 0;
+      line-height: 1.6;
+      text-shadow: 0 2px 8px #000a;
+    }
+    .volver-galeria-btn {
+      display: inline-block;
+      padding: 10px 30px;
+      border-radius: 25px;
+      background: #191e18;
+      border: 2px solid #ccb062;
+      color: #ffecc7;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: background 0.18s, color 0.18s, border 0.18s, transform 0.16s;
+      box-shadow: 0 2px 8px #ccb06233, 0 1px 2px #0009;
+    }
+    .volver-galeria-btn:hover {
+      background: #ccb062;
+      color: #191e18;
+      border-color: #ffecc7;
+      transform: scale(1.04);
+    }
+    /* --------- MEDIA QUERIES --------- */
+    @media (max-width: 1200px) {
+      .coleccion-title {
+	font-size: 48px;
+	font-family: Kalina;
+}
+      .de-logo { font-size: 1.1rem; top: 6px; }
+      .otromundo-logo-text { font-size: 1.2rem; }
+      .suculentas-underline { font-size: 0.85rem;}
+      .galeria-title { font-size: 1.3rem; padding-left: 16px;}
+      .galeria-horizontal { gap: 18px; padding: 0 12px;}
+      .cuadro-marco { min-width: 180px; max-width:210px; height: 170px;}
+      .cuadro-marco img { min-width: 180px; max-width:210px; max-height:170px;}
+      .overlay-info-content { font-size: 1.01rem; }
+      .detalle-planta-container { max-width: 96vw; }
+      .detalle-planta-img { max-width: 98vw; max-height: 200px;}
+      .detalle-planta-nombre { font-size: 1.1rem;}
+      .volver-galeria-btn { font-size: 0.95rem; }
+    }
+    @media (max-width: 700px) {
+      .coleccion-title {
+	font-size: 24px;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+      .de-logo { font-size: 0.78rem; top: 2px; }
+      .navbar { padding: 6px 2px; }
+      .logo-barra-superior { height: 22px; }
+      .mandala-navbar-img-wrap { height: 18px; width: 18px; padding: 1px;}
+      .mandala-navbar-img { height: 12px; width: 12px; }
+      .logo-text-navbar { font-size: 0.95rem; }
+      .navbar ul { gap: 5px; }
+      .navbar li { font-size: 0.92rem; padding: 3px 7px; min-width: 50px; height: 28px;}
+      .section-content { font-size: 1.1rem; }
+      .otromundo-logo-text { font-size: 0.8rem; }
+      .glass-title-bg { padding: 10px 0 8px 0; border-radius: 14px; }
+      .suculentas-underline { font-size: 0.7rem;}
+      .menu-highlight { height: 26px; }
+      .galeria-title { font-size: 1.01rem; padding-left: 6px;}
+      .galeria-horizontal { gap: 7px; padding: 0 4px;}
+      .cuadro-marco { min-width: 110px; max-width:128px; height: 90px;}
+      .cuadro-marco img { min-width: 110px; max-width:128px; max-height:90px;}
+      .overlay-info-content { font-size: 0.7rem; }
+      .detalle-planta-nombre { font-size: 0.78rem;}
+      .detalle-planta-desc { font-size: 0.72rem;}
+      .detalle-planta-img { max-height: 90px;}
+      .volver-galeria-btn { padding: 7px 11px; font-size:0.82rem;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo-barra-superior">
+      <span class="mandala-navbar-img-wrap">
+        <img src="img/mandala.png" alt="Mandala Ojo de Horus" class="mandala-navbar-img" />
+      </span>
+      <span class="logo-navbar-wrap">
+        <span class="logo-text-navbar">OtroMundo</span>
+        <span class="logo-text-abajo">Todos los derechos reservados <sup>®</sup></span>
+      </span>
+    </div>
+    <div class="navbar-menu">
+      <ul id="menu">
+        <li class="active" data-section="inicio">Inicio</li>
+        <li data-section="galeria">Galería</li>
+        <li data-section="contacto">Contacto</li>
+        <div class="menu-highlight" id="menuHighlight"></div>
+      </ul>
+    </div>
+  </nav>
+  <main>
+    <!-- INICIO -->
+    <section id="inicio" class="inicio-section active">
+      <div class="inicio-content">
+        <div class="glass-title-bg">
+          <div class="coleccion-row">
+            <h1 class="coleccion-title">Coleccion</h1>
+            <span class="de-logo">de</span>
+          </div>
+          <div class="otromundo-logo-text-wrap">
+            <span class="otromundo-logo-text">OTROMUNDO</span>
+            <span class="suculentas-underline">CACTUS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- GALERÍA -->
+    <section id="galeria">
+      <div class="galeria-title">Colección</div>
+      <div class="galeria-horizontal-wrapper" id="galeria-scroll">
+        <div class="galeria-horizontal" id="galeria-horizontal">
+          <div class="cuadro-marco" tabindex="0"
+            data-nombre="Astrophytum myriostigma"
+            data-desc="Estrella de cinco puntas, símbolo de equilibrio y misterio."
+            data-img="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80">
+            <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80" alt="Astrophytum myriostigma" />
+            <div class="overlay-info">
+              <div class="overlay-info-content">
+                <div>Astrophytum myriostigma</div>
+                <div class="desc">Estrella de cinco puntas, símbolo de equilibrio y misterio.</div>
+              </div>
+            </div>
+          </div>
+          <div class="cuadro-marco" tabindex="0"
+            data-nombre="Mammillaria elongata"
+            data-desc="Columna de espinas doradas, guardiana del sol del desierto."
+            data-img="https://images.unsplash.com/photo-1444392069729-99a5e9900e40?auto=format&fit=crop&w=1200&q=80">
+            <img src="https://images.unsplash.com/photo-1444392069729-99a5e9900e40?auto=format&fit=crop&w=1200&q=80" alt="Mammillaria elongata" />
+            <div class="overlay-info">
+              <div class="overlay-info-content">
+                <div>Mammillaria elongata</div>
+                <div class="desc">Columna de espinas doradas, guardiana del sol del desierto.</div>
+              </div>
+            </div>
+          </div>
+          <div class="cuadro-marco" tabindex="0"
+            data-nombre="Echinocactus grusonii"
+            data-desc="Asiento de suegra, esfera dorada de paciencia y eternidad."
+            data-img="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80">
+            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80" alt="Echinocactus grusonii" />
+            <div class="overlay-info">
+              <div class="overlay-info-content">
+                <div>Echinocactus grusonii</div>
+                <div class="desc">Asiento de suegra, esfera dorada de paciencia y eternidad.</div>
+              </div>
+            </div>
+          </div>
+          <div class="cuadro-marco" tabindex="0"
+            data-nombre="Opuntia microdasys"
+            data-desc="Orejas de conejo, ternura y peligro en cada gloquidio."
+            data-img="https://images.unsplash.com/photo-1439122955806-6c6a0def9947?auto=format&fit=crop&w=1200&q=80">
+            <img src="https://images.unsplash.com/photo-1439122955806-6c6a0def9947?auto=format&fit=crop&w=1200&q=80" alt="Opuntia microdasys" />
+            <div class="overlay-info">
+              <div class="overlay-info-content">
+                <div>Opuntia microdasys</div>
+                <div class="desc">Orejas de conejo, ternura y peligro en cada gloquidio.</div>
+              </div>
+            </div>
+          </div>
+          <div class="cuadro-marco" tabindex="0"
+            data-nombre="Gymnocalycium mihanovichii"
+            data-desc="Cactus injertado, color y vida en alianza perfecta."
+            data-img="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1200&q=80">
+            <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1200&q=80" alt="Gymnocalycium mihanovichii" />
+            <div class="overlay-info">
+              <div class="overlay-info-content">
+                <div>Gymnocalycium mihanovichii</div>
+                <div class="desc">Cactus injertado, color y vida en alianza perfecta.</div>
+              </div>
+            </div>
+          </div>
+          <div class="cuadro-marco" tabindex="0"
+            data-nombre="Parodia leninghausii"
+            data-desc="Cilindro de oro, resiliencia y crecimiento vertical."
+            data-img="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80" alt="Parodia leninghausii" />
+            <div class="overlay-info">
+              <div class="overlay-info-content">
+                <div>Parodia leninghausii</div>
+                <div class="desc">Cilindro de oro, resiliencia y crecimiento vertical.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Detalle Planta -->
+    <section id="detalle-planta-section" tabindex="-1">
+      <div class="detalle-planta-container">
+        <img id="detalle-planta-img" class="detalle-planta-img" src="" alt="planta" />
+        <div id="detalle-planta-nombre" class="detalle-planta-nombre"></div>
+        <div id="detalle-planta-desc" class="detalle-planta-desc"></div>
+        <button class="volver-galeria-btn" onclick="cerrarDetallePlanta()">VOLVER A LA GALERÍA</button>
+      </div>
+    </section>
+    <section id="contacto">
+      <div class="section-content">Contacto (en construcción)</div>
+    </section>
+  </main>
+  <script>
+    // Menú navegación
+    const ids = ["inicio", "galeria", "contacto"];
+    const menu = document.getElementById('menu');
+    const menuItems = menu.querySelectorAll('li');
+    const highlight = document.getElementById('menuHighlight');
+    let canSwitch = true;
+    function updateHighlight(toIdx) {
+      const target = menuItems[toIdx];
+      const ulRect = menu.getBoundingClientRect();
+      const rect = target.getBoundingClientRect();
+      highlight.style.width = rect.width + 'px';
+      highlight.style.height = rect.height + 'px';
+      highlight.style.transform = `translateX(${rect.left - ulRect.left}px)`;
+      highlight.style.opacity = 1;
+    }
+    updateHighlight(0);
+    function showSection(id, idx, smooth=true) {
+      if (!canSwitch) return;
+      canSwitch = false;
+      ids.forEach((sid, i) => {
+        const sec = document.getElementById(sid);
+        sec.classList.remove('active');
+      });
+      const section = document.getElementById(id);
+      setTimeout(() => {
+        section.classList.add('active');
+        canSwitch = true;
+      }, 20);
+      menuItems.forEach(li => li.classList.remove('active'));
+      menuItems[idx].classList.add('active');
+      updateHighlight(idx);
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: smooth?"smooth":"auto" });
+      }, 150);
+      currentIndex = idx;
+      cerrarDetallePlanta();
+    }
+    menuItems.forEach((li, idx) => {
+      li.addEventListener('mouseenter', function() {
+        updateHighlight(idx);
+      });
+      li.addEventListener('click', function() {
+        updateHighlight(idx);
+        showSection(li.getAttribute('data-section'), idx);
+      });
+    });
+    menu.addEventListener('mouseleave', function() {
+      updateHighlight(currentIndex);
+    });
+    window.addEventListener('resize', () => updateHighlight(currentIndex));
+    // --- GALERÍA AUTO-SCROLL Y DIRECCIÓN CON CURSOR ---
+    const galeriaWrapper = document.getElementById('galeria-scroll');
+    let autoScrollSpeed = 0.5;
+    let userSpeed = 0;
+    let animationFrame, lastTimestamp;
+    function autoScrollGallery(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const dt = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+      galeriaWrapper.scrollLeft += (autoScrollSpeed + userSpeed) * dt * 0.06;
+      if (galeriaWrapper.scrollLeft + galeriaWrapper.clientWidth + 2 >= galeriaWrapper.scrollWidth) {
+        galeriaWrapper.scrollLeft = 0;
+      }
+      if (galeriaWrapper.scrollLeft < 0) {
+        galeriaWrapper.scrollLeft = galeriaWrapper.scrollWidth - galeriaWrapper.clientWidth - 2;
+      }
+      animationFrame = requestAnimationFrame(autoScrollGallery);
+    }
+    animationFrame = requestAnimationFrame(autoScrollGallery);
+    galeriaWrapper.addEventListener('mousemove', function(e) {
+      const x = e.clientX;
+      const width = galeriaWrapper.clientWidth;
+      const edge = 80;
+      if (x < edge) {
+        userSpeed = -2 * (1 - x/edge);
+      } else if (x > width - edge) {
+        userSpeed = 2 * ( (x - (width - edge)) / edge );
+      } else {
+        userSpeed = 0;
+      }
+    });
+    galeriaWrapper.addEventListener('mouseleave', function() {
+      userSpeed = 0;
+    });
+    galeriaWrapper.addEventListener('wheel', function(e) {
+      if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        galeriaWrapper.scrollLeft += e.deltaY + e.deltaX;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    // --------- DETALLE PLANTA ---------
+    // Al hacer click en una imagen de la galería, mostrar sección detalle
+    const cuadros = document.querySelectorAll('.cuadro-marco');
+    const detalleSection = document.getElementById('detalle-planta-section');
+    const detalleImg = document.getElementById('detalle-planta-img');
+    const detalleNombre = document.getElementById('detalle-planta-nombre');
+    const detalleDesc = document.getElementById('detalle-planta-desc');
+    let scrollGaleriaBackup = 0;
+    cuadros.forEach(cuadro => {
+      cuadro.addEventListener('click', function(e) {
+        const nombre = cuadro.getAttribute('data-nombre');
+        const desc = cuadro.getAttribute('data-desc');
+        const img = cuadro.getAttribute('data-img');
+        detalleImg.src = img;
+        detalleImg.alt = nombre;
+        detalleNombre.textContent = nombre;
+        detalleDesc.textContent = desc;
+        detalleSection.classList.add('active');
+        // Guarda el scroll vertical y deshabilita scroll general
+        scrollGaleriaBackup = window.scrollY;
+        document.body.style.overflow = "hidden";
+        detalleSection.focus();
+      });
+      cuadro.addEventListener('keydown', function(e) {
+        if(e.key === "Enter" || e.key === " ") {
+          cuadro.click();
+        }
+      });
+    });
+    function cerrarDetallePlanta() {
+      detalleSection.classList.remove('active');
+      document.body.style.overflow = "";
+      // Retorna el scroll vertical exacto a donde estaba la galería
+      if(scrollGaleriaBackup) window.scrollTo({top: scrollGaleriaBackup});
+    }
+    // Cerrar con Escape
+    detalleSection.addEventListener('keydown', function(e) {
+      if(e.key === "Escape") cerrarDetallePlanta();
+    });
+    // Cerrar al clickear fuera del detalle
+    detalleSection.addEventListener('click', function(e) {
+      if(e.target === detalleSection) cerrarDetallePlanta();
+    });
+  </script>
+</body>
+</html>
