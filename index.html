@@ -96,15 +96,16 @@
         }
         .hero {
             background:
-                linear-gradient(rgba(45, 90, 39, 0.7), rgba(74, 124, 89, 0.7)),
+                linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)),
                 url('background.jpg');
             background-size: cover; background-position: center; height: 100vh;
             display: flex; align-items: center; justify-content: center; text-align: center;
-            color: white; position: relative;
+            color: #234726;
+            position: relative;
         }
         .hero-content h1 {
             font-size: 4rem; margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.12); animation: fadeInUp 1s ease;
         }
         .hero-content p {
             font-size: 1.5rem; margin-bottom: 2rem; max-width: 800px;
@@ -114,9 +115,9 @@
             display: inline-block; background: linear-gradient(45deg, #90EE90, #98FB98);
             color: #2d5a27; padding: 15px 40px; text-decoration: none; border-radius: 50px;
             font-weight: bold; font-size: 1.2rem; transition: all 0.3s ease;
-            animation: fadeInUp 1s ease 0.6s both; box-shadow: 0 5px 20px rgba(144,238,144,0.4);
+            animation: fadeInUp 1s ease 0.6s both; box-shadow: 0 5px 20px rgba(144,238,144,0.18);
         }
-        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(144,238,144,0.6); }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(144,238,144,0.26); }
         .featured-section { padding: 100px 0; background: white; }
         .section-title {
             text-align: center;
@@ -137,11 +138,11 @@
         }
         .featured-card {
             background: white; border-radius: 20px; padding: 2rem; text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1); transition: all 0.3s ease; border: 2px solid transparent;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.07); transition: all 0.3s ease; border: 2px solid transparent;
         }
         .featured-card:hover {
             transform: translateY(-10px); border-color: #90EE90;
-            box-shadow: 0 20px 60px rgba(144,238,144,0.2);
+            box-shadow: 0 20px 60px rgba(144,238,144,0.13);
         }
         .featured-image {
             display: block;
@@ -166,7 +167,7 @@
         .products-section {
             padding: 100px 0;
             background:
-                linear-gradient(rgba(255,255,255,0.7), rgba(232,245,232,0.85)),
+                linear-gradient(rgba(255,255,255,0.87), rgba(255,255,255,0.85)),
                 url('cactus-productos.jpg');
             background-size: cover;
             background-position: center;
@@ -176,9 +177,9 @@
         }
         .product-card {
             background: white; border-radius: 15px; overflow: hidden;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.1); transition: all 0.3s ease;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.07); transition: all 0.3s ease;
         }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.15); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.10); }
         .product-image {
             height: 250px;
             display: flex; align-items: center; justify-content: center; font-size: 4rem; color: white;
@@ -213,11 +214,12 @@
             width: 100%; height: 400px; object-fit: cover; border-radius: 20px;
         }
         .about-image::before { display:none; }
+        /* CONTACTO CON OVERLAY BLANCO */
         .contact-section {
             padding: 100px 0;
-            color: white;
+            color: #234726;
             background:
-                linear-gradient(135deg, rgba(45,90,39,0.78) 0%, rgba(74,124,89,0.75) 100%),
+                linear-gradient(135deg, rgba(255,255,255,0.83) 0%, rgba(255,255,255,0.80) 100%),
                 url('img/contacto-fondo.jpg');
             background-size: cover;
             background-position: center;
@@ -229,7 +231,7 @@
             position: absolute;
             z-index: 0;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(45,90,39,0.15) 0%, rgba(74,124,89,0.12) 100%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.24) 100%);
             pointer-events: none;
         }
         .contact-content {
@@ -413,7 +415,7 @@
 <body>
     <header>
         <nav class="container">
-            <div class="logo">Otro Mundo | Suculentas</div>
+            <div class="logo">Otro Mundo | 094691690</div>
             <ul class="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#coleccion">Colección</a></li>
@@ -425,7 +427,7 @@
     <main>
         <section class="hero" id="inicio">
             <div class="hero-content">
-                <h1>Bienvenido a Otro Mundo</h1>
+                <h1>Bienvenidx a Otro Mundo</h1>
                 <p>Descubrí la colección de suculentas que preparamos para vos</p>
                 <a href="#coleccion" class="cta-button">Explorar Colección</a>
             </div>
@@ -468,8 +470,7 @@
             <div class="container">
                 <div class="about-content">
                     <div class="about-text">
-                        <h2>Nosotros</h2>
-                        <p>
+                                                <p>
                             Hemos seleccionado cuidadosamente <strong>las 11 suculentas que no pueden faltar para armonizar tu hogar</strong>. Cada una de ellas fue elegida por su belleza, energía positiva y facilidad de cuidado, ideales para aportar frescura, equilibrio y vida a cualquier ambiente. Te invitamos a descubrir esta colección única pensada especialmente para transformar y llenar de buenas vibras tu espacio.
                         </p>
                     </div>
@@ -537,22 +538,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Navegación</h3>
-                    <a href="#inicio">Inicio</a>
-                    <a href="#coleccion">Colección</a>
-                    <a href="#nosotros">Nosotros</a>
-                    <a href="#contacto">Contacto</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Síguenos</h3>
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Pinterest</a>
-                    <a href="#">YouTube</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Bienvenido a Otro Mundo - Tienda de Suculentas Online. Todos los derechos reservados.</p>
+                    
+                <p>&copy; 2025 Bienvenidx a Otro Mundo - Suculentas. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
