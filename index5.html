@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otro Mundo | Colección Punk</title>
+    <!-- Google Fonts punk style -->
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Press+Start+2P&family=Montserrat:wght@700;900&family=Quicksand:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff3ea5;
+            --neon-green: #39ff14;
+            --punk-yellow: #fff600;
+            --black: #18181a;
+            --off-white: #fafafa;
+            --punk-blue: #00eaff;
+            --punk-bg: linear-gradient(135deg, #18181a 0%, #232c37 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Press Start 2P', 'Permanent Marker', 'Montserrat', Arial, sans-serif;
+            background: var(--punk-bg);
+            color: var(--off-white);
+            min-height: 100vh;
+            letter-spacing: 0.04em;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 22px; }
+        header {
+            background: #111119f7;
+            box-shadow: 0 0 32px 0 #ff3ea550, 0 8px 24px #00eaff50;
+            border-bottom: 4px dashed var(--punk-yellow);
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; min-height: 80px; }
+        .logo {
+            display: flex; align-items: center; gap: 15px;
+            font-family: 'Permanent Marker', 'Pacifico', cursive;
+            font-size: 2.3rem;
+            color: var(--pink);
+            text-shadow: 2px 2px 0 var(--punk-yellow), 4px 4px 0 #39ff14;
+            letter-spacing: 4px;
+            user-select: none;
+            transform: rotate(-3deg);
+        }
+        .logo::before { content: "🦔"; font-size: 2.6rem; filter: grayscale(1) contrast(2); }
+        .nav-links {
+            display: flex; list-style: none; gap: 2.1rem; align-items: center;
+            background: #232c3766; padding: 11px 38px; border-radius: 3rem;
+            font-family: 'Press Start 2P', 'Montserrat', sans-serif;
+            box-shadow: 0 2px 18px #ff3ea555;
+            border: 2px solid var(--neon-green);
+        }
+        .nav-links a {
+            color: var(--punk-yellow); font-weight: 900; font-size: 1.05rem;
+            padding: 11px 18px; border-radius: 1.7rem; letter-spacing: 2px; text-decoration: none;
+            transition: all .19s cubic-bezier(.68,.23,.37,1.1);
+            border: 2px solid transparent;
+            position: relative;
+            text-shadow: 1px 1px 0 #000, 2px 2px 0 var(--pink);
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--black);
+            background: linear-gradient(90deg, var(--neon-green) 60%, var(--punk-yellow) 100%);
+            border: 2px dashed var(--pink);
+            transform: scale(1.13) rotate(-2deg);
+            text-shadow: none;
+        }
+        @media (max-width:900px) {
+            .logo { font-size:1.7rem; }
+            .nav-links { gap:0.7rem; padding: 7px 12px;}
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            nav { flex-direction: column; align-items: flex-start; }
+            .logo { font-size: 1.2rem; }
+        }
+
+        /* HERO PUNK */
+        .hero-grow {
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
+            background: repeating-linear-gradient(135deg, #111119 0 15px, #1b1b23 15px 30px);
+            padding-top: 85px;
+            border-bottom: 7px double var(--pink);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-grow::after {
+            content: "PUNK'S NOT DEAD 🌵";
+            position: absolute;
+            right: -75px; top: 36px;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 3.2rem;
+            color: var(--punk-yellow);
+            opacity: 0.08;
+            transform: rotate(-21deg);
+            pointer-events: none;
+            user-select: none;
+        }
+        .grow-left {
+            flex:1; padding:3vw 4vw;
+            z-index:2;
+        }
+        .grow-right { flex:1; display:flex; justify-content:center; align-items:center; z-index: 2;}
+        .grow-left h1 {
+            font-size: 2.8rem;
+            font-family: 'Permanent Marker', 'Press Start 2P', cursive;
+            color: var(--neon-green);
+            text-shadow: 3px 3px 0 #ff3ea5, 0 6px 24px #fff60099;
+            font-weight:900;
+            margin-bottom:0.35em;
+            letter-spacing: 3px;
+        }
+        .grow-accent {
+            color: var(--punk-yellow);
+            background:none;
+            text-shadow: 1px 1px 0 #39ff14, 3px 3px 0 #ff3ea5;
+        }
+        .grow-left p {
+            font-size: 1.17rem;
+            color:#ff3ea5;
+            font-family: 'Press Start 2P', 'Montserrat', sans-serif;
+            margin-bottom:2em;
+            text-shadow: 1px 1px 0 #000;
+        }
+        .cta-grow {
+            display:inline-block; background:linear-gradient(90deg,var(--punk-yellow) 60%,var(--neon-green) 100%);
+            color:#18181a; font-weight:900;
+            padding:18px 48px; border-radius:2em; text-decoration:none; font-size:1.25rem;
+            text-shadow: 1px 1px 0 #ff3ea5;
+            box-shadow:0 6px 40px #ff3ea51f, 0 2px 12px #39ff1440;
+            border: 2.5px dashed var(--pink);
+            letter-spacing: 1px;
+            transition: background .2s, color .2s, box-shadow .22s;
+        }
+        .cta-grow:hover {
+            background:linear-gradient(90deg,#39ff14 20%,#ff3ea5 100%);
+            color:#fff600;
+            box-shadow:0 8px 52px #39ff1440, 0 2px 12px #ff3ea540;
+            text-shadow: 2px 2px 0 #000;
+        }
+        .succulent-svg { width: 330px; max-width: 90vw; filter: grayscale(0.3) contrast(1.4) brightness(1.3) drop-shadow(0 0 12px #ff3ea5cc);}
+        .succulent-plant { width: 100%; height: auto; display: block; }
+
+        /* PUNK animation for svg */
+        .succulent-svg svg .grow-accent, .succulent-svg svg .punk-brillo {
+            filter: url(#neon-glow);
+        }
+
+        @media(max-width:900px){
+            .hero-grow{flex-direction:column;}
+            .grow-left,.grow-right{padding:2vw;}
+            .succulent-svg{width:70vw;}
+        }
+        @media(max-width:600px){
+            .hero-grow::after{font-size:2.3rem;right:-40px;}
+        }
+
+        /* GENERAL PUNK SECTIONS */
+        .featured-section, .about-section, .products-section {
+            padding: 90px 0;
+            background: #1a1b1f;
+            border-bottom: 4px dashed var(--neon-green);
+            box-shadow: 0 2px 38px #ff3ea522;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.7rem;
+            color: var(--punk-yellow);
+            margin-bottom: 3rem;
+            font-family: 'Permanent Marker', 'Press Start 2P', cursive;
+            letter-spacing: 7px;
+            text-shadow: 2px 2px 0 #ff3ea5, 0 2px 8px #39ff1480;
+        }
+        .section-title::after {
+            content: '';
+            width: 100px; height: 5px;
+            background: linear-gradient(45deg, var(--pink), var(--neon-green));
+            display: block;
+            margin: 14px auto 0 auto;
+            border-radius: 2px;
+            box-shadow: 0 2px 9px #ff3ea588;
+        }
+        .featured-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem; margin-top: 4rem;
+        }
+        .featured-card {
+            background: #15151a;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 50px #ff3ea533, 0 0px 20px #39ff1412;
+            border: 2.5px dashed var(--pink);
+            transform: rotate(-2.5deg);
+            transition: all 0.29s;
+            position: relative;
+        }
+        .featured-card:hover {
+            transform: translateY(-10px) scale(1.07) rotate(2deg);
+            border-color: var(--neon-green);
+            background: linear-gradient(120deg, #18181a 80%, #ff3ea522 100%);
+            box-shadow: 0 20px 70px #39ff1455;
+        }
+        .featured-image {
+            display: block; margin-bottom: 1.5rem; width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+            box-shadow: 0 2px 12px #ff3ea555; background: #232c37; margin-left: auto; margin-right: auto;
+            border: 2px solid var(--punk-yellow);
+            filter: contrast(1.4) grayscale(0.3);
+        }
+        .featured-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .featured-card h3 {
+            font-size: 1.5rem; color: var(--neon-green);
+            margin-bottom: 1rem;
+            font-family: 'Permanent Marker', cursive;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #ff3ea5, 0 2px 8px #fff600;
+        }
+        .featured-card p {
+            color: #fff600; font-size: 1.07rem; line-height: 1.6;
+            font-family: 'Press Start 2P', 'Montserrat', sans-serif;
+            letter-spacing: 1.3px;
+            text-shadow: 1px 1px 0 #18181a;
+        }
+        .products-section {
+            background: repeating-linear-gradient(135deg, #18181a 0 20px, #232c37 20px 40px);
+        }
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;
+        }
+        .product-card {
+            background: #15151a;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px #ff3ea525, 0 2px 12px #39ff1420;
+            border: 2.5px solid var(--punk-yellow);
+            transform: rotate(-2deg);
+            transition: all 0.29s;
+        }
+        .product-card:hover {
+            transform: translateY(-7px) scale(1.09) rotate(2deg);
+            box-shadow: 0 15px 60px #ff3ea555;
+            border-color: var(--neon-green);
+            background: #232c37;
+        }
+        .product-image img {
+            width: 100%; height: 250px; object-fit: cover; display: block;
+            border-radius: 15px 15px 0 0;
+            filter: grayscale(0.22) contrast(1.18) brightness(1.18);
+            border-bottom: 2px dashed var(--pink);
+        }
+        .product-info { padding: 1.5rem; }
+        .product-info h3 {
+            font-size: 1.13rem; color: var(--punk-yellow); margin-bottom: 0.5rem;
+            font-family: 'Permanent Marker', cursive;
+            letter-spacing: 1.1px;
+            text-shadow: 1px 1px 0 #ff3ea5;
+        }
+        .product-info p {
+            color: var(--neon-green);
+            margin-bottom: 1.2rem;
+            font-family: 'Press Start 2P', 'Montserrat', sans-serif;
+            font-size: 0.98rem;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #000;
+        }
+        .product-button { display: none !important; }
+
+        .about-section { background: #191922; }
+        .about-text h2 {
+            font-size: 2.2rem; color: var(--pink);
+            margin-bottom: 2rem;
+            font-family: 'Permanent Marker', cursive;
+            text-shadow: 2px 2px 0 var(--punk-yellow), 0 1px 6px #39ff14;
+        }
+        .about-text p {
+            font-size: 1.07rem; color: #fff600; margin-bottom: 1.5rem; line-height: 1.7;
+            font-family: 'Press Start 2P', 'Montserrat', sans-serif;
+            text-shadow: 1px 1px 0 #000;
+        }
+        .about-image img {
+            width: 100%; height: 400px; object-fit: cover; border-radius: 20px;
+            box-shadow: 0 4px 32px #ff3ea522;
+            filter: grayscale(0.32) contrast(1.2);
+            border: 2.5px dashed var(--neon-green);
+        }
+        .contact-section {
+            background: linear-gradient(135deg, #232c37 0%, #111119 100%);
+            color: var(--punk-yellow);
+            border-top: 7px double var(--pink);
+            position: relative;
+        }
+        .contact-section::before {
+            content: ""; position: absolute; z-index: 0; top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(135deg, #ff3ea522 0 18px, #39ff1414 20px 38px, transparent 38px 56px);
+            pointer-events: none;
+        }
+        .contact-content { position: relative; z-index: 1; text-align: center; }
+        .contact-info {
+            display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-top: 3rem;
+        }
+        .contact-form-card {
+            background: #111119 !important;
+            color: #fff600;
+            box-shadow: 0 6px 32px 0 #ff3ea522;
+            padding: 2.5rem 1.5rem 2rem 1.5rem;
+            max-width: 410px; min-width: 250px; border-radius: 22px; margin: 0 auto;
+            border: 2.5px dashed var(--neon-green); transition: box-shadow 0.22s, border-color 0.22s;
+            position: relative; overflow: hidden;
+        }
+        .contact-form-card:hover, .contact-form-card:focus-within {
+            box-shadow: 0 12px 44px 0 #39ff1440; border-color: var(--pink);
+        }
+        #contactForm h3 {
+            color: var(--pink); text-align: center; margin-bottom: 1.5rem; font-size: 1.33rem; font-weight: 900;
+            letter-spacing: 2px; font-family: 'Permanent Marker', 'Montserrat', sans-serif;
+            text-shadow: 1px 1px 0 #fff600, 1px 2px 0 #39ff14;
+        }
+        .form-label, .contact-form-card label {
+            color: var(--punk-yellow);
+            text-shadow: 1px 1px 0 #ff3ea5;
+            font-family: 'Press Start 2P', 'Montserrat', sans-serif;
+            font-size: 0.93rem;
+        }
+        .form-input, .form-textarea {
+            background: #1a1b1f;
+            color: var(--neon-green);
+            border: 2px solid var(--pink);
+            border-radius: 8px;
+            padding: 11px;
+            font-family: 'Press Start 2P', 'Montserrat', monospace;
+            font-size: 1rem;
+            margin-top: 6px;
+            width: 99%;
+            margin-bottom: 1.1em;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: 2px dashed var(--neon-green);
+            background: #232c37;
+        }
+        .contact-form-card button[type="submit"] {
+            background: var(--neon-green);
+            color: #18181a;
+            font-family: 'Press Start 2P', 'Montserrat', sans-serif;
+            font-weight: bold;
+            border: 2.5px solid var(--pink);
+            border-radius: 8px;
+            padding: 12px 38px;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background .17s, color .17s;
+            box-shadow: 0 2px 10px #39ff1433;
+            letter-spacing: 1.2px;
+        }
+        .contact-form-card button[type="submit"]:hover {
+            background: var(--pink);
+            color: var(--punk-yellow);
+            box-shadow: 0 8px 24px #ff3ea5bb;
+        }
+        .required-star { color: var(--pink); }
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            background: var(--pink); border-radius: 50%; box-shadow: 0 4px 12px #39ff1440;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.17s, box-shadow 0.22s;
+            animation: floatBubble 7s infinite alternate;
+            border: 3px solid var(--neon-green);
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.13) rotate(-7deg);
+            box-shadow: 0 8px 24px #39ff1480;
+            background: var(--punk-yellow);
+        }
+        .whatsapp-float svg { display: block;}
+        @media (max-width:600px) {
+            .whatsapp-float { bottom: 18px; right: 18px; width: 48px; height: 48px; }
+            .whatsapp-float svg { width: 48px; height: 48px; }
+            .contact-form-card { max-width: 99vw; padding: 1.2rem 0.5rem 1.2rem 0.5rem; }
+            .form-row { flex-direction: column; gap: 0.7rem; }
+        }
+        footer {
+            background: #191922;
+            padding: 36px 0 16px 0;
+            color: var(--neon-green);
+            font-family: 'Press Start 2P', 'Quicksand', sans-serif;
+            font-size: 1.12rem;
+            margin-top: 28px;
+            border-top: 3.5px solid var(--pink);
+        }
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .footer-section { text-align: center;}
+        .footer-section a {
+            color: var(--pink);
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 900;
+            transition: color .19s;
+            font-family: 'Permanent Marker', 'Montserrat', sans-serif;
+            letter-spacing: 0.15em;
+            text-shadow: 1px 1px 0 var(--punk-yellow);
+        }
+        .footer-section a:hover { color: var(--neon-green);}
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Otro Mundo</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#coleccion">Colección</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- HERO PUNK -->
+        <section class="hero hero-grow" id="inicio">
+          <div class="grow-left">
+            <h1>Dejá que tu mundo <span class="grow-accent">crezca</span></h1>
+            <p>Llevá naturaleza a tu espacio con suculentas vivas, rebeldes y fáciles de cuidar.<br>¡La revolución verde y punk!</p>
+            <a href="#coleccion" class="cta-grow">EXPLORAR COLECCIÓN</a>
+          </div>
+          <div class="grow-right">
+            <div class="succulent-svg">
+              <!-- SVG suculenta animada realista, ahora más punk con filtro -->
+              <svg viewBox="0 0 360 360" width="330" height="330" fill="none" xmlns="http://www.w3.org/2000/svg" class="succulent-plant">
+                <defs>
+                  <radialGradient id="verde1" cx="50%" cy="55%" r="60%">
+                    <stop offset="0%" stop-color="#fff600"/>
+                    <stop offset="50%" stop-color="#39ff14"/>
+                    <stop offset="100%" stop-color="#ff3ea5"/>
+                  </radialGradient>
+                  <radialGradient id="verde2" cx="60%" cy="20%" r="80%">
+                    <stop offset="0%" stop-color="#fff600"/>
+                    <stop offset="60%" stop-color="#39ff14"/>
+                    <stop offset="100%" stop-color="#00eaff"/>
+                  </radialGradient>
+                  <radialGradient id="hojaOscura" cx="60%" cy="80%" r="90%">
+                    <stop offset="0%" stop-color="#ff3ea5"/>
+                    <stop offset="80%" stop-color="#39ff14"/>
+                    <stop offset="100%" stop-color="#00eaff"/>
+                  </radialGradient>
+                  <radialGradient id="brillo" cx="40%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#fff" stop-opacity="0.7"/>
+                    <stop offset="70%" stop-color="#fff" stop-opacity="0"/>
+                  </radialGradient>
+                  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#39ff14" flood-opacity="0.5"/>
+                  </filter>
+                </defs>
+                <!-- Sombra -->
+                <ellipse cx="180" cy="310" rx="90" ry="25" fill="#ff3ea5" opacity="0.18">
+                  <animate attributeName="rx" values="90;102;90" dur="3s" repeatCount="indefinite"/>
+                  <animate attributeName="ry" values="25;31;25" dur="3s" repeatCount="indefinite"/>
+                </ellipse>
+                <!-- Hojas traseras -->
+                <g filter="url(#shadow)">
+                  <path d="M110 220 C60 170, 60 100, 170 90 Q165 160, 110 220Z" fill="url(#hojaOscura)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.04 1.09;1 1" begin="0.2s" dur="2.7s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                  <path d="M250 220 C310 170, 310 100, 190 90 Q195 160, 250 220Z" fill="url(#hojaOscura)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.04 1.09;1 1" begin="0.18s" dur="2.7s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                  <path d="M80 265 C40 245, 80 170, 170 140 Q120 200, 80 265Z" fill="url(#hojaOscura)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.05 1.12;1 1" begin="0.1s" dur="2.5s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                  <path d="M280 265 C320 245, 280 170, 190 140 Q240 200, 280 265Z" fill="url(#hojaOscura)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.05 1.12;1 1" begin="0.15s" dur="2.5s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                </g>
+                <!-- Hojas medias -->
+                <g filter="url(#shadow)">
+                  <path d="M120 260 Q85 200, 140 120 Q170 180, 120 260Z" fill="url(#verde2)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.04 1.07;1 1" begin="0.1s" dur="2.3s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                  <path d="M240 260 Q275 200, 220 120 Q190 180, 240 260Z" fill="url(#verde2)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.04 1.07;1 1" begin="0.15s" dur="2.3s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                  <path d="M155 265 Q120 225, 160 130 Q180 190, 155 265Z" fill="url(#verde1)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.05 1.13;1 1" begin="0.05s" dur="2.15s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                  <path d="M205 265 Q240 225, 200 130 Q180 190, 205 265Z" fill="url(#verde1)">
+                    <animateTransform attributeName="transform" type="scale" values="1 1;1.05 1.13;1 1" begin="0.07s" dur="2.15s" repeatCount="indefinite" additive="sum"/>
+                  </path>
+                </g>
+                <!-- Hoja central grande -->
+                <g filter="url(#shadow)">
+                  <path d="M180 280 Q170 200, 180 70 Q190 200, 180 280Z" fill="url(#verde1)">
+                    <animateTransform attributeName="transform"
+                      type="scale"
+                      values="1 1;1.08 1.17;1 1"
+                      keyTimes="0;0.5;1"
+                      begin="0s" dur="2.7s" repeatCount="indefinite"
+                      additive="sum"/>
+                  </path>
+                  <!-- Brillo en la hoja central -->
+                  <ellipse cx="182" cy="150" rx="15" ry="45" fill="url(#brillo)" opacity="0.7">
+                    <animate attributeName="rx" values="15;19;15" dur="2.7s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.21;0.41;0.21" dur="2.7s" repeatCount="indefinite"/>
+                  </ellipse>
+                </g>
+                <!-- Hojas delanteras pequeñas -->
+                <g filter="url(#shadow)">
+                  <path d="M135 280 Q110 240, 150 190 Q155 230, 135 280Z" fill="url(#verde2)">
+                    <animateTransform attributeName="transform"
+                      type="scale"
+                      values="1 1;1.06 1.14;1 1"
+                      keyTimes="0;0.5;1"
+                      begin="0.1s" dur="2.1s" repeatCount="indefinite"/>
+                  </path>
+                  <path d="M225 280 Q250 240, 210 190 Q205 230, 225 280Z" fill="url(#verde2)">
+                    <animateTransform attributeName="transform"
+                      type="scale"
+                      values="1 1;1.06 1.14;1 1"
+                      keyTimes="0;0.6;1"
+                      begin="0.2s" dur="2.2s" repeatCount="indefinite"/>
+                  </path>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </section>
+        <!-- RESTO IGUAL -->
+        <section class="featured-section">
+            <div class="container">
+                <h2 class="section-title">¿Por qué elegirnos?</h2>
+                <div class="featured-grid">
+                    <div class="featured-card fade-in">
+                        <span class="featured-image">
+                            <img src="img/featured/icono-cactus.jpg" alt="Cactus con amor">
+                        </span>
+                        <h3>Únicos</h3>
+                        <p>Suculentas rebeldes, cultivadas a puro punk y dedicación diaria. Llevate una planta con actitud y vida.</p>
+                    </div>
+                    <div class="featured-card fade-in">
+                        <span class="featured-image">
+                            <img src="img/featured/icono-intercambio.jpg" alt="Intercambio de suculentas">
+                        </span>
+                        <h3>Intercambio</h3>
+                        <p>¿Tenés una suculenta under? Nos encanta descubrir variedades y hacemos trueque con espíritu rebelde.</p>
+                    </div>
+                    <div class="featured-card fade-in">
+                        <span class="featured-image">
+                            <img src="img/featured/icono-maceta.jpg" alt="Macetas artesanales">
+                        </span>
+                        <h3>Macetas</h3>
+                        <p>Macetas únicas, pintadas a mano y con diseños rupturistas. ¡Decorá tu espacio como un auténtico punk!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="products-section" id="coleccion">
+            <div class="container">
+                <h2 class="section-title">Colección</h2>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+        </section>
+        <section class="about-section" id="nosotros">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Sobre Nosotros</h2>
+                        <p>
+                            Elegimos <strong>las 11 suculentas que no pueden faltar en la jungla urbana</strong>. Cada una es diferente, fuerte y con mucha onda. Nuestra misión: romper la monotonía y llenar tu casa de rebeldía y energía positiva. ¡Sumate a la revolución verde!
+                        </p>
+                    </div>
+                    <div class="about-image">
+                        <img src="img/nosotros.png" alt="Equipo de Otro Mundo">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="contact-section" id="contacto">
+            <div class="container">
+                <div class="contact-content">
+                    <h2>¡Contactá sin reglas!</h2>
+                    <p>¿Querés sumarte al club de las plantas punk? ¿Tenés un mensaje o propuesta subversiva?</p>
+                    <div class="contact-info">
+                        <div class="contact-card contact-form-card">
+                            <form id="contactForm" action="https://formspree.io/f/xrbkbzvw" method="POST" autocomplete="on">
+                                <h3>Dejá tu mensaje rebelde:</h3>
+                                <div class="contact-form-fields">
+                                    <div class="form-row">
+                                        <div>
+                                            <label for="nombre" class="form-label">
+                                                Nombre <span class="required-star">*</span>
+                                            </label>
+                                            <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Tu apodo punk" required>
+                                        </div>
+                                        <div>
+                                            <label for="email" class="form-label">
+                                                Email <span class="required-star">*</span>
+                                            </label>
+                                            <input type="email" id="email" name="email" class="form-input" placeholder="tu@email.com" required>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="comentario" class="form-label">
+                                            Mensaje <span class="required-star">*</span>
+                                        </label>
+                                        <textarea id="comentario" name="comentario" class="form-textarea" required placeholder="Escribí tu propuesta, duda o grito punk..."></textarea>
+                                    </div>
+                                    <button type="submit">ENVIAR</button>
+                                    <p id="formMsg"></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- WhatsApp flotante -->
+    <a href="https://wa.me/+59894691690?text=Hola%20quiero%20mi%20suculenta%20punk!" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" fill="none" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="16" fill="#ff3ea5"/>
+            <path d="M23.472 19.347c-.37-.185-2.185-1.08-2.523-1.205-.338-.124-.585-.185-.833.186-.247.37-.95 1.204-1.165 1.452-.214.247-.428.278-.797.093-.37-.186-1.566-.577-2.985-1.841-1.103-.984-1.848-2.199-2.066-2.57-.214-.37-.023-.57.162-.755.166-.164.37-.428.556-.642.185-.215.247-.37.37-.617.124-.247.062-.464-.03-.648-.093-.185-.833-2.012-1.14-2.753-.297-.714-.6-.616-.833-.628l-.709-.012c-.247 0-.648.093-.986.464-.338.37-1.296 1.27-1.296 3.1 0 1.83 1.327 3.593 1.513 3.841.185.247 2.607 3.995 6.318 5.17.883.247 1.57.396 2.105.507.885.169 1.691.146 2.328.089 0 0 2.215-.905 2.527-2.24.312-1.336.312-2.482.221-2.627-.09-.144-.338-.228-.709-.413z" fill="#fff"/>
+        </svg>
+    </a>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#coleccion">Colección</a>
+                    <a href="#nosotros">Nosotros</a>
+                    <a href="#contacto">Contacto</a>
+                    <br>
+                    <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+                    <a href="https://www.facebook.com/" target="_blank">Facebook</a>
+                    <span style="margin-left:16px;">&copy; 2025 Otro Mundo · Todos los derechos reservados.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const suculentas = [
+            {nombre: "Siempreviva Calcareum", archivo: "siemprevivacalcar.jpg", descripcion: "Suculenta ultra resistente, ideal para punks que no riegan mucho."},
+            {nombre: "Echeveria Elegans", archivo: "echeveria-elegans.jpg", descripcion: "La rosa de alabastro, belleza fría y rebelde, a prueba de todo."},
+            {nombre: "Sedum Morganianum (Cola de Burro)", archivo: "sedum-morganianum.jpg", descripcion: "Cuelga como cresta de punk. Imposible pasar desapercibida."},
+            {nombre: "Haworthia Fasciata (Cebra)", archivo: "haworthia-fasciata.jpg", descripcion: "Rayas como un bajo distorsionado. ¡Pequeña pero con actitud!"},
+            {nombre: "Crassula Ovata (Jade)", archivo: "crassula-ovata.jpg", descripcion: "La plata y la prosperidad, pero sin venderse al sistema."},
+            {nombre: "Graptopetalum Paraguayense (Planta Fantasma)", archivo: "graptopetalum-paraguayense.jpg", descripcion: "Apariencia etérea. Salvaje, rara y única."},
+            {nombre: "Kalanchoe Tomentosa (Orejas de Gato)", archivo: "kalanchoe-tomentosa.jpg", descripcion: "Peluda, felina, y con bordes marrones como botas Dr. Martens."},
+            {nombre: "Aloe Vera", archivo: "aloe-vera.jpg", descripcion: "Cura heridas de pogo y decora cualquier guarida."},
+            {nombre: "Senecio Rowleyanus (Rosario de Bolas)", archivo: "senecio-rowleyanus.jpg", descripcion: "Colgante y alternativo, como una cadena punk."}
+        ];
+        function renderProductos() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            suculentas.forEach((prod) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="img/suculentas/${prod.archivo}" alt="${prod.nombre}">
+                    </div>
+                    <div class="product-info">
+                        <h3>${prod.nombre}</h3>
+                        <p>${prod.descripcion || "Una suculenta para tu jungla punk."}</p>
+                        <button class="product-button">Añadir a la Cesta</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', renderProductos);
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+            });
+        });
+
+        // Fade in animation on scroll para featured-card
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('fade-in');
+            });
+        }, observerOptions);
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.featured-card').forEach(card => observer.observe(card));
+            // Feedback para el form
+            var form = document.getElementById('contactForm');
+            if(form) {
+                form.addEventListener('submit', function(e) {
+                    var msg = document.getElementById('formMsg');
+                    msg.textContent = "Enviando tu grito punk...";
+                    setTimeout(function(){
+                        msg.textContent = "¡Gracias por sumarte a la revolución suculenta!";
+                        form.reset();
+                    }, 1200);
+                });
+            }
+        });
+
+        // Efecto header al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // Efecto hover para product-card
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.11) rotate(1deg)';
+                    this.style.boxShadow = '0 15px 90px #ff3ea566, 0 4px 14px #39ff1440';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
