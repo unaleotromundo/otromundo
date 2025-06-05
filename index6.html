@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otro Mundo | Colección</title>
     <!-- Fuentes Google modernas y divertidas -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Quicksand:wght@400;700&family=Pacifico&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
             background: rgba(255,255,255,0.90);
             backdrop-filter: blur(18px) saturate(1.2);
             color: var(--primary-dark);
-            position: fixed; top: 0; width: 100vw; z-index: 1000;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
             box-shadow: 0 4px 32px #25d36614;
             border-bottom: 2px solid #90ee9035;
             transition: background 0.22s, box-shadow .3s;
@@ -87,7 +87,7 @@
         .nav-links a:hover::after, .nav-links a.active::after { width: calc(100% - 36px); }
         .nav-links a:focus { outline: 2px solid var(--primary); }
 
-        /* HERO */
+        /* HERO MODERNO Y DIVERTIDO */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -345,8 +345,8 @@
             transform: scale(1.11) rotate(-7deg); box-shadow: 0 8px 24px #25d36680;
         }
 
-        /* MOBILE: vertical y horizontal */
-        @media (max-width: 900px) {
+        /* ----------- MOBILE PROFESSIONAL & MODERNO ----------- */
+        @media (max-width:900px) {
             nav { min-height:62px; }
             .container { padding:0 10px; }
             .logo { font-size:1.13rem; }
@@ -382,8 +382,6 @@
             .hero-left, .hero-right {
                 padding: 36px 5vw 9px 5vw;
                 min-height: 0;
-                width: 100vw;
-                box-sizing: border-box;
             }
             .hero-title { font-size: 2.2rem; text-align: center; }
             .hero-desc { font-size: 1.08rem; text-align: center; margin: 0 auto 1.5rem auto; }
@@ -426,23 +424,6 @@
             .hero-img { max-width: 98vw; }
             .whatsapp-float { bottom: 18px; right: 18px; width: 48px; height: 48px; }
             .whatsapp-float svg { width: 48px; height: 48px; }
-        }
-        /* Orientación horizontal (landscape) y vertical */
-        @media screen and (max-width: 900px) and (orientation: landscape) {
-            .hero {
-                flex-direction: row;
-            }
-            .hero-left, .hero-right {
-                min-width: 50vw;
-                min-height: 100vw;
-                padding: 18px 2vw;
-            }
-            .hero-img { max-width: 40vw; min-width: 120px; }
-            .cta-button { max-width: 300px; }
-            .featured-section, .products-section, .about-section, .contact-section {
-                padding: 44px 0 22px 0;
-            }
-            .about-image img { height: 140px; }
         }
     </style>
 </head>
