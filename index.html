@@ -196,10 +196,6 @@
             transform: translateY(-1px) scale(1.03); box-shadow: 0 4px 18px #25d36655; outline: none;
         }
         #formMsg { font-size: 1.05rem; text-align: center; margin-top: 1.2rem; color: #25d366; }
-        .section-title {
-            text-align: center; font-size: 2rem; color: #2d5a27; margin-bottom: 2rem;
-            font-family: 'Pacifico', cursive; font-weight: bold; letter-spacing: .07em;
-        }
         .products-section {
             padding: 110px 0 30px 0;
         }
@@ -272,6 +268,139 @@
             width: 100%; max-width: 340px; border-radius: 20px; box-shadow: 0 5px 18px #25d3661a;
         }
         .footer-content { text-align: center; padding: 30px 0; color: #2d5a27; background: #e2ffe3; }
+
+        /* Modal Galería */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(22,28,23,0.90);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px #000b, 0 2px 7px #25d36655;
+            max-width: 98vw;
+            max-height: 96vh;
+            width: 420px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 23px 0 18px 0;
+        }
+        .modal-close {
+            position: absolute;
+            top: 11px; right: 16px;
+            background: #fff;
+            color: #25d366;
+            border: none;
+            font-size: 2.1rem;
+            font-weight: 800;
+            border-radius: 50%;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #25d3661a;
+            z-index: 100;
+            transition: background .18s, color .18s, transform .15s;
+        }
+        .modal-close:hover { background: #25d366; color: #fff; transform: scale(1.11);}
+        .modal-title {
+            margin-bottom: 10px;
+            font-size: 1.13em;
+            font-weight: bold;
+            color: #25d366;
+            letter-spacing: 0.03em;
+            text-align: center;
+        }
+        .modal-slider {
+            width: 100%;
+            max-width: 340px;
+            height: 290px;
+            margin: 0 auto 1.1em auto;
+            overflow: hidden;
+            position: relative;
+            border-radius: 13px;
+            background: #e2ffe3;
+            box-shadow: 0 8px 20px #25d36614;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+        }
+        .modal-slider-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important;
+            border-radius: 13px;
+            background: #f8fff8;
+            transition: opacity 0.3s, transform 0.25s cubic-bezier(.42,.01,.62,1.14);
+            box-shadow: 0 2px 12px #25d36617;
+            pointer-events: all;
+            user-select: none;
+            cursor: zoom-in;
+            will-change: transform;
+            image-rendering: auto;
+        }
+        .modal-slider-img.zoomed {
+            cursor: grab;
+            z-index: 10;
+        }
+        .slider-arrow {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 34px; height: 34px;
+            font-size: 1.8em;
+            color: #25d366;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #25d36622;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s, transform 0.14s;
+            opacity: 0.91;
+        }
+        .slider-arrow.left { left: 5px; }
+        .slider-arrow.right { right: 5px; }
+        .modal-slider-count {
+            position: absolute;
+            bottom: 0; right: 10px;
+            color: #fff;
+            background: #25d366cc;
+            font-size: 1em;
+            border-radius: 10px 10px 0 0;
+            padding: 2px 10px 1px 10px;
+            font-weight: 600;
+            pointer-events: none;
+            box-shadow: 0 2px 6px #0d2a007a;
+        }
+        .modal-desc {
+            color: #222;
+            background: #e2ffe377;
+            font-size: 1.05em;
+            border-radius: 10px;
+            padding: 10px 12px 8px 12px;
+            margin-bottom: 0.7em;
+            margin-top: 7px;
+            text-align: left;
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.43;
+            max-width: 81vw;
+        }
+        @media (max-width: 500px) {
+            .modal-content {width: 98vw; padding: 8px 0 10px 0;}
+            .modal-slider { max-width: 98vw; height: 46vw; min-height: 120px;}
+            .modal-desc { font-size:.99em; padding:8px 4px 7px 7px;}
+        }
         @media (min-width: 900px) {
             .product-image {max-width: 440px; height: 380px;}
         }
@@ -362,6 +491,20 @@
                 </div>
             </div>
         </section>
+        <!-- Galería Modal flotante -->
+        <div id="modalOverlay" class="modal-overlay" tabindex="-1">
+            <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <button class="modal-close" id="modalCloseBtn" aria-label="Cerrar vista de imágenes">&times;</button>
+                <div class="modal-title" id="modalTitle"></div>
+                <div class="modal-slider" id="modalSlider">
+                    <button class="slider-arrow left" id="sliderPrev" aria-label="Anterior">&#8592;</button>
+                    <img src="" alt="" class="modal-slider-img" id="modalSliderImg">
+                    <button class="slider-arrow right" id="sliderNext" aria-label="Siguiente">&#8594;</button>
+                    <div class="modal-slider-count" id="modalSliderCount"></div>
+                </div>
+                <div class="modal-desc" id="modalDesc"></div>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="container">
@@ -412,19 +555,19 @@
             }
         });
 
-        // COLECCIÓN DE PLANTAS
+        // COLECCIÓN DE PLANTAS + GALERÍA
         const suculentas = [
-            {nombre: "El Cactus Cacahuete", archivo: "cactuscacahuete.jpg", descripcion: "(Echinopsis chamaecereus) es una verdadera delicia para los amantes de las suculentas. Este cactus de tallos delgados y dedos, que parecen cacahuetes, forma densos grupos que se extienden con gracia. Sus suaves espinas apenas se notan, haciendo de él una planta muy amigable al tacto. En primavera y verano, se adorna con una espectacular floración de vibrantes flores de color naranja o rojo intenso, creando un contraste asombroso con sus tallos verdes. Es fácil de cuidar y perfecto para añadir un toque de alegría y color a cualquier espacio."},
-            {nombre: "Echeveria Elegans", archivo: "echeveria-elegans.jpg", descripcion: "Rosa de Alabastro, es una de las suculentas más clásicas, populares y queridas, famosa por su belleza simétrica y su facilidad de cultivo. Su característica más distintiva es la formación de densas y perfectas rosetas de hojas carnosas, de un delicado color verde azulado o verde grisáceo. Estas hojas, de forma espatulada, suelen tener una capa cerosa (pruina) que les da un aspecto mate y las protege del sol intenso. La disposición de las hojas es tan regular y simétrica que a menudo se asemeja a una rosa en plena floración."},
-            {nombre: "Graptosedum 'California Sunset'", archivo: "califonissunset.jpg", descripcion: "Es una suculenta híbrida excepcionalmente popular y visualmente impactante, creada del cruce entre un Graptopetalum y un Sedum! Su característica más distintiva es su espectacular cambio de coloración. Las rosetas de hojas carnosas y algo alargadas, inicialmente de un tono verde pálido o amarillo verdoso, se transforman en magníficos tonos de naranja, rosa, rojo cobrizo y bronce cuando se exponen a una luz solar brillante y a condiciones de estrés (como temperaturas frescas o riego moderado). Es esta paleta de colores vibrantes, que recuerda a una puesta de sol, la que le da su nombre."}, 
-            {nombre: "Huernia Ojo de Dragón", archivo: "ojodedragon.jpg", descripcion: "Huernia schneideriana es una especie suculenta perenne de pequeño porte muy común en colecciones a nivel mundial; en algunas ocasiones es llamada como ojo de dragón por la coloración típica de sus flores. Esta especie pertenece a la familia Apocynaceae y dentro del género Huernia,es una de las más comunes de encontrar en los jardines."},
-            {nombre: "Callisia Navicularis", archivo: "callisianavicularis.jpg", descripcion: "Joya de la Cama o Planta de Cadena de Tortuga, esta especie se distingue por sus hojas gruesas y carnosas dispuestas de manera imbricada (superpuestas como tejas) a lo largo de tallos rastreros. Cada hoja tiene una forma distintiva, similar a la quilla de un barco o una pequeña canoa, lo que le da un aspecto muy arquitectónico. Su coloración suele ser un verde intenso, pero lo que la hace realmente atractiva es su capacidad de desarrollar tonos púrpuras o rojizos en el envés de las hojas o en toda la superficie cuando recibe abundante luz solar, especialmente en condiciones de estrés leve o temperaturas más frescas. Algunas variedades pueden incluso presentar un patrón jaspeado o moteado en la superficie de las hojas."},
-            {nombre: "Cactus Coral o Cactus Arroz", archivo: "cactuscoral.jpg", descripcion: "La Rhipsalis cereuscula, es una especie fascinante dentro del género Rhipsalis, que se diferencia de los cactus desérticos más típicos por su naturaleza epífita, es decir, que crece sobre otras plantas (como los árboles) en su hábitat natural en las selvas tropicales de Sudamérica (incluyendo Uruguay). Lo más característico de esta planta son sus tallos delgados, ramificados y segmentados, que crecen en cascada, creando una densa maraña de arroz o coral verde vibrante. Estos segmentos son pequeños y cilíndricos, y a menudo desarrollan un ligero tono rojizo en las puntas cuando se exponen a una buena cantidad de luz."},
-            {nombre: "Madre perla", archivo: "madreperla.jpg", descripcion: "Graptopetalum paraguayense Sus hojas son de un color entre el verde y el gris (con un tono rosado), una defensa que han desarrollado para evitar las quemaduras por el sol. Debido a su porte tan llamativo y a las necesidades de su cultivo es una suculenta colgante perfecta para el balcón o en la terraza"},
-            {nombre: "Mammillaria vetula", archivo: "mammillariavetula.jpg", descripcion: "Es un cactus encantador y muy popular, apreciado por su forma globular y su facilidad de cultivo. Como muchas Mammillaria, su principal característica es la presencia de tubérculos mamilas en lugar de costillas , de los cuales emergen las espinas. En el caso específico de Mammillaria vetula, una característica destacada es su denso y hermoso patrón de espinas, a menudo finas y como de papel, que cubren casi por completo el cuerpo del cactus, dándole una apariencia lanuda o peluda, especialmente en las variedades como Mammillaria vetula ssp. gracilis comúnmente conocida como Cactus de dedal o Thimble Cactus. Estas espinas no suelen ser muy punzantes al tacto ."},
-            {nombre: "Mammillaria prolifera", archivo: "mammillariaprolifera.jpg", descripcion: "Cactus de Huevo de Pájaro o Cactus de Bolas de Nieve (aunque este último se comparte con otras especies), es un cactus muy popular y apreciado por su proliferación notoria y su atractivo aspecto peludo o lanudo. Su característica más destacada es su increíble capacidad para producir numerosos hijuelos o bolas desde la base, formando rápidamente densos grupos o cúmulos que pueden llenar una maceta entera. Estos hijuelos se desprenden fácilmente, lo que la hace muy sencilla de propagar."},
-            {nombre: "Crassula expansa subsp. fragilis", archivo: "crassulafragilis.jpg", descripcion: "como su nombre lo sugiere fragilis, se caracteriza por sus tallos y ramas delicadas y ligeramente quebradizas. Esto, lejos de ser un defecto, le confiere una textura y una forma de crecimiento muy particular y atractiva. A menudo se la conoce como Crassula Hiedra o Crassula Miniatura Trepadora por su hábito de crecimiento. Sus tallos son finos, ramificados y pueden ser rastreros o ligeramente trepadores colgantes, lo que la hace ideal para cestas colgantes o para derramarse sobre los bordes de las macetas."},
-            {nombre: "Opuntia monacantha variegada monstruosa", archivo: "monstruosa.jpg", descripcion: "Es una variante excepcional y muy buscada de la Opuntia monacantha, que combina varias características distintivas en una sola planta, convirtiéndola en una verdadera pieza de colección y una joya visual"}
+            {nombre: "El Cactus Cacahuete", archivo: "cactuscacahuete.jpg", descripcion: "(Echinopsis chamaecereus) es una verdadera delicia para los amantes de las suculentas. Este cactus de tallos delgados y dedos, que parecen cacahuetes, forma densos grupos que se extienden con gracia. Sus suaves espinas apenas se notan, haciendo de él una planta muy amigable al tacto. En primavera y verano, se adorna con una espectacular floración de vibrantes flores de color naranja o rojo intenso, creando un contraste asombroso con sus tallos verdes. Es fácil de cuidar y perfecto para añadir un toque de alegría y color a cualquier espacio.", fotos:["cactuscacahuete.jpg","cactuscacahuete-2.jpg","cactuscacahuete-3.jpg"]},
+            {nombre: "Echeveria Elegans", archivo: "echeveria-elegans.jpg", descripcion: "Rosa de Alabastro, es una de las suculentas más clásicas, populares y queridas, famosa por su belleza simétrica y su facilidad de cultivo. Su característica más distintiva es la formación de densas y perfectas rosetas de hojas carnosas, de un delicado color verde azulado o verde grisáceo. Estas hojas, de forma espatulada, suelen tener una capa cerosa (pruina) que les da un aspecto mate y las protege del sol intenso. La disposición de las hojas es tan regular y simétrica que a menudo se asemeja a una rosa en plena floración.", fotos: ["echeveria-elegans.jpg", "echeveria-elegans-2.jpg"]},
+            {nombre: "Graptosedum 'California Sunset'", archivo: "califonissunset.jpg", descripcion: "Es una suculenta híbrida excepcionalmente popular y visualmente impactante, creada del cruce entre un Graptopetalum y un Sedum! Su característica más distintiva es su espectacular cambio de coloración. Las rosetas de hojas carnosas y algo alargadas, inicialmente de un tono verde pálido o amarillo verdoso, se transforman en magníficos tonos de naranja, rosa, rojo cobrizo y bronce cuando se exponen a una luz solar brillante y a condiciones de estrés (como temperaturas frescas o riego moderado). Es esta paleta de colores vibrantes, que recuerda a una puesta de sol, la que le da su nombre.", fotos:["califonissunset.jpg","califonissunset-2.jpg"]},
+            {nombre: "Huernia Ojo de Dragón", archivo: "ojodedragon.jpg", descripcion: "Huernia schneideriana es una especie suculenta perenne de pequeño porte muy común en colecciones a nivel mundial; en algunas ocasiones es llamada como ojo de dragón por la coloración típica de sus flores. Esta especie pertenece a la familia Apocynaceae y dentro del género Huernia,es una de las más comunes de encontrar en los jardines.", fotos: ["ojodedragon.jpg","ojodedragon-2.jpg"]},
+            {nombre: "Callisia Navicularis", archivo: "callisianavicularis.jpg", descripcion: "Joya de la Cama o Planta de Cadena de Tortuga, esta especie se distingue por sus hojas gruesas y carnosas dispuestas de manera imbricada (superpuestas como tejas) a lo largo de tallos rastreros. Cada hoja tiene una forma distintiva, similar a la quilla de un barco o una pequeña canoa, lo que le da un aspecto muy arquitectónico. Su coloración suele ser un verde intenso, pero lo que la hace realmente atractiva es su capacidad de desarrollar tonos púrpuras o rojizos en el envés de las hojas o en toda la superficie cuando recibe abundante luz solar, especialmente en condiciones de estrés leve o temperaturas más frescas. Algunas variedades pueden incluso presentar un patrón jaspeado o moteado en la superficie de las hojas.", fotos:["callisianavicularis.jpg"]},
+            {nombre: "Cactus Coral o Cactus Arroz", archivo: "cactuscoral.jpg", descripcion: "La Rhipsalis cereuscula, es una especie fascinante dentro del género Rhipsalis, que se diferencia de los cactus desérticos más típicos por su naturaleza epífita, es decir, que crece sobre otras plantas (como los árboles) en su hábitat natural en las selvas tropicales de Sudamérica (incluyendo Uruguay). Lo más característico de esta planta son sus tallos delgados, ramificados y segmentados, que crecen en cascada, creando una densa maraña de arroz o coral verde vibrante. Estos segmentos son pequeños y cilíndricos, y a menudo desarrollan un ligero tono rojizo en las puntas cuando se exponen a una buena cantidad de luz.", fotos:["cactuscoral.jpg"]},
+            {nombre: "Madre perla", archivo: "madreperla.jpg", descripcion: "Graptopetalum paraguayense Sus hojas son de un color entre el verde y el gris (con un tono rosado), una defensa que han desarrollado para evitar las quemaduras por el sol. Debido a su porte tan llamativo y a las necesidades de su cultivo es una suculenta colgante perfecta para el balcón o en la terraza", fotos:["madreperla.jpg"]},
+            {nombre: "Mammillaria vetula", archivo: "mammillariavetula.jpg", descripcion: "Es un cactus encantador y muy popular, apreciado por su forma globular y su facilidad de cultivo. Como muchas Mammillaria, su principal característica es la presencia de tubérculos mamilas en lugar de costillas , de los cuales emergen las espinas. En el caso específico de Mammillaria vetula, una característica destacada es su denso y hermoso patrón de espinas, a menudo finas y como de papel, que cubren casi por completo el cuerpo del cactus, dándole una apariencia lanuda o peluda, especialmente en las variedades como Mammillaria vetula ssp. gracilis comúnmente conocida como Cactus de dedal o Thimble Cactus. Estas espinas no suelen ser muy punzantes al tacto .", fotos:["mammillariavetula.jpg"]},
+            {nombre: "Mammillaria prolifera", archivo: "mammillariaprolifera.jpg", descripcion: "Cactus de Huevo de Pájaro o Cactus de Bolas de Nieve (aunque este último se comparte con otras especies), es un cactus muy popular y apreciado por su proliferación notoria y su atractivo aspecto peludo o lanudo. Su característica más destacada es su increíble capacidad para producir numerosos hijuelos o bolas desde la base, formando rápidamente densos grupos o cúmulos que pueden llenar una maceta entera. Estos hijuelos se desprenden fácilmente, lo que la hace muy sencilla de propagar.", fotos:["mammillariaprolifera.jpg"]},
+            {nombre: "Crassula expansa subsp. fragilis", archivo: "crassulafragilis.jpg", descripcion: "como su nombre lo sugiere fragilis, se caracteriza por sus tallos y ramas delicadas y ligeramente quebradizas. Esto, lejos de ser un defecto, le confiere una textura y una forma de crecimiento muy particular y atractiva. A menudo se la conoce como Crassula Hiedra o Crassula Miniatura Trepadora por su hábito de crecimiento. Sus tallos son finos, ramificados y pueden ser rastreros o ligeramente trepadores colgantes, lo que la hace ideal para cestas colgantes o para derramarse sobre los bordes de las macetas.", fotos:["crassulafragilis.jpg"]},
+            {nombre: "Opuntia monacantha variegada monstruosa", archivo: "monstruosa.jpg", descripcion: "Es una variante excepcional y muy buscada de la Opuntia monacantha, que combina varias características distintivas en una sola planta, convirtiéndola en una verdadera pieza de colección y una joya visual", fotos:["monstruosa.jpg"]}
         ];
 
         function resumenDescripcion(desc, maxPalabras = 20) {
@@ -440,11 +583,11 @@
         function renderProductos() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
-            suculentas.forEach((prod) => {
+            suculentas.forEach((prod, idx) => {
                 const card = document.createElement('div');
                 card.className = 'product-card base-card';
                 card.innerHTML = `
-                    <div class="product-image" tabindex="0">
+                    <div class="product-image" tabindex="0" data-idx="${idx}">
                         <img src="img/suculentas/${prod.archivo}" alt="${prod.nombre}" loading="lazy">
                     </div>
                     <h3>${prod.nombre}</h3>
@@ -459,7 +602,7 @@
                 });
             });
 
-            // Lógica para mostrar/ocultar descripción completa
+            // Descripción ver más/menos
             document.querySelectorAll('.ver-mas-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const p = btn.closest('.descripcion');
@@ -476,8 +619,192 @@
                     }
                 });
             });
+
+            // Galería modal
+            document.querySelectorAll('.product-image').forEach(imgDiv => {
+                imgDiv.addEventListener('click', function() {
+                    const idx = parseInt(imgDiv.dataset.idx,10);
+                    openModalGallery(idx);
+                });
+                imgDiv.addEventListener('keypress', function(e) {
+                    if (e.key === "Enter" || e.key === " ") {
+                        const idx = parseInt(imgDiv.dataset.idx,10);
+                        openModalGallery(idx);
+                    }
+                });
+            });
         }
         document.addEventListener('DOMContentLoaded', renderProductos);
+
+        // === GALERÍA MODAL FLOTANTE ===
+        let currentModalIdx = 0;
+        let currentPhotoIdx = 0;
+        function openModalGallery(plantaIdx) {
+            const modal = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalImg = document.getElementById('modalSliderImg');
+            const sliderCount = document.getElementById('modalSliderCount');
+            const modalDesc = document.getElementById('modalDesc');
+            const planta = suculentas[plantaIdx];
+            currentModalIdx = plantaIdx;
+            currentPhotoIdx = 0;
+            modalTitle.textContent = planta.nombre;
+            modalDesc.textContent = planta.descripcion;
+            updateModalSlider();
+            modal.classList.add('active');
+            document.body.style.overflow = "hidden";
+            setTimeout(()=>{document.getElementById('modalCloseBtn').focus()}, 250);
+            resetModalZoom();
+        }
+        function closeModalGallery() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = "";
+            resetModalZoom();
+        }
+        function updateModalSlider() {
+            const planta = suculentas[currentModalIdx];
+            const modalImg = document.getElementById('modalSliderImg');
+            const sliderCount = document.getElementById('modalSliderCount');
+            modalImg.style.opacity = "0.5";
+            setTimeout(()=>{
+                modalImg.src = "img/suculentas/" + planta.fotos[currentPhotoIdx];
+                modalImg.alt = planta.nombre + " foto " + (currentPhotoIdx+1);
+                sliderCount.textContent = (currentPhotoIdx+1) + " / " + planta.fotos.length;
+                modalImg.style.opacity = "1";
+                resetModalZoom();
+            }, 80);
+        }
+        document.getElementById('modalCloseBtn').onclick = closeModalGallery;
+        document.getElementById('sliderPrev').onclick = () => {
+            const planta = suculentas[currentModalIdx];
+            currentPhotoIdx = (currentPhotoIdx - 1 + planta.fotos.length) % planta.fotos.length;
+            updateModalSlider();
+        };
+        document.getElementById('sliderNext').onclick = () => {
+            const planta = suculentas[currentModalIdx];
+            currentPhotoIdx = (currentPhotoIdx + 1) % planta.fotos.length;
+            updateModalSlider();
+        };
+        document.getElementById('modalOverlay').addEventListener('click', function(e){
+            if(e.target === this) closeModalGallery();
+        });
+        window.addEventListener('keydown', function(e){
+            const modal = document.getElementById('modalOverlay');
+            if(modal.classList.contains('active')) {
+                if(e.key === "Escape") closeModalGallery();
+                if(e.key === "ArrowRight") document.getElementById('sliderNext').click();
+                if(e.key === "ArrowLeft") document.getElementById('sliderPrev').click();
+            }
+        });
+
+        // --- ZOOM Y PAN EN MODAL SLIDER ---
+        let zoomed = false, offsetX = 0, offsetY = 0, startX = 0, startY = 0, panStart = null;
+        const modalImg = document.getElementById('modalSliderImg');
+        const modalSlider = document.getElementById('modalSlider');
+        let scale = 1, maxScale = 1, naturalW = 1, naturalH = 1, displayW = 1, displayH = 1;
+
+        function resetModalZoom() {
+            zoomed = false;
+            offsetX = offsetY = 0;
+            if (modalImg) {
+                modalImg.classList.remove('zoomed');
+                modalImg.style.transform = "scale(1)";
+                modalImg.style.cursor = "zoom-in";
+                modalImg.style.transition = "transform 0.25s";
+            }
+        }
+        function setZoomModal() {
+            naturalW = modalImg.naturalWidth;
+            naturalH = modalImg.naturalHeight;
+            displayW = modalSlider.offsetWidth;
+            displayH = modalSlider.offsetHeight;
+            let scaleW = naturalW / displayW;
+            let scaleH = naturalH / displayH;
+            maxScale = Math.max(scaleW, scaleH, 1.9);
+            scale = maxScale;
+        }
+        modalImg.onload = function() {
+            resetModalZoom();
+            setZoomModal();
+        };
+        window.addEventListener('resize', function() {
+            setZoomModal();
+            if (zoomed) modalImg.style.transform = `scale(${scale}) translate(0px,0px)`;
+        });
+        modalImg.addEventListener('click', function(e) {
+            if (!zoomed) {
+                setZoomModal();
+                zoomed = true;
+                modalImg.classList.add('zoomed');
+                modalImg.style.transform = `scale(${scale})`;
+                modalImg.style.cursor = "grab";
+                modalImg.style.transition = "transform 0.25s";
+                offsetX = offsetY = 0;
+            } else {
+                resetModalZoom();
+            }
+        });
+        modalSlider.addEventListener('mousedown', function(e){
+            if (!zoomed) return;
+            e.preventDefault();
+            startX = e.clientX - offsetX;
+            startY = e.clientY - offsetY;
+            document.body.style.cursor = 'grabbing';
+            function mousemove(ev) {
+                offsetX = ev.clientX - startX;
+                offsetY = ev.clientY - startY;
+                const maxPanX = ((modalImg.naturalWidth * scale / maxScale) - displayW) / 2;
+                const maxPanY = ((modalImg.naturalHeight * scale / maxScale) - displayH) / 2;
+                offsetX = Math.max(Math.min(offsetX, maxPanX), -maxPanX);
+                offsetY = Math.max(Math.min(offsetY, maxPanY), -maxPanY);
+                modalImg.style.transform = `scale(${scale}) translate(${offsetX/scale}px,${offsetY/scale}px)`;
+            }
+            function mouseup() {
+                document.removeEventListener('mousemove', mousemove);
+                document.removeEventListener('mouseup', mouseup);
+                document.body.style.cursor = '';
+            }
+            document.addEventListener('mousemove', mousemove);
+            document.addEventListener('mouseup', mouseup);
+        });
+        modalSlider.addEventListener('touchstart', function(e){
+            if (!zoomed || e.touches.length !== 1) return;
+            e.preventDefault();
+            panStart = {x: e.touches[0].clientX - offsetX, y: e.touches[0].clientY - offsetY};
+        });
+        modalSlider.addEventListener('touchmove', function(e){
+            if (!zoomed || !panStart || e.touches.length !== 1) return;
+            e.preventDefault();
+            offsetX = e.touches[0].clientX - panStart.x;
+            offsetY = e.touches[0].clientY - panStart.y;
+            const maxPanX = ((modalImg.naturalWidth * scale / maxScale) - modalSlider.offsetWidth) / 2;
+            const maxPanY = ((modalImg.naturalHeight * scale / maxScale) - modalSlider.offsetHeight) / 2;
+            offsetX = Math.max(Math.min(offsetX, maxPanX), -maxPanX);
+            offsetY = Math.max(Math.min(offsetY, maxPanY), -maxPanY);
+            modalImg.style.transform = `scale(${scale}) translate(${offsetX/scale}px,${offsetY/scale}px)`;
+        });
+        modalSlider.addEventListener('touchend', function(e){
+            panStart = null;
+        });
+        let lastTap = 0;
+        modalSlider.addEventListener('touchend', function(e){
+            if (e.touches && e.touches.length > 0) return;
+            const now = new Date().getTime();
+            if (now - lastTap < 400) {
+                if (!zoomed) {
+                    setZoomModal();
+                    zoomed = true;
+                    modalImg.classList.add('zoomed');
+                    modalImg.style.transform = `scale(${scale})`;
+                    modalImg.style.cursor = "grab";
+                    modalImg.style.transition = "transform 0.25s";
+                    offsetX = offsetY = 0;
+                } else {
+                    resetModalZoom();
+                }
+            }
+            lastTap = now;
+        });
     </script>
 </body>
 </html>
