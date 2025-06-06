@@ -22,7 +22,6 @@
             min-height: 100vh;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
         header {
             background: rgba(255,255,255,0.92);
             backdrop-filter: blur(12px);
@@ -64,7 +63,6 @@
             box-shadow: 0 2px 10px #25d3662d;
             transform: scale(1.05) translateY(-1px);
         }
-        /* Hamburger menu */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -85,8 +83,6 @@
         .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-        /* HERO NUEVO: mobile-first */
         .hero {
             display: flex;
             flex-direction: column;
@@ -94,7 +90,7 @@
             justify-content: flex-start;
             width: 100vw;
             min-height: 100svh;
-            padding: 90px 0 24px 0; /* espacio arriba por header fijo */
+            padding: 90px 0 24px 0;
             box-sizing: border-box;
             background: linear-gradient(120deg, #fcfff9 60%, #e2ffe3 100%);
         }
@@ -174,7 +170,6 @@
             80% { transform: scale(1.008) translateY(1.5px) rotate(-0.2deg);}
             100% { transform: scale(1.012) translateY(0px) rotate(0.1deg);}
         }
-        /* DESKTOP HERO (a partir de 900px) */
         @media (min-width: 900px) {
             .hero {
                 flex-direction: row;
@@ -212,7 +207,6 @@
                 border-radius: 35px 35px 0 35px;
             }
         }
-        /* NAV MOBILE */
         @media (max-width: 700px) {
             nav { min-height: 54px; }
             .logo { font-size: 1.15rem; }
@@ -241,7 +235,6 @@
             }
             .hamburger { display: flex; }
         }
-        /* Featured, products, about, contact, footer (simplified, mobile-friendly) */
         .section-title {
             text-align: center; font-size: 2rem; color: #2d5a27; margin-bottom: 2rem;
             font-family: 'Pacifico', cursive; font-weight: bold; letter-spacing: .07em;
@@ -283,6 +276,31 @@
         }
         .form-textarea { min-height: 80px; }
         .footer-content { text-align: center; padding: 30px 0; color: #2d5a27; background: #e2ffe3; }
+        .descripcion {
+            margin-bottom: 1em;
+            color: #444;
+            font-size: 1em;
+            text-align: left;
+            line-height: 1.5;
+            transition: max-height 0.2s;
+            position: relative;
+        }
+        .leer-mas-btn {
+            display: inline-block;
+            color: var(--primary-dark);
+            background: none;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1em;
+            padding: 0 0.3em;
+            margin-top: 4px;
+            transition: color 0.15s;
+            text-decoration: underline dotted;
+        }
+        .leer-mas-btn:hover {
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -303,7 +321,6 @@
         </nav>
     </header>
     <main>
-        <!-- HERO -->
         <section class="hero" id="inicio">
             <div class="hero-content">
                 <h1 class="hero-title">Bienvenido a <span style="font-family:Pacifico,cursive;color:#25d366">Otro Mundo</span></h1>
@@ -319,7 +336,6 @@
                 >
             </div>
         </section>
-        <!-- DESTACADOS -->
         <section class="featured-section">
             <div class="container">
                 <h2 class="section-title">¿Por qué elegirnos?</h2>
@@ -348,14 +364,12 @@
                 </div>
             </div>
         </section>
-        <!-- COLECCIÓN / PRODUCTOS -->
         <section class="products-section" id="coleccion">
             <div class="container">
                 <h2 class="section-title">Colección</h2>
                 <div class="products-grid" id="productsGrid"></div>
             </div>
         </section>
-        <!-- NOSOTROS -->
         <section class="about-section" id="nosotros">
             <div class="container">
                 <h2 class="section-title">Sobre Otro Mundo</h2>
@@ -371,7 +385,6 @@
                 </div>
             </div>
         </section>
-        <!-- CONTACTO -->
         <section class="contact-section" id="contacto">
             <div class="container">
                 <h2 class="section-title">Conectate con Otro Mundo</h2>
@@ -386,7 +399,6 @@
                 </div>
             </div>
         </section>
-        <!-- WhatsApp flotante -->
         <a href="https://wa.me/+59894691690?text=%C2%A1Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20la%20coleccion%20de%20suculentas"
            style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:50%;box-shadow:0 4px 12px #25d36640;width:56px;height:56px;"
            target="_blank"
@@ -396,7 +408,6 @@
                 <path d="M23.472 19.347c-.37-.185-2.185-1.08-2.523-1.205-.338-.124-.585-.185-.833.186-.247.37-.95 1.204-1.165 1.452-.214.247-.428.278-.797.093-.37-.186-1.566-.577-2.985-1.841-1.103-.984-1.848-2.199-2.066-2.57-.214-.37-.023-.57.162-.755.166-.164.37-.428.556-.642.185-.215.247-.37.37-.617.124-.247.062-.464-.03-.648-.093-.185-.833-2.012-1.14-2.753-.297-.714-.6-.616-.833-.628l-.709-.012c-.247 0-.648.093-.986.464-.338.37-1.296 1.27-1.296 3.1 0 1.83 1.327 3.593 1.513 3.841.185.247 2.607 3.995 6.318 5.17.883.247 1.57.396 2.105.507.885.169 1.691.146 2.328.089 0 0 2.215-.905 2.527-2.24.312-1.336.312-2.482.221-2.627-.09-.144-.338-.228-.709-.413z" fill="#fff"/>
             </svg>
         </a>
-        <!-- Footer -->
         <footer>
             <div class="footer-content">
                 <p>&copy; 2025 Otro Mundo - Colección de Suculentas. Todos los derechos reservados.</p>
@@ -411,7 +422,6 @@
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
-        // Close nav on click (mobile)
         Array.from(document.querySelectorAll('.nav-links a')).forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -419,40 +429,106 @@
             });
         });
 
-        // Render suculentas productos
         const suculentas = [
-            {nombre: "El Cactus Cacahuete", archivo: "cactuscacahuete.jpg", descripcion: "Esta suculenta es muy fácil de cuidar."},
-            {nombre: "Echeveria Elegans", archivo: "echeveria-elegans.jpg", descripcion: "Conocida como la rosa de alabastro, esta suculenta forma elegantes rosetas azuladas y es muy fácil de cuidar."},
-            {nombre: "Graptosedum 'California Sunset'", archivo: "califonissunset.jpg", descripcion: "Ideal para macetas colgantes, esta suculenta desarrolla tallos largos y colgantes cubiertos de hojas carnosas."},
-            {nombre: "Huernia Ojo de Dragón", archivo: "ojodedragon.jpg", descripcion: "Pequeña y resistente, destaca por sus rayas blancas horizontales en hojas verdes puntiagudas."},
-            {nombre: "Callisia Navicularis", archivo: "callisianavicularis.jpg", descripcion: "La clásica planta del dinero, de hojas gruesas y brillantes, símbolo de prosperidad."},
-            {nombre: "Cactus Coral o Cactus Arroz", archivo: "cactuscoral.jpg", descripcion: "Hojas en tonos grisáceos, púrpura o rosa pálido, de aspecto etéreo y sumamente decorativa."},
-            {nombre: "Madre perla", archivo: "madreperla.jpg", descripcion: "Hojas peluditas con bordes marrones, muy simpática y original para cualquier colección."},
-            {nombre: "Mammillaria vetula", archivo: "mammillariavetula.jpg", descripcion: "Además de decorativa, es famosa por sus propiedades medicinales y su fácil cultivo."},
-            {nombre: "Mammillaria prolifera", archivo: "mammillariaprolifera.jpg", descripcion: "Una de las suculentas colgantes más originales, con hojas redondas que parecen perlas verdes."},
-            {nombre: "Crassula expansa subsp. fragilis", archivo: "crassulafragilis.jpg", descripcion: "Esta suculenta es muy fácil de cuidar."},
-            {nombre: "Opuntia monacantha variegada monstruosa", archivo: "monstruosa.jpg", descripcion: "Esta suculenta es muy fácil de cuidar."}
+            {nombre: "El Cactus Cacahuete", archivo: "cactuscacahuete.jpg"},
+            {nombre: "Echeveria Elegans", archivo: "echeveria-elegans.jpg"},
+            {nombre: "Graptosedum 'California Sunset'", archivo: "califonissunset.jpg"},
+            {nombre: "Huernia Ojo de Dragón", archivo: "ojodedragon.jpg"},
+            {nombre: "Callisia Navicularis", archivo: "callisianavicularis.jpg"},
+            {nombre: "Cactus Coral o Cactus Arroz", archivo: "cactuscoral.jpg"},
+            {nombre: "Madre perla", archivo: "madreperla.jpg"},
+            {nombre: "Mammillaria vetula", archivo: "mammillariavetula.jpg"},
+            {nombre: "Mammillaria prolifera", archivo: "mammillariaprolifera.jpg"},
+            {nombre: "Crassula expansa subsp. fragilis", archivo: "crassulafragilis.jpg"},
+            {nombre: "Opuntia monacantha variegada monstruosa", archivo: "monstruosa.jpg"}
         ];
-        function renderProductos() {
-            const grid = document.getElementById('productsGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            suculentas.forEach((prod) => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <div class="product-image">
-                        <img src="img/suculentas/${prod.archivo}" alt="${prod.nombre}" loading="lazy">
-                    </div>
-                    <h3>${prod.nombre}</h3>
-                    <p>${prod.descripcion || "Una hermosa suculenta para tu colección."}</p>
-                `;
-                grid.appendChild(card);
-            });
-        }
-        document.addEventListener('DOMContentLoaded', renderProductos);
 
-        // Simple feedback para el form
+        function normaliza(str) {
+            return str.normalize("NFD")
+                      .replace(/[\u0300-\u036f]/g, "")
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]/g, "");
+        }
+
+        function createDescripcionHTML(desc, maxChars=140) {
+            if(desc.length <= maxChars) {
+                return `<span>${desc}</span>`;
+            }
+            const corto = desc.slice(0, maxChars);
+            const largo = desc;
+            return `
+                <span class="desc-corta">${corto}...</span>
+                <span class="desc-larga" style="display:none;">${largo}</span>
+                <button class="leer-mas-btn" type="button">Leer más</button>
+            `;
+        }
+
+        fetch('./catalogo-plantas.json')
+            .then(resp => resp.json())
+            .then(data => {
+                const grid = document.getElementById('productsGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                suculentas.forEach(prod => {
+                    const nombreProdNorm = normaliza(prod.nombre);
+                    let descripcion = "Una hermosa suculenta para tu colección.";
+                    for (const planta of data) {
+                        const nombrePlantaNorm = normaliza(planta.name || "");
+                        if (nombrePlantaNorm.includes(nombreProdNorm) || nombreProdNorm.includes(nombrePlantaNorm)) {
+                            if (planta.description) {
+                                descripcion = planta.description.replace(/\n/g, "<br>");
+                                break;
+                            }
+                        }
+                    }
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-image">
+                            <img src="img/suculentas/${prod.archivo}" alt="${prod.nombre}" loading="lazy">
+                        </div>
+                        <h3>${prod.nombre}</h3>
+                        <p class="descripcion">${createDescripcionHTML(descripcion)}</p>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                // Botón "leer más"
+                grid.querySelectorAll('.leer-mas-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const p = btn.closest('.descripcion');
+                        const corta = p.querySelector('.desc-corta');
+                        const larga = p.querySelector('.desc-larga');
+                        if(btn.textContent === "Leer más") {
+                            corta.style.display = "none";
+                            larga.style.display = "inline";
+                            btn.textContent = "Leer menos";
+                        } else {
+                            corta.style.display = "inline";
+                            larga.style.display = "none";
+                            btn.textContent = "Leer más";
+                        }
+                    });
+                });
+            })
+            .catch(() => {
+                const grid = document.getElementById('productsGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                suculentas.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-image">
+                            <img src="img/suculentas/${prod.archivo}" alt="${prod.nombre}" loading="lazy">
+                        </div>
+                        <h3>${prod.nombre}</h3>
+                        <p class="descripcion">Una hermosa suculenta para tu colección.</p>
+                    `;
+                    grid.appendChild(card);
+                });
+            });
+
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.getElementById('contactForm');
             if(form) {
