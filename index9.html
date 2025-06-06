@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
     <title>Otro Mundo | Colección</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Quicksand:wght@400;700&family=Pacifico&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #25d366;
@@ -12,451 +12,718 @@
             --primary-dark: #2d5a27;
             --accent: #ffbb3b;
             --bg: #f8fff8;
-            --shadow: 0 2px 16px #25d36621;
-            --transition: .3s cubic-bezier(.4, .2, .3, .9);
+            --modal-bg: rgba(22,28,23,0.92);
+            --modal-card-bg: #1c2320;
+            --modal-card-radius: 24px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Quicksand', 'Inter', Arial, sans-serif;
+            font-family: 'Quicksand', Arial, sans-serif;
             color: #222;
             background: linear-gradient(135deg, #f8fff8 0%, #e2ffe3 100%);
             min-height: 100vh;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
         header {
-            background: rgba(255,255,255,0.90);
-            backdrop-filter: blur(18px) saturate(1.2);
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
             color: var(--primary-dark);
             position: fixed; top: 0; width: 100vw; z-index: 1000;
-            box-shadow: 0 4px 32px #25d36614;
+            box-shadow: 0 4px 24px #25d36618;
             border-bottom: 2px solid #90ee9035;
-            transition: background 0.22s, box-shadow .3s;
         }
-        header.scrolled {
-            background: rgba(255,255,255,0.98);
-            box-shadow: 0 8px 24px #25d36627;
+        nav {
+            display: flex; justify-content: space-between; align-items: center; min-height: 64px;
         }
-        nav { display: flex; justify-content: space-between; align-items: center; min-height: 72px; }
         .logo {
             font-family: 'Pacifico', cursive;
-            font-size: 1.75rem; font-weight: 900; letter-spacing: 1px;
-            display: flex; align-items: center; gap: 12px;
-            background: linear-gradient(90deg, var(--primary) 10%, var(--primary-dark) 85%);
-            color: transparent; -webkit-background-clip: text; background-clip: text;
-            filter: drop-shadow(0 4px 12px #90ee9020);
+            font-size: 1.7rem; font-weight: 900; letter-spacing: 1px;
+            color: var(--primary-dark);
+            display: flex; align-items: center; gap: 10px;
             user-select: none;
-            text-shadow: 0 2px 12px #fff4;
         }
         .logo::before {
             content: "🪴";
             font-size: 2.1rem;
-            filter: drop-shadow(0 1px 2px #4a7c5940);
             margin-right: 5px;
         }
         .nav-links {
-            display: flex; list-style: none; gap: 2.2rem; align-items: center;
-            background: rgba(255,255,255,0.15); padding: 7px 24px; border-radius: 2rem;
-            box-shadow: 0 2px 8px #25d36615;
+            display: flex; list-style: none; gap: 2rem; align-items: center;
+            background: rgba(255,255,255,0.10); padding: 6px 20px; border-radius: 1.7rem;
         }
         .nav-links a {
-            font-family: 'Montserrat', 'Quicksand', sans-serif;
+            font-family: 'Quicksand', sans-serif;
             color: var(--primary-dark); text-decoration: none; font-weight: 700;
-            font-size: 1.13rem; letter-spacing: .7px;
-            padding: 9px 21px; border-radius: 1.8rem; transition: color .22s, background .19s, box-shadow .2s;
-            position: relative;
-            overflow: hidden;
+            font-size: 1.12rem; letter-spacing: .6px;
+            padding: 8px 19px; border-radius: 1.5rem; transition: color .20s, background .18s;
         }
         .nav-links a:hover, .nav-links a.active {
             color: #fff;
             background: linear-gradient(90deg, var(--primary) 40%, var(--primary-light) 100%);
-            box-shadow: 0 2px 12px #25d36634;
+            box-shadow: 0 2px 10px #25d3662d;
             transform: scale(1.05) translateY(-1px);
         }
-        .nav-links a::after {
-            content: '';
-            display: block;
-            width: 0; height: 3px;
-            background: linear-gradient(90deg, var(--primary-light) 40%, var(--primary-dark) 100%);
-            border-radius: 2px;
-            transition: width .32s;
-            position: absolute;
-            left: 18px; bottom: 5px;
-        }
-        .nav-links a:hover::after, .nav-links a.active::after { width: calc(100% - 36px); }
-        .nav-links a:focus { outline: 2px solid var(--primary); }
-
         .hamburger {
             display: none;
             flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
+            justify-content: center;
+            align-items: center;
+            width: 32px; height: 28px;
             cursor: pointer;
-            z-index: 1001; /* Ensure it's above the nav links */
-            padding: 5px; /* Increase tappable area */
+            z-index: 1001;
         }
         .hamburger span {
             width: 100%;
             height: 3px;
             background-color: var(--primary-dark);
             border-radius: 2px;
-            transition: all 0.3s ease;
+            margin: 3px 0;
+            transition: all 0.3s;
         }
-        .hamburger.active span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
-
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: stretch;
-            justify-content: stretch;
-            background: none;
-            position: relative;
-            overflow: hidden;
-            /* Añadido: padding-top para compensar el header fijo */
-            padding-top: 72px;
-        }
-        .hero-left, .hero-right {
-            flex: 1 1 0;
-            min-width: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .hero-left {
-            background: linear-gradient(120deg, #fcfff9 68%, #e6ffe8 100%);
-            flex-direction: column;
-            padding: 0 6vw;
-            z-index: 1;
-            position: relative;
-            animation: heroSlideLeft 1s cubic-bezier(.38,1.16,.38,1.01);
-        }
-        .hero-title {
-            font-family: 'Montserrat', 'Quicksand', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--primary-dark);
-            margin-bottom: 1.1rem;
-            line-height: 1.1;
-            background: linear-gradient(90deg, var(--primary-dark) 30%, var(--primary) 90%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 16px #abffcc55;
-        }
-        .hero-desc {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.35rem;
-            color: #345343;
-            margin-bottom: 2.2rem;
-            line-height: 1.6;
-            max-width: 470px;
-        }
-        /* CTA Button 3D Effect */
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: #fff;
-            padding: 17px 48px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 1.22rem;
-            letter-spacing: .07em;
-            transition: all 0.32s cubic-bezier(.8,.3,.16,1);
-            box-shadow: 0 7px 32px var(--primary-light), 0 2px 8px #25d36622;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            filter: drop-shadow(0 4px 16px #d2ffde70);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
-            transform: translateX(-100%);
-            transition: transform 0.4s ease-out;
-            z-index: -1;
-        }
-        .cta-button:hover::before { transform: translateX(0); }
-        .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 40px var(--primary-light), 0 4px 16px #25d36633;
-            filter: drop-shadow(0 8px 24px #d2ffde90);
-        }
-        .cta-button:active {
-            transform: translateY(-2px) scale(0.98);
-            box-shadow: 0 4px 18px var(--primary-light), 0 1px 4px #25d36611;
-        }
-        .cta-button:focus { outline: 2px solid var(--accent);}
-
-        .hero-right {
-            background: linear-gradient(120deg, #f7fdf7 60%, #e2f6eb 100%);
-            justify-content: flex-end;
-            position: relative;
-            animation: heroSlideRight 1.1s cubic-bezier(.38,1.16,.38,1.01);
-        }
-        .hero-visual-container {
-            width: 100%;
-            height: 100%;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .hero-suculenta-img-animada {
-            width: 50vw;
-            max-width: 650px;
-            min-width: 280px;
-            height: auto;
-            border-radius: 35px 35px 0 35px;
-            box-shadow: 0 12px 60px #25d36640, 0 2px 12px #90ee9011;
-            display: block;
-            margin: 0 auto;
-            animation: movimientoPlantaIA 8s ease-in-out infinite alternate;
-            will-change: transform, filter;
-            filter: brightness(1.04) contrast(1.07) saturate(1.08) blur(0.2px);
-            object-fit: cover;
-            pointer-events: none;
-            user-select: none;
-        }
-        @keyframes movimientoPlantaIA {
-            0% { transform: scale(1) translateX(0px) translateY(0px) rotate(-1deg); filter: brightness(1.04) contrast(1.07) saturate(1.08) blur(0.2px); }
-            20% { transform: scale(1.012) translateX(2px) translateY(-2px) rotate(0.2deg); filter: brightness(1.06) contrast(1.09) saturate(1.12) blur(0.24px); }
-            40% { transform: scale(1.010) translateX(-2px) translateY(1px) rotate(-0.1deg); filter: brightness(1.02) contrast(1.06) saturate(1.1) blur(0.18px); }
-            60% { transform: scale(1.017) translateX(1.5px) translateY(-1.5px) rotate(0.2deg); filter: brightness(1.07) contrast(1.10) saturate(1.15) blur(0.25px); }
-            80% { transform: scale(1.008) translateX(-1.5px) translateY(1.5px) rotate(-0.2deg); filter: brightness(1.03) contrast(1.06) saturate(1.09) blur(0.18px); }
-            100% { transform: scale(1.012) translateX(0px) translateY(0px) rotate(0.1deg); filter: brightness(1.04) contrast(1.07) saturate(1.1) blur(0.2px); }
-        }
-        @keyframes heroSlideLeft { from { opacity:0; transform: translateX(-60px);} to {opacity:1; transform: translateX(0);} }
-        @keyframes heroSlideRight { from { opacity:0; transform: translateX(60px);} to {opacity:1; transform: translateX(0);} }
-        .fade-in { animation: fadeInUp .88s cubic-bezier(.4, .2, .3, .9) both; }
-        @keyframes fadeInUp { from { opacity:0; transform: translateY(40px);} to { opacity:1; transform: none;} }
-
-        /* Common card styles */
-        .base-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.07);
-            transition: all 0.3s ease;
-            will-change: transform, box-shadow; /* Hint for smoother animations */
-        }
-
-        .section-title {
-            text-align: center; font-size: 4rem; color: #2d5a27; margin-bottom: 3rem;
-            position: relative; font-family: 'Pacifico', cursive; font-weight: bold;
-            letter-spacing: .07em;
-        }
-        .section-title::after {
-            content: ''; width: 100px; height: 4px; background: linear-gradient(45deg, #90EE90, #98FB98);
-            position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); border-radius: 2px;
-        }
-        .featured-section, .products-section, .about-section, .contact-section {
-            padding: 100px 0;
-        }
-        .featured-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem; margin-top: 4rem;
-        }
-        .featured-card {
-            padding: 2rem; text-align: center;
-            border: 2px solid transparent;
-            animation: fadeInUp 1.1s cubic-bezier(.4, .2, .3, .9) both;
-        }
-        .featured-card.base-card {
-            box-shadow: 0 10px 40px rgba(0,0,0,0.07);
-            border-radius: 20px;
-        }
-        .featured-card:active, .featured-card:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 10px 40px #25d36633;
-        }
-        .featured-card:hover {
-            transform: translateY(-10px) scale(1.03) rotate(-1.5deg);
-            border-color: var(--primary-light);
-            box-shadow: 0 20px 60px rgba(144,238,144,0.13);
-        }
-        .featured-image {
-            display: block; margin-bottom: 1.5rem; width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
-            box-shadow: 0 2px 12px #a0dfa040; background: #e8f5e8; margin-left: auto; margin-right: auto;
-        }
-        .featured-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .featured-card h3 { font-size: 1.8rem; color: #2d5a27; margin-bottom: 1rem; font-family: 'Montserrat', sans-serif;}
-        .featured-card p { color: #666; font-size: 1.17rem; line-height: 1.6; font-family: 'Quicksand', sans-serif; }
-
-        /* --- MEDIA QUERIES --- */
-        @media (max-width: 900px) {
-            .container { padding: 0 15px; }
-            .logo { font-size: 1.4rem; }
-            .nav-links {
-                gap: 1rem;
-                padding: 7px 15px;
-                background: rgba(255,255,255,0.25); /* Slightly more opaque for readability */
-            }
-            .hero-suculenta-img-animada {
-                width: 90vw;
-                max-width: 98vw;
-                min-width: 120px;
-                border-radius: 18px 18px 0 18px;
-            }
-            .section-title {
-                font-size: 3rem;
-                margin-bottom: 2rem;
-            }
-            .featured-section, .products-section, .about-section, .contact-section {
-                padding: 60px 0;
-            }
-            .featured-grid, .products-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .about-image img {
-                height: auto; /* Allow image to scale proportionally */
-                max-height: 300px; /* Max height to prevent oversized images */
-            }
-            .contact-info {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            .contact-form-card {
-                padding: 2rem 1rem 1.5rem 1rem;
-            }
-            .form-row {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            header { border-radius: 0 0 18px 18px; }
-            nav { min-height: 62px; }
-            .hamburger { display: flex; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        @media (max-width: 700px) {
+            nav { min-height: 54px; }
+            .logo { font-size: 1.15rem; }
             .nav-links {
                 flex-direction: column;
-                background: rgba(255,255,255,0.98);
+                gap: 0.6rem;
+                background: rgba(255,255,255,0.97);
                 position: fixed;
-                top: 62px; /* Adjusted to new header height */
-                right: -100%; /* Off-screen by default */
-                width: 100%;
-                z-index: 999;
-                border-radius: 0 0 22px 22px;
-                box-shadow: 0 8px 32px #25d36622;
-                padding: 12px 0;
-                gap: 0.9rem;
-                transition: right .3s ease-out, opacity .3s ease-out; /* Añadida transición de opacidad */
-                opacity: 0; /* Inicialmente invisible */
-            }
-            .nav-links.active {
-                right: 0;
-                opacity: 1; /* Visible cuando está activo */
-            }
-            .nav-links a {
-                width: 90%;
-                margin: 0 auto;
-                text-align: center;
-                font-size: 1.1rem;
-                padding: 13px 0;
-                border-radius: 1.5rem; /* Slightly smaller border radius */
-            }
-            /* Modificado: Ajustes para la sección hero en móviles */
-            .hero {
-                flex-direction: column;
-                min-height: 100vh; /* Asegurar que ocupe al menos toda la altura de la pantalla */
-                padding-top: 72px; /* Compensar la altura del header */
-            }
-            .hero-left, .hero-right {
-                padding: 20px 5vw 9px 5vw; /* Reducido el padding superior de 36px a 20px */
-                min-height: 0;
+                top: 54px;
+                right: -100vw;
                 width: 100vw;
-                box-sizing: border-box;
+                z-index: 999;
+                box-shadow: 0 8px 24px #25d36618;
+                border-radius: 0 0 18px 18px;
+                padding: 18px 0 18px 0;
+                transition: right 0.3s;
             }
-            .hero-title {
-                font-size: 2.2rem;
-                text-align: center;
-                line-height: 1.2;
-                margin-top: 10px; /* Añadir un poco más de espacio arriba del título */
-            }
-            .hero-desc {
-                font-size: 1.08rem;
-                text-align: center;
-                margin: 0 auto 1.5rem auto;
-                line-height: 1.5;
-            }
-            .cta-button {
-                padding: 15px 0;
-                width: 100%; /* Full width for better tappable area */
-                max-width: 350px;
-                display: block;
+            .nav-links.active { right: 0; }
+            .nav-links a {
+                width: 95%;
                 margin: 0 auto;
+                text-align: center;
+                font-size: 1.07rem;
+                padding: 13px 0;
+                border-radius: 1.2rem;
             }
-            .hero-suculenta-img-animada { max-width: 85vw; min-width: 120px; margin: 0 auto; border-radius: 18px 18px 0 18px; }
-            .hero-visual-container { min-height: 180px; }
-
-            .about-text h2 { font-size: 3rem; }
-            .about-text p { font-size: 1rem; }
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                bottom: 20px;
-                right: 20px;
-            }
-            .whatsapp-float svg {
-                width: 38px;
-                height: 38px;
-            }
+            .hamburger { display: flex; }
         }
-
-        @media (max-width: 600px) {
-            .hero-suculenta-img-animada { max-width: 98vw; }
-            .section-title { font-size: 2.5rem; }
-            .hero-visual-container { min-height: 250px; } /* Increased min-height for better image visibility */
+        .section-title {
+            text-align: center; font-size: 2rem; color: #2d5a27; margin-bottom: 2rem;
+            font-family: 'Pacifico', cursive; font-weight: bold; letter-spacing: .07em;
         }
-
-        @media (max-width: 480px) { /* Specific for smaller phones to ensure image is not cropped */
-            .hero-suculenta-img-animada {
-                object-fit: contain; /* Ensure the whole image is visible */
-                height: 250px; /* Give it a fixed height or min-height */
-            }
+        .products-section {
+            padding: 110px 0 30px 0;
         }
-
-        @media screen and (max-width: 900px) and (orientation: landscape) {
-            .hero {
-                flex-direction: row;
-                padding-top: 72px; /* Mantener el padding-top en modo landscape */
-            }
-            .hero-left, .hero-right {
-                min-width: 50vw;
-                min-height: 100vw; /* This might be too large for landscape on some devices. Adjust as needed. */
-                padding: 18px 2vw;
-            }
-            .hero-suculenta-img-animada { max-width: 40vw; min-width: 120px; }
-            .cta-button { max-width: 300px; }
+        .products-grid {
+            display: grid; grid-template-columns: 1fr; gap: 2.2rem; margin-top: 1.5rem;
+        }
+        @media (min-width: 700px) {
+            .products-grid { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.07);
+            padding: 2rem 1rem 1.3rem 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-image {
+            width: 100%;
+            max-width: 440px;
+            height: 340px;
+            overflow: hidden;
+            border-radius: 18px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 12px #25d36617;
+            position: relative;
+            background: #f8fff8;
+            cursor: zoom-in;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 18px;
+            transition: transform 0.35s cubic-bezier(.42,.01,.62,1.14), filter 0.25s;
+            will-change: transform;
+            display: block;
+        }
+        .about-section { background: #f8fff8; }
+        .descripcion {
+            margin-bottom: 1em;
+            color: #444;
+            font-size: 1em;
+            text-align: left;
+            line-height: 1.5;
+            position: relative;
+        }
+        .leer-mas-btn {
+            display: inline-block;
+            color: var(--primary-dark);
+            background: none;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1em;
+            padding: 0 0.3em;
+            margin-top: 4px;
+            transition: color 0.15s;
+            text-decoration: underline dotted;
+        }
+        .leer-mas-btn:hover { color: var(--primary); }
+        /* MODAL MODERN STYLES */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 12000;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: var(--modal-bg);
+            justify-content: center;
+            align-items: center;
+            transition: background 0.25s;
+        }
+        .modal-overlay.active { display: flex; animation: modalFadeIn .22s cubic-bezier(.42,.01,.62,1.14); }
+        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content {
+            background: var(--modal-card-bg);
+            border-radius: var(--modal-card-radius);
+            box-shadow: 0 16px 50px #000b, 0 2px 7px #25d36655;
+            max-width: 99vw;
+            max-height: 94vh;
+            width: 540px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 26px 0 20px 0;
+            animation: modalCardPop .20s cubic-bezier(.42,.01,.62,1.14);
+        }
+        @keyframes modalCardPop { from { transform: scale(.93); opacity: 0.6; } to { transform: scale(1); opacity: 1; } }
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            background: #1c2320;
+            color: #fff;
+            border: none;
+            font-size: 2.2rem;
+            font-weight: 800;
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #2d5a271a;
+            z-index: 100;
+            transition: background .18s, color .18s, transform .15s;
+        }
+        .modal-close:hover { background: #25d366; color: #1c2320; transform: scale(1.08);}
+        .modal-title {
+            margin-bottom: 12px;
+            font-size: 1.38em;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 0.03em;
+            text-align: center;
+        }
+        .modal-slider {
+            width: 100%;
+            max-width: 420px;
+            height: 370px;
+            margin: 0 auto 1.6em auto;
+            overflow: hidden;
+            position: relative;
+            border-radius: 19px;
+            background: #e2ffe3;
+            box-shadow: 0 8px 20px #25d36614;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+        }
+        .modal-slider-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important;
+            border-radius: 19px;
+            background: #f8fff8;
+            transition: opacity 0.3s, transform 0.25s cubic-bezier(.42,.01,.62,1.14);
+            box-shadow: 0 2px 12px #25d36617;
+            pointer-events: all;
+            user-select: none;
+            cursor: zoom-in;
+            will-change: transform;
+            image-rendering: auto;
+        }
+        .modal-slider-img.zoomed {
+            cursor: grab;
+            z-index: 10;
+        }
+        .slider-arrow {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            font-size: 2.1em;
+            color: #25d366;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #25d36622;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s, transform 0.14s;
+            opacity: 0.92;
+        }
+        .slider-arrow:active { background: #d8ffd8; color: #1c2320; transform: scale(1.06);}
+        .slider-arrow.left { left: 5px; }
+        .slider-arrow.right { right: 5px; }
+        .modal-slider-count {
+            position: absolute;
+            bottom: 0; right: 16px;
+            color: #fff;
+            background: #25d366cc;
+            font-size: 1em;
+            border-radius: 10px 10px 0 0;
+            padding: 3px 14px 2px 14px;
+            font-weight: 600;
+            pointer-events: none;
+            box-shadow: 0 2px 6px #0d2a007a;
+        }
+        .modal-desc {
+            color: #e4ffe3;
+            background: #20312766;
+            font-size: 1.08em;
+            border-radius: 12px;
+            padding: 13px 18px 9px 18px;
+            margin-bottom: 2px;
+            margin-top: 7px;
+            text-align: left;
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.55;
+            max-width: 81vw;
+        }
+        @media (max-width: 700px) {
+            .modal-content { width: 98vw; }
+            .modal-slider { max-width: 97vw; height: 54vw; min-height:180px;}
+            .modal-desc { font-size:1em; padding:11px 9px 8px 13px;}
         }
     </style>
 </head>
 <body>
-    <!-- El resto del código HTML permanece igual -->
+    <header>
+        <nav class="container">
+            <div class="logo">Otro Mundo</div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#coleccion" class="active">Colección</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="products-section" id="coleccion">
+            <div class="container">
+                <h2 class="section-title">Colección</h2>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+        </section>
+        <div id="modalOverlay" class="modal-overlay" tabindex="-1">
+            <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <button class="modal-close" id="modalCloseBtn" aria-label="Cerrar vista de imágenes">&times;</button>
+                <div class="modal-title" id="modalTitle"></div>
+                <div class="modal-slider" id="modalSlider">
+                    <button class="slider-arrow left" id="sliderPrev" aria-label="Anterior">&#8592;</button>
+                    <img src="" alt="" class="modal-slider-img" id="modalSliderImg">
+                    <button class="slider-arrow right" id="sliderNext" aria-label="Siguiente">&#8594;</button>
+                    <div class="modal-slider-count" id="modalSliderCount"></div>
+                </div>
+                <div class="modal-desc" id="modalDesc"></div>
+            </div>
+        </div>
+    </main>
+    <script>
+    const suculentas = [
+        {
+            nombre: "El Cactus Cacahuete",
+            archivo: "cactuscacahuete.jpg",
+            descripcion: "Un cactus pequeño y peculiar, ideal para principiantes. Tolera la sequía y requiere mucha luz natural.",
+            fotos: [
+                "cactuscacahuete.jpg",
+                "cactuscacahuete-2.jpg",
+                "cactuscacahuete-3.jpg"
+            ]
+        },
+        {
+            nombre: "Echeveria Elegans",
+            archivo: "echeveria-elegans.jpg",
+            descripcion: `Famosa por su forma de roseta y color suave.
+Necesita riego moderado y evita el exceso de humedad en las hojas.
+Esta variedad es perfecta para quienes buscan una planta resistente y decorativa.
+Su belleza radica en la simplicidad y la elegancia de sus hojas, que forman una espiral casi perfecta.
+Incluso en espacios reducidos, puede aportar mucha vida y color.`,
+            fotos: [
+                "echeveria-elegans.jpg",
+                "echeveria-elegans-2.jpg"
+            ]
+        },
+        {
+            nombre: "Graptosedum 'California Sunset'",
+            archivo: "califonissunset.jpg",
+            descripcion: `Sus hojas cambian de color según la luz. Riego escaso y mucho sol para resaltar sus tonos naranjas. 
+¡Ideal para sumar un toque de color al jardín o balcón!
+Si se la coloca cerca de una ventana soleada, sus puntas se tornan rojizas, creando un efecto espectacular.`,
+            fotos: [
+                "califonissunset.jpg",
+                "califonissunset-2.jpg"
+            ]
+        },
+        {
+            nombre: "Huernia Ojo de Dragón",
+            archivo: "ojodedragon.jpg",
+            descripcion: `Es una suculenta nativa de África con tallos carnosos y flores con forma de estrella de aspecto exótico, que parecen un pequeño dragón. 
+Requiere luz abundante y riego moderado. Es muy resistente y de fácil reproducción.`,
+            fotos: [
+                "ojodedragon.jpg",
+                "ojodedragon-2.jpg"
+            ]
+        },
+        {
+            nombre: "Callisia Navicularis",
+            archivo: "callisianavicularis.jpg",
+            descripcion: `Planta rastrera de hojas carnosas y pequeñas. Ideal para cubrir macetas o como planta colgante. 
+Prefiere semisombra y riegos frecuentes en verano.`,
+            fotos: [
+                "callisianavicularis.jpg"
+            ]
+        },
+        {
+            nombre: "Cactus Coral o Cactus Arroz",
+            archivo: "cactuscoral.jpg",
+            descripcion: `Cactus de crecimiento lento, muy ornamental por sus tallos cilíndricos que recuerdan a granos de arroz.
+Tolera largos periodos sin agua y le gusta el sol directo.`,
+            fotos: [
+                "cactuscoral.jpg"
+            ]
+        },
+        {
+            nombre: "Madre perla",
+            archivo: "madreperla.jpg",
+            descripcion: `Conocida por sus hojas plateadas en forma de roseta. Muy resistente, necesita poco riego y mucho sol para lucir sus colores nacarados.`,
+            fotos: [
+                "madreperla.jpg"
+            ]
+        },
+        {
+            nombre: "Mammillaria vetula",
+            archivo: "mammillariavetula.jpg",
+            descripcion: `Cactus pequeño, globoso y cubierto de espinas suaves. Florece en primavera con pequeñas flores rosadas o blancas. 
+Ideal para macetas pequeñas y colecciones.`,
+            fotos: [
+                "mammillariavetula.jpg"
+            ]
+        },
+        {
+            nombre: "Mammillaria prolifera",
+            archivo: "mammillariaprolifera.jpg",
+            descripcion: `Cactus que forma grupos de pequeñas cabezas. Sus flores son blancas y produce frutos rojos muy decorativos. 
+De fácil cultivo y rápido crecimiento.`,
+            fotos: [
+                "mammillariaprolifera.jpg"
+            ]
+        },
+        {
+            nombre: "Crassula expansa subsp. fragilis",
+            archivo: "crassulafragilis.jpg",
+            descripcion: "Planta de porte bajo con tallos finos y delicados. Prefiere ambientes luminosos y riegos controlados.",
+            fotos: [
+                "crassulafragilis.jpg"
+            ]
+        },
+        {
+            nombre: "Opuntia monacantha variegada monstruosa",
+            archivo: "monstruosa.jpg",
+            descripcion: `Variedad muy decorativa y poco común. Sus formas irregulares y coloración la hacen única en cualquier colección.
+Puede alcanzar un tamaño considerable y requiere espacio para lucirse.
+Sus espinas son pequeñas, pero se recomienda manipularla con cuidado.`,
+            fotos: [
+                "monstruosa.jpg"
+            ]
+        }
+    ];
+
+    function createDescripcionHTML(desc, maxChars=120) {
+        if(desc.length <= maxChars) return `<span>${desc}</span>`;
+        const corto = desc.slice(0, maxChars);
+        return `<span class="desc-corta">${corto}...</span>
+            <span class="desc-larga" style="display:none;">${desc}</span>
+            <button class="leer-mas-btn" type="button">Leer más</button>`;
+    }
+    function renderProductos() {
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = '';
+        suculentas.forEach((prod, idx) => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div class="product-image" data-index="${idx}" tabindex="0" aria-label="Ver más fotos ${prod.nombre}">
+                    <img src="img/suculentas/${prod.archivo}" alt="${prod.nombre}" loading="lazy">
+                </div>
+                <h3>${prod.nombre}</h3>
+                <p class="descripcion">${createDescripcionHTML(prod.descripcion)}</p>
+            `;
+            grid.appendChild(card);
+        });
+
+        document.querySelectorAll('.product-image').forEach(container => {
+            const img = container.querySelector('img');
+            let zoomed = false;
+            let scale = 2.1;
+            container.addEventListener('mouseenter', e => {
+                img.style.transform = `scale(${scale})`;
+                img.style.filter = "brightness(1.05) contrast(1.06)";
+                container.classList.add('zoomed');
+                zoomed = true;
+            });
+            container.addEventListener('mouseleave', e => {
+                img.style.transform = "scale(1)";
+                img.style.filter = "";
+                container.classList.remove('zoomed');
+                img.style.transformOrigin = "center center";
+                zoomed = false;
+            });
+            container.addEventListener('mousemove', e => {
+                if(!zoomed) return;
+                const rect = container.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                img.style.transformOrigin = `${x}% ${y}%`;
+            });
+            container.addEventListener('click', function() {
+                const idx = parseInt(container.getAttribute('data-index'), 10);
+                openModalGallery(idx);
+            });
+            container.addEventListener('keypress', function(e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    const idx = parseInt(container.getAttribute('data-index'), 10);
+                    openModalGallery(idx);
+                }
+            });
+        });
+
+        document.querySelectorAll('.leer-mas-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const p = btn.closest('.descripcion');
+                const corta = p.querySelector('.desc-corta');
+                const larga = p.querySelector('.desc-larga');
+                if(btn.textContent === "Leer más") {
+                    corta.style.display = "none";
+                    larga.style.display = "inline";
+                    btn.textContent = "Leer menos";
+                } else {
+                    corta.style.display = "inline";
+                    larga.style.display = "none";
+                    btn.textContent = "Leer más";
+                }
+            });
+        });
+    }
+    renderProductos();
+
+    // --- MODAL SLIDER & ZOOM REAL ---
+    let currentModalIdx = 0;
+    let currentPhotoIdx = 0;
+    function openModalGallery(plantaIdx) {
+        const modal = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalImg = document.getElementById('modalSliderImg');
+        const sliderCount = document.getElementById('modalSliderCount');
+        const modalDesc = document.getElementById('modalDesc');
+        const planta = suculentas[plantaIdx];
+        currentModalIdx = plantaIdx;
+        currentPhotoIdx = 0;
+        modalTitle.textContent = planta.nombre;
+        modalDesc.textContent = planta.descripcion;
+        updateModalSlider();
+        modal.classList.add('active');
+        document.body.style.overflow = "hidden";
+        setTimeout(()=>{document.getElementById('modalCloseBtn').focus()}, 250);
+        resetModalZoom();
+    }
+    function closeModalGallery() {
+        document.getElementById('modalOverlay').classList.remove('active');
+        document.body.style.overflow = "";
+        resetModalZoom();
+    }
+    function updateModalSlider() {
+        const planta = suculentas[currentModalIdx];
+        const modalImg = document.getElementById('modalSliderImg');
+        const sliderCount = document.getElementById('modalSliderCount');
+        modalImg.style.opacity = "0.5";
+        setTimeout(()=>{
+            modalImg.src = "img/suculentas/" + planta.fotos[currentPhotoIdx];
+            modalImg.alt = planta.nombre + " foto " + (currentPhotoIdx+1);
+            sliderCount.textContent = (currentPhotoIdx+1) + " / " + planta.fotos.length;
+            modalImg.style.opacity = "1";
+            resetModalZoom();
+        }, 80);
+    }
+    document.getElementById('modalCloseBtn').onclick = closeModalGallery;
+    document.getElementById('sliderPrev').onclick = () => {
+        const planta = suculentas[currentModalIdx];
+        currentPhotoIdx = (currentPhotoIdx - 1 + planta.fotos.length) % planta.fotos.length;
+        updateModalSlider();
+    };
+    document.getElementById('sliderNext').onclick = () => {
+        const planta = suculentas[currentModalIdx];
+        currentPhotoIdx = (currentPhotoIdx + 1) % planta.fotos.length;
+        updateModalSlider();
+    };
+
+    // --- ZOOM Y PAN EN MODAL SLIDER ---
+    let zoomed = false, offsetX = 0, offsetY = 0, startX = 0, startY = 0, panStart = null;
+    const modalImg = document.getElementById('modalSliderImg');
+    const modalSlider = document.getElementById('modalSlider');
+    let scale = 1, maxScale = 1, naturalW = 1, naturalH = 1, displayW = 1, displayH = 1;
+
+    function resetModalZoom() {
+        zoomed = false;
+        offsetX = offsetY = 0;
+        if (modalImg) {
+            modalImg.classList.remove('zoomed');
+            modalImg.style.transform = "scale(1)";
+            modalImg.style.cursor = "zoom-in";
+            modalImg.style.transition = "transform 0.25s";
+        }
+    }
+    function setZoomModal() {
+        naturalW = modalImg.naturalWidth;
+        naturalH = modalImg.naturalHeight;
+        displayW = modalSlider.offsetWidth;
+        displayH = modalSlider.offsetHeight;
+        let scaleW = naturalW / displayW;
+        let scaleH = naturalH / displayH;
+        maxScale = Math.max(scaleW, scaleH, 1);
+        scale = maxScale;
+    }
+    modalImg.onload = function() {
+        resetModalZoom();
+        setZoomModal();
+    };
+    window.addEventListener('resize', function() {
+        setZoomModal();
+        if (zoomed) modalImg.style.transform = `scale(${scale}) translate(0px,0px)`;
+    });
+    modalImg.addEventListener('click', function(e) {
+        if (!zoomed) {
+            setZoomModal();
+            zoomed = true;
+            modalImg.classList.add('zoomed');
+            modalImg.style.transform = `scale(${scale})`;
+            modalImg.style.cursor = "grab";
+            modalImg.style.transition = "transform 0.25s";
+            offsetX = offsetY = 0;
+        } else {
+            resetModalZoom();
+        }
+    });
+    modalSlider.addEventListener('mousedown', function(e){
+        if (!zoomed) return;
+        e.preventDefault();
+        startX = e.clientX - offsetX;
+        startY = e.clientY - offsetY;
+        document.body.style.cursor = 'grabbing';
+        function mousemove(ev) {
+            offsetX = ev.clientX - startX;
+            offsetY = ev.clientY - startY;
+            const maxPanX = ((modalImg.naturalWidth * scale / maxScale) - displayW) / 2;
+            const maxPanY = ((modalImg.naturalHeight * scale / maxScale) - displayH) / 2;
+            offsetX = Math.max(Math.min(offsetX, maxPanX), -maxPanX);
+            offsetY = Math.max(Math.min(offsetY, maxPanY), -maxPanY);
+            modalImg.style.transform = `scale(${scale}) translate(${offsetX/scale}px,${offsetY/scale}px)`;
+        }
+        function mouseup() {
+            document.removeEventListener('mousemove', mousemove);
+            document.removeEventListener('mouseup', mouseup);
+            document.body.style.cursor = '';
+        }
+        document.addEventListener('mousemove', mousemove);
+        document.addEventListener('mouseup', mouseup);
+    });
+    modalSlider.addEventListener('touchstart', function(e){
+        if (!zoomed || e.touches.length !== 1) return;
+        e.preventDefault();
+        panStart = {x: e.touches[0].clientX - offsetX, y: e.touches[0].clientY - offsetY};
+    });
+    modalSlider.addEventListener('touchmove', function(e){
+        if (!zoomed || !panStart || e.touches.length !== 1) return;
+        e.preventDefault();
+        offsetX = e.touches[0].clientX - panStart.x;
+        offsetY = e.touches[0].clientY - panStart.y;
+        const maxPanX = ((modalImg.naturalWidth * scale / maxScale) - modalSlider.offsetWidth) / 2;
+        const maxPanY = ((modalImg.naturalHeight * scale / maxScale) - modalSlider.offsetHeight) / 2;
+        offsetX = Math.max(Math.min(offsetX, maxPanX), -maxPanX);
+        offsetY = Math.max(Math.min(offsetY, maxPanY), -maxPanY);
+        modalImg.style.transform = `scale(${scale}) translate(${offsetX/scale}px,${offsetY/scale}px)`;
+    });
+    modalSlider.addEventListener('touchend', function(e){
+        panStart = null;
+    });
+    let lastTap = 0;
+    modalSlider.addEventListener('touchend', function(e){
+        if (e.touches && e.touches.length > 0) return;
+        const now = new Date().getTime();
+        if (now - lastTap < 400) {
+            if (!zoomed) {
+                setZoomModal();
+                zoomed = true;
+                modalImg.classList.add('zoomed');
+                modalImg.style.transform = `scale(${scale})`;
+                modalImg.style.cursor = "grab";
+                modalImg.style.transition = "transform 0.25s";
+                offsetX = offsetY = 0;
+            } else {
+                resetModalZoom();
+            }
+        }
+        lastTap = now;
+    });
+
+    document.getElementById('modalCloseBtn').onclick = closeModalGallery;
+    document.getElementById('sliderPrev').onclick = () => {
+        const planta = suculentas[currentModalIdx];
+        currentPhotoIdx = (currentPhotoIdx - 1 + planta.fotos.length) % planta.fotos.length;
+        updateModalSlider();
+    };
+    document.getElementById('sliderNext').onclick = () => {
+        const planta = suculentas[currentModalIdx];
+        currentPhotoIdx = (currentPhotoIdx + 1) % planta.fotos.length;
+        updateModalSlider();
+    };
+    document.getElementById('modalOverlay').addEventListener('click', function(e){
+        if(e.target === this) closeModalGallery();
+    });
+    window.addEventListener('keydown', function(e){
+        const modal = document.getElementById('modalOverlay');
+        if(modal.classList.contains('active')) {
+            if(e.key === "Escape") closeModalGallery();
+            if(e.key === "ArrowRight") document.getElementById('sliderNext').click();
+            if(e.key === "ArrowLeft") document.getElementById('sliderPrev').click();
+        }
+    });
+    </script>
 </body>
 </html>
-
