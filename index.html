@@ -586,14 +586,11 @@
             currentPhotoIdx = 0;
             updateModalSlider();
             modal.classList.add('active');
-            modal.style.display = "flex";
             document.body.style.overflow = "hidden";
             setTimeout(()=>{document.getElementById('modalCloseBtn').focus()}, 250);
         }
         function closeModalGallery() {
-            const modal = document.getElementById('modalOverlay');
-            modal.classList.remove('active');
-            modal.style.display = "none";
+            document.getElementById('modalOverlay').classList.remove('active');
             document.body.style.overflow = "";
         }
         function updateModalSlider() {
