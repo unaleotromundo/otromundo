@@ -1,2 +1,0 @@
-# otromundo
-coleccion de suculentas
