@@ -1,0 +1,318 @@
+body {
+    margin: 0;
+    background: url('background.png') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body.modal-active { 
+    overflow: hidden;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    color: #555; 
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: 30% 40% 30%; 
+    grid-template-rows: repeat(4, auto); 
+    gap: 10px; 
+    padding: 1% 3%; 
+    margin: 20px auto;
+    width: 90%;
+    max-width: 900px;
+    min-width: 300px;
+    box-sizing: border-box;
+    height: auto;
+}
+
+.frame {
+    position: relative;
+    overflow: hidden; 
+    padding-top: 100%; 
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.frame img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    display: block;
+}
+
+/* --- Estilos de la ventana flotante (hover-info) --- */
+.hover-info {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 2px solid #ccc;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000; 
+    max-width: 400px; 
+    text-align: center;
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
+    pointer-events: none; 
+}
+
+.frame:hover .hover-info {
+    opacity: 1; 
+    visibility: visible; 
+    pointer-events: auto; 
+}
+
+.hover-info .hover-image {
+    max-width: 100%; 
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.hover-info p {
+    margin: 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+    color: #555;
+}
+
+/* --- Estilos del LIGHTBOX (Modal de pantalla completa) --- */
+.lightbox {
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.8); 
+    justify-content: center; 
+    align-items: center; 
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.lightbox.active {
+    display: flex; 
+    opacity: 1;
+}
+
+.lightbox-content {
+    max-width: 90%; 
+    max-height: 90%; 
+    display: block; 
+    margin: auto; 
+    object-fit: contain; 
+    border: 5px solid white; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff; 
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 2001; 
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* --- Estilos del MODAL DE BIENVENIDA (Splash Screen) --- */
+.welcome-modal {
+    display: none; 
+    position: fixed;
+    z-index: 3000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9); 
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; 
+}
+
+.welcome-modal.active {
+    display: flex; 
+    opacity: 1;
+}
+
+.welcome-image {
+    max-width: 90%; 
+    max-height: 90%;
+    display: block;
+    object-fit: contain; 
+    border: 5px solid white;
+    box-shadow: 0 0 30px rgba(0,0,0,0.7);
+}
+
+.close-welcome-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 3001; 
+}
+
+.close-welcome-button:hover,
+.close-welcome-button:focus {
+    color: #bbb;
+}
+
+/* --- Estilos del BOTÓN FLOTANTE (Cactus) --- */
+.floating-cactus-button {
+    position: fixed; /* Lo hace flotante */
+    bottom: 20px; /* Distancia desde abajo */
+    right: 20px; /* Distancia desde la derecha */
+    width: 100px; /* Ancho base del contenedor del botón */
+    height: auto; /* Altura auto para la imagen */
+    cursor: pointer;
+    z-index: 2500; /* Por encima de la galería y hover, pero debajo de los modales */
+    display: flex;
+    flex-direction: column; /* Para apilar la imagen y el texto */
+    align-items: center; /* Centrar horizontalmente */
+    justify-content: center; /* Centrar verticalmente */
+    text-align: center;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transición suave al pasar el mouse */
+    background: none; /* Sin fondo de botón por defecto */
+    border: none; /* Sin borde */
+    padding: 0; /* Sin padding */
+    outline: none; /* Sin outline al enfocar */
+}
+
+.floating-cactus-button:hover {
+    transform: translateY(-5px); /* Pequeño efecto "pop" al pasar el mouse */
+}
+
+/* Ocultar el botón si algún modal está activo */
+body.modal-active .floating-cactus-button {
+    opacity: 0;
+    pointer-events: none; /* No permite clics cuando está oculto */
+}
+
+.floating-cactus-button img {
+    max-width: 100%; /* La imagen del cactus ocupa todo el ancho del contenedor */
+    height: auto;
+    display: block;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.4)); /* Sombra para que destaque */
+}
+
+.floating-cactus-button .button-text {
+    margin-top: 5px; /* Espacio entre el cactus y el texto */
+    color: #4CAF50; /* Un color verde que combine con el cactus */
+    font-size: 0.9em;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente para el texto */
+    padding: 3px 8px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+
+/* --- Estilos específicos para cada marco (sin cambios) --- */
+/* Fila 1 */
+.gallery .frame:nth-child(1) { grid-column: 1 / 2; grid-row: 1 / 2; padding-top: 70%; }
+.gallery .frame:nth-child(2) { grid-column: 2 / 3; grid-row: 1 / 2; padding-top: 70%; }
+.gallery .frame:nth-child(3) { grid-column: 3 / 4; grid-row: 1 / 2; padding-top: 70%; }
+
+/* Fila 2 */
+.gallery .frame:nth-child(4) { grid-column: 1 / 2; grid-row: 2 / 3; padding-top: 70%; }
+.gallery .frame:nth-child(5) { grid-column: 2 / 3; grid-row: 2 / 3; padding-top: 70%; }
+.gallery .frame:nth-child(6) { grid-column: 3 / 4; grid-row: 2 / 3; padding-top: 70%; }
+
+/* Fila 3 */
+.gallery .frame:nth-child(7) { grid-column: 1 / 2; grid-row: 3 / 4; padding-top: 70%; }
+.gallery .frame:nth-child(8) { grid-column: 2 / 3; grid-row: 3 / 4; padding-top: 120%; }
+.gallery .frame:nth-child(9) { grid-column: 3 / 4; grid-row: 3 / 4; padding-top: 70%; }
+
+/* Fila 4 (los últimos dos, desplazados y más pequeños) */
+.gallery .frame:nth-child(10) { grid-column: 1 / 2; grid-row: 4 / 5; padding-top: 70%; justify-self: end; margin-right: 10%; width: 90%; }
+.gallery .frame:nth-child(11) { grid-column: 2 / 3; grid-row: 4 / 5; padding-top: 70%; justify-self: start; margin-left: 10%; width: 90%; }
+
+/* --- Media Queries para Responsividad (ajustes para modals y botón flotante) --- */
+
+@media (max-width: 992px) {
+    header p { font-size: 0.9em; } 
+    .gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; width: 95%; }
+    .gallery .frame:nth-child(n) { grid-column: auto; grid-row: auto; padding-top: 100%; justify-self: stretch; margin: 0; width: 100%; }
+    .hover-info { max-width: 80%; padding: 15px; } 
+    .close-button { font-size: 30px; top: 15px; right: 25px; } 
+    .lightbox-content { max-width: 95%; max-height: 95%; } 
+    .close-welcome-button { font-size: 30px; top: 15px; right: 25px; }
+    .welcome-image { max-width: 95%; max-height: 95%; }
+
+    /* Ajustes para el botón flotante en tablets */
+    .floating-cactus-button {
+        width: 80px; /* Más pequeño en tablets */
+        bottom: 15px;
+        right: 15px;
+    }
+    .floating-cactus-button .button-text {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 600px) {
+    header { padding: 15px; }
+    header p { font-size: 0.8em; } 
+    .gallery { grid-template-columns: 1fr; gap: 5px; padding: 5px; width: 98%; }
+    .hover-info { max-width: 90%; padding: 10px; }
+    .close-button { font-size: 25px; top: 10px; right: 15px; } 
+    .lightbox-content { max-width: 98%; max-height: 98%; } 
+    .close-welcome-button { font-size: 25px; top: 10px; right: 15px; }
+    .welcome-image { max-width: 98%; max-height: 98%; }
+
+    /* Ajustes para el botón flotante en móviles */
+    .floating-cactus-button {
+        width: 65px; /* Aún más pequeño en móviles */
+        bottom: 10px;
+        right: 10px;
+    }
+    .floating-cactus-button .button-text {
+        font-size: 0.7em;
+        padding: 2px 5px;
+    }
+}
+
+html, body {
+    height: 100%;
+}

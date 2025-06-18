@@ -6,6 +6,51 @@
     <title>Otro Mundo | Colección</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
+ /* Estilos para el nuevo botón flotante de Colección 2 */
+        .collection2-float {
+            position: fixed;
+            bottom: 20px; /* Ajusta la distancia desde abajo si es necesario */
+            left: 20px; /* Ajusta la distancia desde la izquierda */
+            background-color: #fff; /* Fondo blanco para el botón */
+            color: var(--accent-green); /* Color del texto, puedes cambiarlo */
+            border-radius: 50px; /* Bordes redondeados */
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 99; /* Asegura que esté por encima de otros elementos */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px; /* Relleno del botón */
+            text-decoration: none;
+            font-size: 1em; /* Tamaño de fuente */
+            transition: all 0.3s ease;
+            white-space: nowrap; /* Evita que el texto se rompa */
+        }
+
+        .collection2-float:hover {
+            transform: scale(1.05) translateY(-3px); /* Pequeño efecto al pasar el ratón */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .collection2-float .succulent-icon {
+            width: 40px; /* Tamaño del icono de la suculenta */
+            height: auto;
+            margin-right: 8px; /* Espacio entre el icono y el texto */
+        }
+
+        /* Medias queries para el botón flotante de Colección 2 en pantallas pequeñas */
+        @media (max-width: 768px) {
+            .collection2-float {
+                bottom: 80px; /* Eleva el botón para que no choque con el de WhatsApp */
+                left: 10px;
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+            .collection2-float .succulent-icon {
+                width: 35px;
+                margin-right: 5px;
+            }
+        }
         :root {
             --accent-green: #25d366;
             --accent-yellow: #ffe066;
@@ -432,6 +477,67 @@
                 <div class="gallery-count" id="modalSliderCount"></div>
             </div>
         </div>
+<a href="coleccion2/poe-preview.html"
+           class="collection2-float"
+           target="_blank"
+           aria-label="Ir a Colección 2">
+            <img src="coleccion2.png" alt="Colección 2" class="succulent-icon">
+            <span class="collection2-text">¡Colección 2!</span>
+        </a>
+        <a href="https://wa.me/+59894691690?text=¡Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20la%20coleccion%20de%20suculentas"
+           class="whatsapp-float"
+           target="_blank"
+           aria-label="Hablar por WhatsApp">
+            <span class="wa-bubble">
+                <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+                    <defs>
+                        <radialGradient id="waGlow" cx="50%" cy="50%" r="60%" fx="50%" fy="50%">
+                            <stop offset="0%" stop-color="#25D366" stop-opacity="1"/>
+                            <stop offset="100%" stop-color="#128C7E" stop-opacity="0.75"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="16" cy="16" r="16" fill="url(#waGlow)"/>
+                    <path d="M23.472 19.347c-.37-.185-2.185-1.08-2.523-1.205-.338-.124-.585-.185-.833.186-.247.37-.95 1.204-1.165 1.452-.214.247-.428.278-.797.093-.37-.186-1.566-.577-2.985-1.841-1.103-.984-1.848-2.199-2.066-2.57-.214-.37-.023-.57.162-.755.166-.164.37-.428.556-.642.185-.215.247-.37.37-.617.124-.247.062-.464-.03-.648-.093-.185-.833-2.012-1.14-2.753-.297-.714-.6-.616-.833-.628l-.709-.012c-.247 0-.648.093-.986.464-.338.37-1.296 1.27-1.296 3.1 0 1.83 1.327 3.593 1.513 3.841.185.247 2.607 3.995 6.318 5.17.883.247 1.57.396 2.105.507.885.169 1.691.146 2.328.089 0 0 2.215-.905 2.527-2.24.312-1.336.312-2.482.221-2.627-.09-.144-.338-.228-.709-.413z" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="wa-text">¡WhatsApp!</span>
+        </a>
+        <a href="https://wa.me/+59894691690?text=¡Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20la%20coleccion%20de%20suculentas"
+           class="whatsapp-float"
+           target="_blank"
+           aria-label="Hablar por WhatsApp">
+            <span class="wa-bubble">
+                <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+                    <defs>
+                        <radialGradient id="waGlow" cx="50%" cy="50%" r="60%" fx="50%" fy="50%">
+                            <stop offset="0%" stop-color="#25D366" stop-opacity="1"/>
+                            <stop offset="100%" stop-color="#128C7E" stop-opacity="0.75"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="16" cy="16" r="16" fill="url(#waGlow)"/>
+                    <path d="M23.472 19.347c-.37-.185-2.185-1.08-2.523-1.205-.338-.124-.585-.185-.833.186-.247.37-.95 1.204-1.165 1.452-.214.247-.428.278-.797.093-.37-.186-1.566-.577-2.985-1.841-1.103-.984-1.848-2.199-2.066-2.57-.214-.37-.023-.57.162-.755.166-.164.37-.428.556-.642.185-.215.247-.37.37-.617.124-.247.062-.464-.03-.648-.093-.185-.833-2.012-1.14-2.753-.297-.714-.6-.616-.833-.628l-.709-.012c-.247 0-.648.093-.986.464-.338.37-1.296 1.27-1.296 3.1 0 1.83 1.327 3.593 1.513 3.841.185.247 2.607 3.995 6.318 5.17.883.247 1.57.396 2.105.507.885.169 1.691.146 2.328.089 0 0 2.215-.905 2.527-2.24.312-1.336.312-2.482.221-2.627-.09-.144-.338-.228-.709-.413z" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="wa-text">¡WhatsApp!</span>
+        </a>
+        <a href="https://wa.me/+59894691690?text=¡Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20la%20coleccion%20de%20suculentas"
+           class="whatsapp-float"
+           target="_blank"
+           aria-label="Hablar por WhatsApp">
+            <span class="wa-bubble">
+                <svg viewBox="0 0 32 32" width="32" height="32" fill="none">
+                    <defs>
+                        <radialGradient id="waGlow" cx="50%" cy="50%" r="60%" fx="50%" fy="50%">
+                            <stop offset="0%" stop-color="#25D366" stop-opacity="1"/>
+                            <stop offset="100%" stop-color="#128C7E" stop-opacity="0.75"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="16" cy="16" r="16" fill="url(#waGlow)"/>
+                    <path d="M23.472 19.347c-.37-.185-2.185-1.08-2.523-1.205-.338-.124-.585-.185-.833.186-.247.37-.95 1.204-1.165 1.452-.214.247-.428.278-.797.093-.37-.186-1.566-.577-2.985-1.841-1.103-.984-1.848-2.199-2.066-2.57-.214-.37-.023-.57.162-.755.166-.164.37-.428.556-.642.185-.215.247-.37.37-.617.124-.247.062-.464-.03-.648-.093-.185-.833-2.012-1.14-2.753-.297-.714-.6-.616-.833-.628l-.709-.012c-.247 0-.648.093-.986.464-.338.37-1.296 1.27-1.296 3.1 0 1.83 1.327 3.593 1.513 3.841.185.247 2.607 3.995 6.318 5.17.883.247 1.57.396 2.105.507.885.169 1.691.146 2.328.089 0 0 2.215-.905 2.527-2.24.312-1.336.312-2.482.221-2.627-.09-.144-.338-.228-.709-.413z" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="wa-text">¡WhatsApp!</span>
+        </a>
         <a href="https://wa.me/+59894691690?text=¡Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20la%20coleccion%20de%20suculentas"
             class="whatsapp-float"
             target="_blank"

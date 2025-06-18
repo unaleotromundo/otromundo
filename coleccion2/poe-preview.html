@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Suculentas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="welcomeModal" class="welcome-modal">
+        <span class="close-welcome-button">&times;</span>
+        <img src="img/coleccion2.png" alt="Bienvenida a la Colección" class="welcome-image">
+    </div>
+
+    <header>
+        <p>© 2025 OtroMundo-Suculentas. Colección 2. Todos los derechos reservados.</p>
+    </header>
+
+    <div class="gallery" id="gallery">
+        <div class="frame" data-fullsize-src="img/senecioarticulatus_full.png">
+            <img src="img/senecioarticulatus.png" alt="Suculenta 1">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 1 - Detalle" class="hover-image"> 
+                <p>Información detallada de Senecio Articulatus. Es una planta hermosa y fácil de cuidar.</p>
+            </div>
+        </div>
+        
+        <div class="frame" data-fullsize-src="img/gasteriapillansi_full.jpg">
+            <img src="img/gasteriapillansi.jpg" alt="Suculenta 2">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 2 - Detalle" class="hover-image">
+                <p>Gasteria Pillansi: Ideal para interiores luminosos.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/crassulapellucida_full.jpg">
+            <img src="img/crassulapellucida.jpg" alt="Suculenta 3">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 3 - Detalle" class="hover-image">
+                <p>Crassula Pellucida: Colorida y de bajo mantenimiento.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/echeveriasetosal_full.jpg">
+            <img src="img/echeveriasetosal.jpg" alt="Suculenta 4">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 4 - Detalle" class="hover-image">
+                <p>Echeveria Setosa: Con hojas suaves y aterciopeladas.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/sedumluteoviride_full.jpg">
+            <img src="img/sedumluteoviride.jpg" alt="Suculenta 5">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 5 - Detalle" class="hover-image">
+                <p>Sedum Luteoviride: Perfecto para rocallas y macetas.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/sedumclavatum_full.jpg">
+            <img src="img/sedumclavatum.jpg" alt="Suculenta 6">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 6 - Detalle" class="hover-image">
+                <p>Sedum Clavatum: Forma compacta y atractiva.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/haworthiacuspidata_full.jpg">
+            <img src="img/haworthiacuspidata.jpg" alt="Suculenta 7">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 7 - Detalle" class="hover-image">
+                <p>Haworthia Cuspidata: Ideal para principiantes y poca luz.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/pachyphytumcompactum_full.jpg">
+            <img src="img/pachyphytumcompactum.jpg" alt="Suculenta 8">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 8 - Detalle" class="hover-image">
+                <p>Pachyphytum Compactum: Hojas regordetas y decorativas.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/corpuscularialehmannii_full.jpg">
+            <img src="img/corpuscularialehmannii.jpg" alt="Suculenta 9">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 9 - Detalle" class="hover-image">
+                <p>Corpuscularia Lehmannii: Pequeñas flores amarillas.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/opuntiamicrodasys_full.jpg">
+            <img src="img/opuntiamicrodasys.jpg" alt="Suculenta 10">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 10 - Detalle" class="hover-image">
+                <p>Opuntia Microdasys: El "nopalito" sin espinas.</p>
+            </div>
+        </div>
+        <div class="frame" data-fullsize-src="img/sedumrubrotinctum_full.jpg">
+            <img src="img/sedumrubrotinctum.jpg" alt="Suculenta 11">
+            <div class="hover-info">
+                <img src="" alt="Suculenta 11 - Detalle" class="hover-image">
+                <p>Sedum Rubrotinctum: Se pone rojo bajo el sol.</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 500px; background-color: white; text-align: center; padding-top: 20px; margin-top: 20px;">
+        <p>© 2025 Otro Mundo - Colección de Suculentas. Todos los derechos reservados.</p>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-button">&times;</span>
+        <img src="" alt="Imagen en pantalla completa" class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <div id="floatingCactusButton" class="floating-cactus-button" role="button" aria-label="Ir a Colección 1">
+        <img src="img/cactus_button.png" alt="Cactus Colección 1">
+        <span class="button-text">Colección 1</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
