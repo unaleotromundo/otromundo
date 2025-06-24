@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeWelcomeButton = document.querySelector('.close-welcome-button'); 
 
     const floatingCactusButton = document.getElementById('floatingCactusButton'); // Nuevo: Referencia al botón flotante
-    const collection1URL = 'https://contralamaquina.github.io/otromundo/'; // *** CAMBIA ESTA URL a la de tu Colección 1 ***
+    const collection1URL = 'https://unaleotromundo.github.io/otromundo/'; // *** CAMBIA ESTA URL a la de tu Colección 1 ***
 
     // --- Lógica del Modal de Bienvenida ---
     setTimeout(() => {
