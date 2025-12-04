@@ -48,7 +48,6 @@
             background: url('hero-bg.webp') no-repeat center center fixed; 
             background-size: cover;
         }
-        /* Fallback fondo */
         .wall-bg:after {
             content: ""; position: absolute; inset: 0; z-index: -1;
             background: url('https://images.unsplash.com/photo-1459156212016-c812468e2115?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
@@ -143,7 +142,22 @@
             width: 100%; height: 250px; overflow: hidden; border-bottom: 2px solid var(--ink-color);
             margin-bottom: 15px; cursor: zoom-in; background: #fff; position: relative;
         }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1); }
+        
+        .product-image img { 
+            width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1); 
+            transition: transform 0.3s ease;
+        }
+
+        /* ESTA CLASE HACE LA MAGIA DEL ZOOM PARA RECORTAR MARCOS */
+        .zoom-crop {
+            transform: scale(1.18); /* Aumenta un 18% para sacar el marco */
+            transform-origin: center center;
+        }
+        /* Al hacer hover en la tarjeta, aumentamos un poquito más el zoom */
+        .product-card:hover .zoom-crop {
+            transform: scale(1.25); 
+        }
+
         .descripcion { font-size: 0.95rem; line-height: 1.6; flex-grow: 1; }
         .ver-mas-btn {
             background: none; border: none; color: var(--green-retro); font-weight: bold; 
@@ -272,7 +286,7 @@
             <div class="container">
                 <h2 class="section-title">Nuestra Colección</h2>
                 <div class="products-grid" id="productsGrid">
-                    <!-- JS inyectará las plantas y la tarjeta especial al final -->
+                    <!-- JS inyectará las plantas -->
                 </div>
             </div>
         </section>
@@ -348,13 +362,8 @@
     </a>
 
     <script>
-        /* 
-           DESCRIPCIONES ACTUALIZADAS:
-           Como no puedo ver el texto de las imágenes, he redactado descripciones botánicas 
-           reales y atractivas para cada especie basándome en sus nombres científicos.
-        */
         const suculentas = [
-            // --- COLECCIÓN 1 ---
+            // --- COLECCIÓN 1 (0-10) ---
             {nombre: "El Cactus maní", ruta: "img/suculentas/cactuscacahuete.jpg", descripcion: "(Echinopsis chamaecereus) Cactus de tallos delgados que parecen cacahuetes. Flores naranjas vibrantes.", fotos:["img/suculentas/cactuscacahuete.jpg","img/suculentas/cactuscacahuete-2.jpg"]},
             {nombre: "Echeveria Elegans", ruta: "img/suculentas/echeveria-elegans.jpg", descripcion: "Rosa de Alabastro. Famosa por su belleza simétrica y facilidad de cultivo.", fotos: ["img/suculentas/echeveria-elegans.jpg"]},
             {nombre: "Graptosedum 'California Sunset'", ruta: "img/suculentas/califonissunset.jpg", descripcion: "Sus hojas cambian de color a tonos naranja y bronce con el sol, como un atardecer.", fotos:["img/suculentas/califonissunset.jpg"]},
@@ -367,77 +376,20 @@
             {nombre: "Crassula Fragilis", ruta: "img/suculentas/crassulafragilis.jpg", descripcion: "Tallos delicados y ramificados, ideal para macetas colgantes.", fotos:["img/suculentas/crassulafragilis.jpg"]},
             {nombre: "Opuntia Monstruosa", ruta: "img/suculentas/monstruosa.jpg", descripcion: "Variante excepcional de Opuntia, una verdadera joya de colección.", fotos:["img/suculentas/monstruosa.jpg"]},
 
-            // --- COLECCIÓN 2 (Descripciones Mejoradas) ---
-            {
-                nombre: "Senecio Articulatus", 
-                ruta: "img/senecioarticulatus.png", 
-                descripcion: "Conocida como 'Planta Vela', tiene tallos tubulares curiosamente segmentados y hojas verdes lobuladas que caen en reposo. Una rareza escultural.", 
-                fotos: ["img/senecioarticulatus.png", "img/senecioarticulatus_full.png"]
-            },
-            {
-                nombre: "Gasteria Pillansi", 
-                ruta: "img/gasteriapillansi.jpg", 
-                descripcion: "Pariente del Aloe, sus hojas son gruesas, duras y moteadas, creciendo en forma de dístico (abanico). Muy resistente y perfecta para interiores.", 
-                fotos: ["img/gasteriapillansi.jpg", "img/gasteriapillansi_full.jpg"]
-            },
-            {
-                nombre: "Crassula Pellucida", 
-                ruta: "img/crassulapellucida.jpg", 
-                descripcion: "Una suculenta rastrera encantadora, con pequeñas hojas en forma de corazón que se tornan rojizas en los bordes con el sol. Ideal para cestas colgantes.", 
-                fotos: ["img/crassulapellucida.jpg", "img/crassulapellucida_full.jpg"]
-            },
-            {
-                nombre: "Echeveria Setosa", 
-                ruta: "img/echeveriasetosal.jpg", 
-                descripcion: "Llamada 'Mexican Firecracker', se distingue por estar cubierta de finos pelitos blancos (setas) que le dan una textura aterciopelada única.", 
-                fotos: ["img/echeveriasetosal.jpg", "img/echeveriasetosal_full.jpg"]
-            },
-            {
-                nombre: "Sedum Luteoviride", 
-                ruta: "img/sedumluteoviride.jpg", 
-                descripcion: "Un Sedum de crecimiento rápido con hojas verdes brillantes que adquieren tonos anaranjados bajo estrés solar. Excelente para dar color.", 
-                fotos: ["img/sedumluteoviride.jpg", "img/sedumluteoviride_full.jpg"]
-            },
-            {
-                nombre: "Sedum Clavatum", 
-                ruta: "img/sedumclavatum.jpg", 
-                descripcion: "Forma rosetas compactas y regordetas de color verde pálido o azulado. Sus tallos tienden a colgar con el tiempo, creando un efecto cascada.", 
-                fotos: ["img/sedumclavatum.jpg", "img/sedumclavatum_full.jpg"]
-            },
-            {
-                nombre: "Haworthia Cuspidata", 
-                ruta: "img/haworthiacuspidata.jpg", 
-                descripcion: "Famosa por sus 'ventanas' translúcidas en las puntas de las hojas, que permiten pasar la luz. Forma una roseta perfecta similar a una estrella.", 
-                fotos: ["img/haworthiacuspidata.jpg", "img/haworthiacuspidata_full.jpg"]
-            },
-            {
-                nombre: "Pachyphytum Compactum", 
-                ruta: "img/pachyphytumcompactum.jpg", 
-                descripcion: "Conocida como 'Little Jewel', sus hojas cilíndricas tienen marcas facetadas blancas que parecen cortes de diamante. Una joya visual.", 
-                fotos: ["img/pachyphytumcompactum.jpg", "img/pachyphytumcompactum_full.jpg"]
-            },
-            {
-                nombre: "Corpuscularia Lehmannii", 
-                ruta: "img/corpuscularialehmannii.jpg", 
-                descripcion: "La 'Planta de Hielo'. Sus hojas grisáceas y gruesas crecen en pares opuestos pareciendo cubos apilados. Muy geométrica y resistente a la sequía.", 
-                fotos: ["img/corpuscularialehmannii.jpg", "img/corpuscularialehmannii_full.jpg"]
-            },
-            {
-                nombre: "Opuntia Microdasys", 
-                ruta: "img/opuntiamicrodasys.jpg", 
-                descripcion: "Las famosas 'Alas de Ángel' u 'Orejas de Conejo'. No tiene espinas largas, sino gloquidios suaves (¡cuidado al tocar!) dorados o blancos.", 
-                fotos: ["img/opuntiamicrodasys.jpg", "img/opuntiamicrodasys_full.jpg"]
-            },
-            {
-                nombre: "Sedum Rubrotinctum", 
-                ruta: "img/sedumrubrotinctum.jpg", 
-                descripcion: "Conocido como 'Dedos de Dios' o 'Jelly Beans'. Sus hojas cilíndricas pasan de verde a un rojo intenso brillante cuando reciben sol directo.", 
-                fotos: ["img/sedumrubrotinctum.jpg", "img/sedumrubrotinctum_full.jpg"]
-            }
+            // --- COLECCIÓN 2 (11-21) ---
+            {nombre: "Senecio Articulatus", ruta: "img/senecioarticulatus.png", descripcion: "Conocida como 'Planta Vela', tiene tallos tubulares curiosamente segmentados y hojas verdes lobuladas.", fotos: ["img/senecioarticulatus.png", "img/senecioarticulatus_full.png"]},
+            {nombre: "Gasteria Pillansi", ruta: "img/gasteriapillansi.jpg", descripcion: "Pariente del Aloe, sus hojas son gruesas, duras y moteadas, creciendo en forma de abanico.", fotos: ["img/gasteriapillansi.jpg", "img/gasteriapillansi_full.jpg"]},
+            {nombre: "Crassula Pellucida", ruta: "img/crassulapellucida.jpg", descripcion: "Una suculenta rastrera encantadora, con pequeñas hojas en forma de corazón rojizas.", fotos: ["img/crassulapellucida.jpg", "img/crassulapellucida_full.jpg"]},
+            {nombre: "Echeveria Setosa", ruta: "img/echeveriasetosal.jpg", descripcion: "Llamada 'Mexican Firecracker', se distingue por estar cubierta de finos pelitos blancos.", fotos: ["img/echeveriasetosal.jpg", "img/echeveriasetosal_full.jpg"]},
+            {nombre: "Sedum Luteoviride", ruta: "img/sedumluteoviride.jpg", descripcion: "Sedum de crecimiento rápido con hojas verdes brillantes que adquieren tonos anaranjados.", fotos: ["img/sedumluteoviride.jpg", "img/sedumluteoviride_full.jpg"]},
+            {nombre: "Sedum Clavatum", ruta: "img/sedumclavatum.jpg", descripcion: "Forma rosetas compactas y regordetas de color verde pálido. Sus tallos tienden a colgar.", fotos: ["img/sedumclavatum.jpg", "img/sedumclavatum_full.jpg"]},
+            {nombre: "Haworthia Cuspidata", ruta: "img/haworthiacuspidata.jpg", descripcion: "Famosa por sus 'ventanas' translúcidas en las hojas, que permiten pasar la luz.", fotos: ["img/haworthiacuspidata.jpg", "img/haworthiacuspidata_full.jpg"]},
+            {nombre: "Pachyphytum Compactum", ruta: "img/pachyphytumcompactum.jpg", descripcion: "Conocida como 'Little Jewel', sus hojas cilíndricas tienen marcas facetadas blancas.", fotos: ["img/pachyphytumcompactum.jpg", "img/pachyphytumcompactum_full.jpg"]},
+            {nombre: "Corpuscularia Lehmannii", ruta: "img/corpuscularialehmannii.jpg", descripcion: "La 'Planta de Hielo'. Sus hojas grisáceas crecen en pares opuestos como cubos.", fotos: ["img/corpuscularialehmannii.jpg", "img/corpuscularialehmannii_full.jpg"]},
+            {nombre: "Opuntia Microdasys", ruta: "img/opuntiamicrodasys.jpg", descripcion: "Las famosas 'Alas de Ángel'. No tiene espinas largas, sino gloquidios suaves dorados.", fotos: ["img/opuntiamicrodasys.jpg", "img/opuntiamicrodasys_full.jpg"]},
+            {nombre: "Sedum Rubrotinctum", ruta: "img/sedumrubrotinctum.jpg", descripcion: "'Dedos de Dios'. Sus hojas cilíndricas pasan de verde a un rojo intenso con el sol.", fotos: ["img/sedumrubrotinctum.jpg", "img/sedumrubrotinctum_full.jpg"]}
         ];
 
-        // --- LÓGICA DE RENDERIZADO ---
-        
         function resumenDescripcion(desc, maxPalabras = 18) {
             const palabras = desc.split(' ');
             if (palabras.length <= maxPalabras) return `<span>${desc}</span>`;
@@ -452,13 +404,17 @@
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
             
-            // 1. Renderizar todas las tarjetas normales
             suculentas.forEach((prod, idx) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                
+                // DETECTAR SI ES DE LA COLECCIÓN 2 (Índice 11 en adelante) PARA APLICAR ZOOM
+                const isCollection2 = idx >= 11;
+                const zoomClass = isCollection2 ? 'zoom-crop' : '';
+
                 card.innerHTML = `
                     <div class="product-image" tabindex="0" data-idx="${idx}">
-                        <img src="${prod.ruta}" alt="${prod.nombre}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Imagen+No+Disponible'">
+                        <img src="${prod.ruta}" class="${zoomClass}" alt="${prod.nombre}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Imagen+No+Disponible'">
                     </div>
                     <h3>${prod.nombre}</h3>
                     <p class="descripcion">${resumenDescripcion(prod.descripcion)}</p>
@@ -466,8 +422,7 @@
                 grid.appendChild(card);
             });
 
-            // 2. Renderizar LA TARJETA ESPECIAL (Colección 2 Aleatoria)
-            // Filtramos solo las de la "Colección 2" (las últimas 11, indices 11 a 21)
+            // TARJETA ESPECIAL (Al final) - También con ZOOM si la foto es de la colección 2
             const collection2StartIdx = 11;
             const randomOffset = Math.floor(Math.random() * (suculentas.length - collection2StartIdx));
             const randomPlant = suculentas[collection2StartIdx + randomOffset];
@@ -478,7 +433,7 @@
             specialCard.target = '_blank';
             specialCard.innerHTML = `
                 <div class="product-image">
-                    <img src="${randomPlant.ruta}" alt="Descubre más" style="opacity: 0.8">
+                    <img src="${randomPlant.ruta}" class="zoom-crop" alt="Descubre más" style="opacity: 0.8">
                 </div>
                 <h3>¿Querés ver más?</h3>
                 <p class="descripcion">
@@ -490,14 +445,13 @@
             `;
             grid.appendChild(specialCard);
 
-            // Listeners
             setupListeners();
         }
 
         function setupListeners() {
             document.querySelectorAll('.ver-mas-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
-                    e.preventDefault(); // Evitar saltos raros
+                    e.preventDefault();
                     const p = btn.closest('.descripcion');
                     const corta = p.querySelector('.desc-corta');
                     const larga = p.querySelector('.desc-larga');
@@ -514,7 +468,6 @@
             });
 
             document.querySelectorAll('.product-image').forEach(imgDiv => {
-                // Solo abrir modal si NO es la tarjeta especial (que es un enlace <a>)
                 if(!imgDiv.closest('.special-card')) {
                     imgDiv.addEventListener('click', function() {
                         openModalGallery(parseInt(imgDiv.dataset.idx, 10));
@@ -556,7 +509,6 @@
             const total = planta.fotos ? planta.fotos.length : 1;
             sliderCount.textContent = `${currentPhotoIdx + 1} / ${total}`;
         }
-
         document.getElementById('modalCloseBtn').onclick = closeModalGallery;
         document.getElementById('sliderPrev').onclick = () => {
             const planta = suculentas[currentModalIdx];
