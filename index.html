@@ -85,7 +85,31 @@
         .switch-input:checked + .switch-plate .switch-toggle {
             transform: rotateX(180deg); background: #ccc; box-shadow: 0 -4px 2px rgba(0,0,0,0.2) inset;
         }
-
+/* --- BOTÓN MUTE --- */
+.mute-button {
+    margin-top: 10px;
+    background: var(--paper-bg);
+    border: 2px solid var(--ink-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none; /* Oculto por defecto */
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+    transition: transform 0.1s;
+}
+.mute-button:hover {
+    transform: scale(1.1);
+}
+.mute-button:active {
+    transform: scale(0.95);
+}
+.mute-button.visible {
+    display: flex;
+}
         /* --- HEADER --- */
         header {
             background: var(--paper-bg); border-bottom: var(--border-width) solid var(--ink-color);
@@ -263,11 +287,14 @@
     <div class="room-overlay" id="roomOverlay"></div>
 
     <div class="light-switch-wrapper">
-        <input type="checkbox" id="light-switch" class="switch-input">
-        <label for="light-switch" class="switch-plate" title="Encender/Apagar Luz">
-            <span class="switch-toggle"></span>
-        </label>
-    </div>
+    <input type="checkbox" id="light-switch" class="switch-input">
+    <label for="light-switch" class="switch-plate" title="Encender/Apagar Luz">
+        <span class="switch-toggle"></span>
+    </label>
+    <button id="muteBtn" class="mute-button" title="Mutear/Desmutear">
+        <span id="speakerIcon">🔊</span>
+    </button>
+</div>
 
     <header>
         <nav class="container">
@@ -492,13 +519,62 @@
             });
         }
 
-        // --- INTERRUPTOR ---
-        const switchInput = document.getElementById('light-switch');
-        const root = document.documentElement;
-        switchInput.addEventListener('change', function() {
-            if(this.checked) root.setAttribute('data-theme', 'dark');
-            else root.removeAttribute('data-theme');
-        });
+        // --- SISTEMA DE AUDIO Y TEMA ---
+const switchInput = document.getElementById('light-switch');
+const root = document.documentElement;
+const muteBtn = document.getElementById('muteBtn');
+const speakerIcon = document.getElementById('speakerIcon');
+
+let audioApagada = new Audio('luzapagada.mp3');
+let audioPrendida = new Audio('luzprendida.mp3');
+let isMuted = false;
+let currentAudio = null;
+
+// Configurar audios
+audioApagada.volume = 0.5;
+audioPrendida.volume = 0.5;
+
+// Función para reproducir audio
+function playAudio(audio) {
+    if (currentAudio && !currentAudio.paused) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+    }
+    
+    if (!isMuted) {
+        currentAudio = audio;
+        audio.play().catch(err => console.log('Error reproduciendo audio:', err));
+    }
+}
+
+// Cambio de tema con el interruptor
+switchInput.addEventListener('change', function() {
+    if(this.checked) {
+        // Cambiar a tema oscuro
+        root.setAttribute('data-theme', 'dark');
+        playAudio(audioApagada);
+        muteBtn.classList.add('visible');
+    } else {
+        // Cambiar a tema claro
+        root.removeAttribute('data-theme');
+        playAudio(audioPrendida);
+        // Mantener el botón visible si ya se mostró
+    }
+});
+
+// Botón de mute/unmute
+muteBtn.addEventListener('click', function() {
+    isMuted = !isMuted;
+    
+    if (isMuted) {
+        speakerIcon.textContent = '🔇';
+        if (currentAudio && !currentAudio.paused) {
+            currentAudio.pause();
+        }
+    } else {
+        speakerIcon.textContent = '🔊';
+    }
+});
 
         // --- EFECTO INTERACTIVO EN IMAGEN HERO (TU CÓDIGO PRESERVADO) ---
         (function() {
