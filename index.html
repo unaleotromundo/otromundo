@@ -125,26 +125,20 @@
             transition: transform 0.1s, box-shadow 0.1s; margin-top: 20px;
         }
         .cta-button:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000; }
-        /* ANTES: */
-.hero-img { 
-    max-width: 300px; border: 2px solid var(--ink-color); box-shadow: var(--hard-shadow); 
-    margin: 20px auto; display: block; filter: grayscale(20%);
-}
-
-/* DESPUÉS: */
-.hero-img-container {
-    max-width: 300px; 
-    margin: 20px auto; 
-    display: block;
-    position: relative;
-    cursor: pointer;
-}
-.hero-img-canvas {
-    width: 100%;
-    height: auto;
-    border: 2px solid var(--ink-color);
-    box-shadow: var(--hard-shadow);
-}
+        
+        .hero-img-container {
+            max-width: 300px; 
+            margin: 20px auto; 
+            display: block;
+            position: relative;
+            cursor: pointer;
+        }
+        .hero-img-canvas {
+            width: 100%;
+            height: auto;
+            border: 2px solid var(--ink-color);
+            box-shadow: var(--hard-shadow);
+        }
 
         /* --- GRID PRODUCTOS --- */
         .products-grid {
@@ -159,7 +153,23 @@
             width: 100%; height: 250px; overflow: hidden; border-bottom: 2px solid var(--ink-color);
             margin-bottom: 15px; cursor: zoom-in; background: #fff; position: relative;
         }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1); }
+        
+        .product-image img { 
+            width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1);
+            transition: transform 0.3s ease; /* Suaviza el zoom */
+        }
+
+        /* --- AQUÍ ESTÁ EL BLOQUE DE ZOOM QUE FALTABA --- */
+        .zoom-crop {
+            transform: scale(1.50); /* AUMENTO FUERTE (1.50 = 50% más grande) */
+            transform-origin: center center;
+        }
+        /* Al pasar el mouse aumentamos un poco más */
+        .product-card:hover .zoom-crop {
+            transform: scale(1.60); 
+        }
+        /* ------------------------------------------------ */
+
         .descripcion { font-size: 0.95rem; line-height: 1.6; flex-grow: 1; }
         .ver-mas-btn {
             background: none; border: none; color: var(--green-retro); font-weight: bold; 
@@ -279,9 +289,11 @@
                 <p>
                     Descubrí la colección completa de suculentas. Una selección única que combina clásicos y nuevas variedades para llenar tu hogar de vida y frescura.
                 </p>
+                <!-- CONTENEDOR DE TU EFECTO CANVAS HERO -->
                 <div class="hero-img-container" id="heroImageContainer">
-    <canvas id="heroCanvas" class="hero-img-canvas"></canvas>
-</div>
+                    <canvas id="heroCanvas" class="hero-img-canvas"></canvas>
+                </div>
+            </div>
         </section>
 
         <section id="coleccion">
@@ -364,11 +376,6 @@
     </a>
 
     <script>
-        /* 
-           DESCRIPCIONES ACTUALIZADAS:
-           Como no puedo ver el texto de las imágenes, he redactado descripciones botánicas 
-           reales y atractivas para cada especie basándome en sus nombres científicos.
-        */
         const suculentas = [
             // --- COLECCIÓN 1 ---
             {nombre: "El Cactus maní", ruta: "img/suculentas/cactuscacahuete.jpg", descripcion: "(Echinopsis chamaecereus) Cactus de tallos delgados que parecen cacahuetes. Flores naranjas vibrantes.", fotos:["img/suculentas/cactuscacahuete.jpg","img/suculentas/cactuscacahuete-2.jpg"]},
@@ -383,77 +390,20 @@
             {nombre: "Crassula Fragilis", ruta: "img/suculentas/crassulafragilis.jpg", descripcion: "Tallos delicados y ramificados, ideal para macetas colgantes.", fotos:["img/suculentas/crassulafragilis.jpg"]},
             {nombre: "Opuntia Monstruosa", ruta: "img/suculentas/monstruosa.jpg", descripcion: "Variante excepcional de Opuntia, una verdadera joya de colección.", fotos:["img/suculentas/monstruosa.jpg"]},
 
-            // --- COLECCIÓN 2 (Descripciones Mejoradas) ---
-            {
-                nombre: "Senecio Articulatus", 
-                ruta: "img/senecioarticulatus.png", 
-                descripcion: "Conocida como 'Planta Vela', tiene tallos tubulares curiosamente segmentados y hojas verdes lobuladas que caen en reposo. Una rareza escultural.", 
-                fotos: ["img/senecioarticulatus.png", "img/senecioarticulatus_full.png"]
-            },
-            {
-                nombre: "Gasteria Pillansi", 
-                ruta: "img/gasteriapillansi.jpg", 
-                descripcion: "Pariente del Aloe, sus hojas son gruesas, duras y moteadas, creciendo en forma de dístico (abanico). Muy resistente y perfecta para interiores.", 
-                fotos: ["img/gasteriapillansi.jpg", "img/gasteriapillansi_full.jpg"]
-            },
-            {
-                nombre: "Crassula Pellucida", 
-                ruta: "img/crassulapellucida.jpg", 
-                descripcion: "Una suculenta rastrera encantadora, con pequeñas hojas en forma de corazón que se tornan rojizas en los bordes con el sol. Ideal para cestas colgantes.", 
-                fotos: ["img/crassulapellucida.jpg", "img/crassulapellucida_full.jpg"]
-            },
-            {
-                nombre: "Echeveria Setosa", 
-                ruta: "img/echeveriasetosal.jpg", 
-                descripcion: "Llamada 'Mexican Firecracker', se distingue por estar cubierta de finos pelitos blancos (setas) que le dan una textura aterciopelada única.", 
-                fotos: ["img/echeveriasetosal.jpg", "img/echeveriasetosal_full.jpg"]
-            },
-            {
-                nombre: "Sedum Luteoviride", 
-                ruta: "img/sedumluteoviride.jpg", 
-                descripcion: "Un Sedum de crecimiento rápido con hojas verdes brillantes que adquieren tonos anaranjados bajo estrés solar. Excelente para dar color.", 
-                fotos: ["img/sedumluteoviride.jpg", "img/sedumluteoviride_full.jpg"]
-            },
-            {
-                nombre: "Sedum Clavatum", 
-                ruta: "img/sedumclavatum.jpg", 
-                descripcion: "Forma rosetas compactas y regordetas de color verde pálido o azulado. Sus tallos tienden a colgar con el tiempo, creando un efecto cascada.", 
-                fotos: ["img/sedumclavatum.jpg", "img/sedumclavatum_full.jpg"]
-            },
-            {
-                nombre: "Haworthia Cuspidata", 
-                ruta: "img/haworthiacuspidata.jpg", 
-                descripcion: "Famosa por sus 'ventanas' translúcidas en las puntas de las hojas, que permiten pasar la luz. Forma una roseta perfecta similar a una estrella.", 
-                fotos: ["img/haworthiacuspidata.jpg", "img/haworthiacuspidata_full.jpg"]
-            },
-            {
-                nombre: "Pachyphytum Compactum", 
-                ruta: "img/pachyphytumcompactum.jpg", 
-                descripcion: "Conocida como 'Little Jewel', sus hojas cilíndricas tienen marcas facetadas blancas que parecen cortes de diamante. Una joya visual.", 
-                fotos: ["img/pachyphytumcompactum.jpg", "img/pachyphytumcompactum_full.jpg"]
-            },
-            {
-                nombre: "Corpuscularia Lehmannii", 
-                ruta: "img/corpuscularialehmannii.jpg", 
-                descripcion: "La 'Planta de Hielo'. Sus hojas grisáceas y gruesas crecen en pares opuestos pareciendo cubos apilados. Muy geométrica y resistente a la sequía.", 
-                fotos: ["img/corpuscularialehmannii.jpg", "img/corpuscularialehmannii_full.jpg"]
-            },
-            {
-                nombre: "Opuntia Microdasys", 
-                ruta: "img/opuntiamicrodasys.jpg", 
-                descripcion: "Las famosas 'Alas de Ángel' u 'Orejas de Conejo'. No tiene espinas largas, sino gloquidios suaves (¡cuidado al tocar!) dorados o blancos.", 
-                fotos: ["img/opuntiamicrodasys.jpg", "img/opuntiamicrodasys_full.jpg"]
-            },
-            {
-                nombre: "Sedum Rubrotinctum", 
-                ruta: "img/sedumrubrotinctum.jpg", 
-                descripcion: "Conocido como 'Dedos de Dios' o 'Jelly Beans'. Sus hojas cilíndricas pasan de verde a un rojo intenso brillante cuando reciben sol directo.", 
-                fotos: ["img/sedumrubrotinctum.jpg", "img/sedumrubrotinctum_full.jpg"]
-            }
+            // --- COLECCIÓN 2 (11-21) ---
+            {nombre: "Senecio Articulatus", ruta: "img/senecioarticulatus.png", descripcion: "Conocida como 'Planta Vela', tiene tallos tubulares curiosamente segmentados y hojas verdes lobuladas.", fotos: ["img/senecioarticulatus.png", "img/senecioarticulatus_full.png"]},
+            {nombre: "Gasteria Pillansi", ruta: "img/gasteriapillansi.jpg", descripcion: "Pariente del Aloe, sus hojas son gruesas, duras y moteadas, creciendo en forma de abanico.", fotos: ["img/gasteriapillansi.jpg", "img/gasteriapillansi_full.jpg"]},
+            {nombre: "Crassula Pellucida", ruta: "img/crassulapellucida.jpg", descripcion: "Una suculenta rastrera encantadora, con pequeñas hojas en forma de corazón rojizas.", fotos: ["img/crassulapellucida.jpg", "img/crassulapellucida_full.jpg"]},
+            {nombre: "Echeveria Setosa", ruta: "img/echeveriasetosal.jpg", descripcion: "Llamada 'Mexican Firecracker', se distingue por estar cubierta de finos pelitos blancos.", fotos: ["img/echeveriasetosal.jpg", "img/echeveriasetosal_full.jpg"]},
+            {nombre: "Sedum Luteoviride", ruta: "img/sedumluteoviride.jpg", descripcion: "Sedum de crecimiento rápido con hojas verdes brillantes que adquieren tonos anaranjados.", fotos: ["img/sedumluteoviride.jpg", "img/sedumluteoviride_full.jpg"]},
+            {nombre: "Sedum Clavatum", ruta: "img/sedumclavatum.jpg", descripcion: "Forma rosetas compactas y regordetas de color verde pálido. Sus tallos tienden a colgar.", fotos: ["img/sedumclavatum.jpg", "img/sedumclavatum_full.jpg"]},
+            {nombre: "Haworthia Cuspidata", ruta: "img/haworthiacuspidata.jpg", descripcion: "Famosa por sus 'ventanas' translúcidas en las hojas, que permiten pasar la luz.", fotos: ["img/haworthiacuspidata.jpg", "img/haworthiacuspidata_full.jpg"]},
+            {nombre: "Pachyphytum Compactum", ruta: "img/pachyphytumcompactum.jpg", descripcion: "Conocida como 'Little Jewel', sus hojas cilíndricas tienen marcas facetadas blancas.", fotos: ["img/pachyphytumcompactum.jpg", "img/pachyphytumcompactum_full.jpg"]},
+            {nombre: "Corpuscularia Lehmannii", ruta: "img/corpuscularialehmannii.jpg", descripcion: "La 'Planta de Hielo'. Sus hojas grisáceas crecen en pares opuestos como cubos.", fotos: ["img/corpuscularialehmannii.jpg", "img/corpuscularialehmannii_full.jpg"]},
+            {nombre: "Opuntia Microdasys", ruta: "img/opuntiamicrodasys.jpg", descripcion: "Las famosas 'Alas de Ángel'. No tiene espinas largas, sino gloquidios suaves dorados.", fotos: ["img/opuntiamicrodasys.jpg", "img/opuntiamicrodasys_full.jpg"]},
+            {nombre: "Sedum Rubrotinctum", ruta: "img/sedumrubrotinctum.jpg", descripcion: "'Dedos de Dios'. Sus hojas cilíndricas pasan de verde a un rojo intenso con el sol.", fotos: ["img/sedumrubrotinctum.jpg", "img/sedumrubrotinctum_full.jpg"]}
         ];
 
-        // --- LÓGICA DE RENDERIZADO ---
-        
         function resumenDescripcion(desc, maxPalabras = 18) {
             const palabras = desc.split(' ');
             if (palabras.length <= maxPalabras) return `<span>${desc}</span>`;
@@ -464,17 +414,23 @@
                 <button class="ver-mas-btn" type="button">[+ ver más]</button>`;
         }
 
+        // --- FUNCIÓN RENDERIZADO ACTUALIZADA CON ZOOM ---
         function renderProductos() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
             
-            // 1. Renderizar todas las tarjetas normales
             suculentas.forEach((prod, idx) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                
+                // DETECTAR SI ES DE LA COLECCIÓN 2 (Índice 11 en adelante)
+                // Esto es lo que faltaba en tu archivo:
+                const isCollection2 = idx >= 11;
+                const zoomClass = isCollection2 ? 'zoom-crop' : '';
+
                 card.innerHTML = `
                     <div class="product-image" tabindex="0" data-idx="${idx}">
-                        <img src="${prod.ruta}" alt="${prod.nombre}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Imagen+No+Disponible'">
+                        <img src="${prod.ruta}" class="${zoomClass}" alt="${prod.nombre}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Imagen+No+Disponible'">
                     </div>
                     <h3>${prod.nombre}</h3>
                     <p class="descripcion">${resumenDescripcion(prod.descripcion)}</p>
@@ -482,8 +438,7 @@
                 grid.appendChild(card);
             });
 
-            // 2. Renderizar LA TARJETA ESPECIAL (Colección 2 Aleatoria)
-            // Filtramos solo las de la "Colección 2" (las últimas 11, indices 11 a 21)
+            // TARJETA ESPECIAL (Al final) - También con ZOOM si es necesario
             const collection2StartIdx = 11;
             const randomOffset = Math.floor(Math.random() * (suculentas.length - collection2StartIdx));
             const randomPlant = suculentas[collection2StartIdx + randomOffset];
@@ -494,7 +449,7 @@
             specialCard.target = '_blank';
             specialCard.innerHTML = `
                 <div class="product-image">
-                    <img src="${randomPlant.ruta}" alt="Descubre más" style="opacity: 0.8">
+                    <img src="${randomPlant.ruta}" class="zoom-crop" alt="Descubre más" style="opacity: 0.8">
                 </div>
                 <h3>¿Querés ver más?</h3>
                 <p class="descripcion">
@@ -506,14 +461,13 @@
             `;
             grid.appendChild(specialCard);
 
-            // Listeners
             setupListeners();
         }
 
         function setupListeners() {
             document.querySelectorAll('.ver-mas-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
-                    e.preventDefault(); // Evitar saltos raros
+                    e.preventDefault();
                     const p = btn.closest('.descripcion');
                     const corta = p.querySelector('.desc-corta');
                     const larga = p.querySelector('.desc-larga');
@@ -530,7 +484,6 @@
             });
 
             document.querySelectorAll('.product-image').forEach(imgDiv => {
-                // Solo abrir modal si NO es la tarjeta especial (que es un enlace <a>)
                 if(!imgDiv.closest('.special-card')) {
                     imgDiv.addEventListener('click', function() {
                         openModalGallery(parseInt(imgDiv.dataset.idx, 10));
@@ -547,251 +500,186 @@
             else root.removeAttribute('data-theme');
         });
 
-        // --- MODAL ---
-        let currentModalIdx = 0;
-        let currentPhotoIdx = 0;
-	let imgWidth, imgHeight, imgOffsetX, imgOffsetY;
+        // --- EFECTO INTERACTIVO EN IMAGEN HERO (TU CÓDIGO PRESERVADO) ---
+        (function() {
+            const canvas = document.getElementById('heroCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let dots = [];
+            let mouse = { x: 0, y: 0 };
+            let isActive = false;
+            let animationId;
+            let heroImage = new Image();
+            let imageLoaded = false;
+            let imgWidth, imgHeight, imgOffsetX, imgOffsetY;
 
-function initDots() {
-    dots = [];
-    const rows = 15;
-    const cols = 15;
-    const spacingX = imgWidth / cols;
-    const spacingY = imgHeight / rows;
-    
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            dots.push({
-                x: j * spacingX + imgOffsetX,
-                y: i * spacingY + imgOffsetY,
-                baseX: j * spacingX + imgOffsetX,
-                baseY: i * spacingY + imgOffsetY,
-                vx: 0,
-                vy: 0
-            });
-        }
-    }
-}
+            // Cargar imagen
+            heroImage.onload = function() {
+                imageLoaded = true;
+                resizeCanvas();
+                animate();
+            };
+            heroImage.onerror = function() {
+                canvas.style.display = 'none';
+            };
+            heroImage.src = 'img/suculentas-hero.png';
 
-        function openModalGallery(plantaIdx) {
-            const modal = document.getElementById('modalOverlay');
-            currentModalIdx = plantaIdx;
-            currentPhotoIdx = 0;
-            updateModalSlider();
-            modal.classList.add('active');
-            document.body.style.overflow = "hidden";
-        }
-        function closeModalGallery() {
-            document.getElementById('modalOverlay').classList.remove('active');
-            document.body.style.overflow = "";
-        }
-        function updateModalSlider() {
-            const planta = suculentas[currentModalIdx];
-            const modalImg = document.getElementById('modalSliderImg');
-            const sliderCount = document.getElementById('modalSliderCount');
-            let fotoSrc = planta.fotos && planta.fotos.length > 0 ? planta.fotos[currentPhotoIdx] : planta.ruta;
-            modalImg.src = fotoSrc;
-            const total = planta.fotos ? planta.fotos.length : 1;
-            sliderCount.textContent = `${currentPhotoIdx + 1} / ${total}`;
-        }
+            function resizeCanvas() {
+                if (!imageLoaded) return;
+                const container = canvas.parentElement;
+                const maxWidth = Math.min(300, container.offsetWidth);
+                const aspectRatio = heroImage.height / heroImage.width;
+                
+                const padding = 40; 
+                canvas.width = maxWidth;
+                canvas.height = maxWidth * aspectRatio;
+                
+                const scale = Math.min(
+                    (canvas.width - padding) / heroImage.width,
+                    (canvas.height - padding) / heroImage.height
+                );
+                
+                imgWidth = heroImage.width * scale;
+                imgHeight = heroImage.height * scale;
+                imgOffsetX = (canvas.width - imgWidth) / 2;
+                imgOffsetY = (canvas.height - imgHeight) / 2;
+                
+                initDots();
+            }
 
-        document.getElementById('modalCloseBtn').onclick = closeModalGallery;
-        document.getElementById('sliderPrev').onclick = () => {
-            const planta = suculentas[currentModalIdx];
-            const total = planta.fotos ? planta.fotos.length : 1;
-            if(total > 1) { currentPhotoIdx = (currentPhotoIdx - 1 + total) % total; updateModalSlider(); }
-        };
-        document.getElementById('sliderNext').onclick = () => {
-            const planta = suculentas[currentModalIdx];
-            const total = planta.fotos ? planta.fotos.length : 1;
-            if(total > 1) { currentPhotoIdx = (currentPhotoIdx + 1) % total; updateModalSlider(); }
-        };
-// ==========================================
-// EFECTO INTERACTIVO EN IMAGEN HERO
-// ==========================================
-(function() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    let dots = [];
-    let mouse = { x: 0, y: 0 };
-    let isActive = false;
-    let animationId;
-    let heroImage = new Image();
-    let imageLoaded = false;
+            function initDots() {
+                dots = [];
+                const rows = 15;
+                const cols = 15;
+                const spacingX = canvas.width / cols;
+                const spacingY = canvas.height / rows;
+                
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        dots.push({
+                            x: j * spacingX,
+                            y: i * spacingY,
+                            baseX: j * spacingX,
+                            baseY: i * spacingY,
+                            vx: 0,
+                            vy: 0
+                        });
+                    }
+                }
+            }
 
-    // Cargar imagen
-    heroImage.onload = function() {
-        imageLoaded = true;
-        resizeCanvas();
-        animate();
-    };
-    heroImage.onerror = function() {
-        canvas.style.display = 'none';
-    };
-    heroImage.src = 'img/suculentas-hero.png';
+            function animate() {
+                if (!imageLoaded) {
+                    animationId = requestAnimationFrame(animate);
+                    return;
+                }
 
-    function resizeCanvas() {
-    if (!imageLoaded) return;
-    const container = canvas.parentElement;
-    const maxWidth = Math.min(300, container.offsetWidth);
-    const aspectRatio = heroImage.height / heroImage.width;
-    
-    // Ajustar para que la imagen se vea completa con padding
-    const padding = 40; // Espacio alrededor de la imagen
-    canvas.width = maxWidth;
-    canvas.height = maxWidth * aspectRatio;
-    
-    // Redimensionar proporcionalmente la imagen dentro del canvas
-    const scale = Math.min(
-        (canvas.width - padding) / heroImage.width,
-        (canvas.height - padding) / heroImage.height
-    );
-    
-    imgWidth = heroImage.width * scale;
-    imgHeight = heroImage.height * scale;
-    imgOffsetX = (canvas.width - imgWidth) / 2;
-    imgOffsetY = (canvas.height - imgHeight) / 2;
-    
-    initDots();
-}
-
-    function initDots() {
-        dots = [];
-        const rows = 15;
-        const cols = 15;
-        const spacingX = canvas.width / cols;
-        const spacingY = canvas.height / rows;
-        
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
-                dots.push({
-                    x: j * spacingX,
-                    y: i * spacingY,
-                    baseX: j * spacingX,
-                    baseY: i * spacingY,
-                    vx: 0,
-                    vy: 0
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const cols = 15;
+                const rows = 15;
+                
+                for (let i = 0; i < rows - 1; i++) {
+                    for (let j = 0; j < cols - 1; j++) {
+                        const idx = i * cols + j;
+                        const dot1 = dots[idx];
+                        const dot2 = dots[idx + 1];
+                        const dot3 = dots[idx + cols];
+                        const dot4 = dots[idx + cols + 1];
+                        
+                        drawTriangle(
+                            dot1.baseX, dot1.baseY, dot2.baseX, dot2.baseY, dot3.baseX, dot3.baseY,
+                            dot1.x, dot1.y, dot2.x, dot2.y, dot3.x, dot3.y
+                        );
+                        
+                        drawTriangle(
+                            dot2.baseX, dot2.baseY, dot4.baseX, dot4.baseY, dot3.baseX, dot3.baseY,
+                            dot2.x, dot2.y, dot4.x, dot4.y, dot3.x, dot3.y
+                        );
+                    }
+                }
+                
+                dots.forEach((dot) => {
+                    const dx = mouse.x - dot.x;
+                    const dy = mouse.y - dot.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const maxDistance = 80;
+                    
+                    if (isActive && distance < maxDistance) {
+                        const force = (1 - distance / maxDistance) * 1.2;
+                        dot.vx -= (dx / distance) * force * 4;
+                        dot.vy -= (dy / distance) * force * 4;
+                    }
+                    
+                    const returnForce = 0.1;
+                    dot.vx += (dot.baseX - dot.x) * returnForce;
+                    dot.vy += (dot.baseY - dot.y) * returnForce;
+                    
+                    dot.vx *= 0.82;
+                    dot.vy *= 0.82;
+                    
+                    dot.x += dot.vx;
+                    dot.y += dot.vy;
                 });
-            }
-        }
-    }
-
-    function animate() {
-        if (!imageLoaded) {
-            animationId = requestAnimationFrame(animate);
-            return;
-        }
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        const cols = 15;
-        const rows = 15;
-        
-        // Dibujar imagen distorsionada
-        for (let i = 0; i < rows - 1; i++) {
-            for (let j = 0; j < cols - 1; j++) {
-                const idx = i * cols + j;
-                const dot1 = dots[idx];
-                const dot2 = dots[idx + 1];
-                const dot3 = dots[idx + cols];
-                const dot4 = dots[idx + cols + 1];
                 
-                drawTriangle(
-                    dot1.baseX, dot1.baseY, dot2.baseX, dot2.baseY, dot3.baseX, dot3.baseY,
-                    dot1.x, dot1.y, dot2.x, dot2.y, dot3.x, dot3.y
-                );
+                animationId = requestAnimationFrame(animate);
+            }
+
+            function drawTriangle(sx1, sy1, sx2, sy2, sx3, sy3, dx1, dy1, dx2, dy2, dx3, dy3) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(dx1, dy1);
+                ctx.lineTo(dx2, dy2);
+                ctx.lineTo(dx3, dy3);
+                ctx.closePath();
+                ctx.clip();
                 
-                drawTriangle(
-                    dot2.baseX, dot2.baseY, dot4.baseX, dot4.baseY, dot3.baseX, dot3.baseY,
-                    dot2.x, dot2.y, dot4.x, dot4.y, dot3.x, dot3.y
-                );
+                const denom = (sx1 - sx3) * (sy2 - sy3) - (sx2 - sx3) * (sy1 - sy3);
+                if (Math.abs(denom) < 0.0001) {
+                    ctx.restore();
+                    return;
+                }
+                
+                const m11 = ((dx1 - dx3) * (sy2 - sy3) - (dx2 - dx3) * (sy1 - sy3)) / denom;
+                const m12 = ((dx2 - dx3) * (sx1 - sx3) - (dx1 - dx3) * (sx2 - sx3)) / denom;
+                const m21 = ((dy1 - dy3) * (sy2 - sy3) - (dy2 - dy3) * (sy1 - sy3)) / denom;
+                const m22 = ((dy2 - dy3) * (sx1 - sx3) - (dy1 - dy3) * (sx2 - sx3)) / denom;
+                const dx = dx3 - m11 * sx3 - m12 * sy3;
+                const dy = dy3 - m21 * sx3 - m22 * sy3;
+                
+                ctx.transform(m11, m21, m12, m22, dx, dy);
+                ctx.drawImage(heroImage, imgOffsetX, imgOffsetY, imgWidth, imgHeight);
+                ctx.restore();
             }
-        }
-        
-        // Actualizar física de puntos
-        dots.forEach((dot) => {
-            const dx = mouse.x - dot.x;
-            const dy = mouse.y - dot.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const maxDistance = 80;
-            
-            if (isActive && distance < maxDistance) {
-                const force = (1 - distance / maxDistance) * 1.2;
-                dot.vx -= (dx / distance) * force * 4;
-                dot.vy -= (dy / distance) * force * 4;
+
+            function handleInteraction(e) {
+                const rect = canvas.getBoundingClientRect();
+                if (e.type === 'mousemove' || e.type === 'mousedown') {
+                    mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
+                    mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+                } else if (e.type === 'touchmove' || e.type === 'touchstart') {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    mouse.x = (touch.clientX - rect.left) * (canvas.width / rect.width);
+                    mouse.y = (touch.clientY - rect.top) * (canvas.height / rect.height);
+                }
             }
-            
-            const returnForce = 0.1;
-            dot.vx += (dot.baseX - dot.x) * returnForce;
-            dot.vy += (dot.baseY - dot.y) * returnForce;
-            
-            dot.vx *= 0.82;
-            dot.vy *= 0.82;
-            
-            dot.x += dot.vx;
-            dot.y += dot.vy;
-        });
-        
-        animationId = requestAnimationFrame(animate);
-    }
 
-    function drawTriangle(sx1, sy1, sx2, sy2, sx3, sy3, dx1, dy1, dx2, dy2, dx3, dy3) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(dx1, dy1);
-        ctx.lineTo(dx2, dy2);
-        ctx.lineTo(dx3, dy3);
-        ctx.closePath();
-        ctx.clip();
-        
-        const denom = (sx1 - sx3) * (sy2 - sy3) - (sx2 - sx3) * (sy1 - sy3);
-        if (Math.abs(denom) < 0.0001) {
-            ctx.restore();
-            return;
-        }
-        
-        const m11 = ((dx1 - dx3) * (sy2 - sy3) - (dx2 - dx3) * (sy1 - sy3)) / denom;
-        const m12 = ((dx2 - dx3) * (sx1 - sx3) - (dx1 - dx3) * (sx2 - sx3)) / denom;
-        const m21 = ((dy1 - dy3) * (sy2 - sy3) - (dy2 - dy3) * (sy1 - sy3)) / denom;
-        const m22 = ((dy2 - dy3) * (sx1 - sx3) - (dy1 - dy3) * (sx2 - sx3)) / denom;
-        const dx = dx3 - m11 * sx3 - m12 * sy3;
-        const dy = dy3 - m21 * sx3 - m22 * sy3;
-        
-        ctx.transform(m11, m21, m12, m22, dx, dy);
-        ctx.drawImage(heroImage, imgOffsetX, imgOffsetY, imgWidth, imgHeight);
-        ctx.restore();
-    }
+            canvas.addEventListener('mousedown', () => isActive = true);
+            canvas.addEventListener('mouseup', () => isActive = false);
+            canvas.addEventListener('mouseleave', () => isActive = false);
+            canvas.addEventListener('mousemove', handleInteraction);
+            canvas.addEventListener('touchstart', (e) => {
+                isActive = true;
+                handleInteraction(e);
+            });
+            canvas.addEventListener('touchend', () => isActive = false);
+            canvas.addEventListener('touchmove', handleInteraction);
 
-    function handleInteraction(e) {
-        const rect = canvas.getBoundingClientRect();
-        if (e.type === 'mousemove' || e.type === 'mousedown') {
-            mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
-            mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
-        } else if (e.type === 'touchmove' || e.type === 'touchstart') {
-            e.preventDefault();
-            const touch = e.touches[0];
-            mouse.x = (touch.clientX - rect.left) * (canvas.width / rect.width);
-            mouse.y = (touch.clientY - rect.top) * (canvas.height / rect.height);
-        }
-    }
+            window.addEventListener('resize', resizeCanvas);
+        })();
 
-    // Event listeners
-    canvas.addEventListener('mousedown', () => isActive = true);
-    canvas.addEventListener('mouseup', () => isActive = false);
-    canvas.addEventListener('mouseleave', () => isActive = false);
-    canvas.addEventListener('mousemove', handleInteraction);
-    canvas.addEventListener('touchstart', (e) => {
-        isActive = true;
-        handleInteraction(e);
-    });
-    canvas.addEventListener('touchend', () => isActive = false);
-    canvas.addEventListener('touchmove', handleInteraction);
-
-    window.addEventListener('resize', resizeCanvas);
-})();
-// ==========================================
         // --- INICIALIZACIÓN ---
         document.addEventListener('DOMContentLoaded', function() {
             renderProductos();

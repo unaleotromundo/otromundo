@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Otro Mundo | Colección Completa</title>
+    <!-- Fuente Retro tipo máquina de escribir -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- VARIABLES DE TEMA (Retro & Minimalista) --- */
+        :root {
+            /* Colores Base - Modo Claro (Luz Encendida) */
+            --bg-wall: #f4f1ea; 
+            --paper-bg: #fffbf0; 
+            --ink-color: #1a1a1a; 
+            --accent: #dfa800; 
+            --green-retro: #4a6c45; 
+            --border-width: 2px;
+            --hard-shadow: 6px 6px 0px #1a1a1a; 
+            --overlay-opacity: 0; 
+        }
+
+        [data-theme="dark"] {
+            /* Modo Oscuro (Luz Apagada) */
+            --paper-bg: #2d2d2d;
+            --ink-color: #e0e0e0;
+            --hard-shadow: 6px 6px 0px #000;
+            --accent: #ffcc00;
+            --overlay-opacity: 0.75; 
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        * { box-sizing: border-box; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            color: var(--ink-color);
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- FONDO --- */
+        .wall-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background: url('hero-bg.webp') no-repeat center center fixed; 
+            background-size: cover;
+        }
+        .wall-bg:after {
+            content: ""; position: absolute; inset: 0; z-index: -1;
+            background: url('https://images.unsplash.com/photo-1459156212016-c812468e2115?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover; opacity: 0.5;
+        }
+
+        .room-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; opacity: var(--overlay-opacity);
+            z-index: -1; pointer-events: none; transition: opacity 0.5s ease;
+        }
+
+        /* --- INTERRUPTOR --- */
+        .light-switch-wrapper {
+            position: fixed; top: 100px; right: 30px; z-index: 2000;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .switch-plate {
+            width: 60px; height: 100px; background: #e0e0e0; border: 2px solid #555;
+            border-radius: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative;
+        }
+        .switch-plate::before, .switch-plate::after {
+            content: ''; position: absolute; width: 6px; height: 6px; 
+            background: #bbb; border-radius: 50%; border: 1px solid #777; left: 50%; transform: translateX(-50%);
+        }
+        .switch-plate::before { top: 10px; }
+        .switch-plate::after { bottom: 10px; }
+        .switch-input { display: none; }
+        .switch-toggle {
+            width: 20px; height: 40px; background: #fff; border: 1px solid #999;
+            transition: transform 0.2s; box-shadow: 0 4px 2px rgba(0,0,0,0.2);
+        }
+        .switch-input:checked + .switch-plate .switch-toggle {
+            transform: rotateX(180deg); background: #ccc; box-shadow: 0 -4px 2px rgba(0,0,0,0.2) inset;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--paper-bg); border-bottom: var(--border-width) solid var(--ink-color);
+            position: fixed; width: 100%; top: 0; z-index: 1000; padding: 10px 0;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { 
+            font-weight: 700; font-size: 1.4rem; letter-spacing: -1px; text-transform: uppercase; 
+            border: 2px solid var(--ink-color); padding: 5px 10px; background: var(--accent); color: #000;
+        }
+        .nav-links { list-style: none; display: flex; gap: 20px; padding: 0; margin: 0;}
+        .nav-links a { 
+            text-decoration: none; color: var(--ink-color); font-weight: bold; 
+            font-size: 1.1rem; border-bottom: 2px solid transparent; 
+        }
+        .nav-links a:hover { border-bottom: 2px solid var(--accent); }
+
+        /* --- SECCIONES --- */
+        section { padding: 80px 0; position: relative; z-index: 1; }
+        .retro-card {
+            background: var(--paper-bg); border: var(--border-width) solid var(--ink-color);
+            box-shadow: var(--hard-shadow); padding: 30px; margin-bottom: 40px;
+        }
+        h1, h2, h3 { text-transform: uppercase; letter-spacing: 1px; }
+        .section-title {
+            background: var(--ink-color); color: var(--paper-bg); display: inline-block;
+            padding: 10px 20px; font-size: 1.8rem; margin-bottom: 30px; box-shadow: 4px 4px 0 var(--accent);
+        }
+
+        /* --- HERO --- */
+        .hero { min-height: 80vh; display: flex; align-items: center; justify-content: center; }
+        .hero-content { text-align: center; max-width: 700px; }
+        .cta-button {
+            display: inline-block; background: var(--accent); color: #000; padding: 15px 30px;
+            text-decoration: none; font-weight: bold; border: 2px solid #000; box-shadow: 4px 4px 0 #000;
+            transition: transform 0.1s, box-shadow 0.1s; margin-top: 20px;
+        }
+        .cta-button:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000; }
+        .hero-img { 
+            max-width: 300px; border: 2px solid var(--ink-color); box-shadow: var(--hard-shadow); 
+            margin: 20px auto; display: block; filter: grayscale(20%);
+        }
+
+        /* --- GRID PRODUCTOS --- */
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;
+        }
+        .product-card {
+            background: var(--paper-bg); border: 2px solid var(--ink-color); box-shadow: var(--hard-shadow);
+            padding: 15px; text-align: left; transition: transform 0.2s; display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-image {
+            width: 100%; height: 250px; overflow: hidden; border-bottom: 2px solid var(--ink-color);
+            margin-bottom: 15px; cursor: zoom-in; background: #fff; position: relative;
+        }
+        
+        .product-image img { 
+            width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1); 
+            transition: transform 0.3s ease;
+        }
+
+        /* --- ZOOM MODIFICADO: MÁS GRANDE --- */
+        .zoom-crop {
+            transform: scale(1.35); /* <--- AUMENTADO A 1.35 (Antes 1.35) */
+            transform-origin: center center;
+        }
+        .product-card:hover .zoom-crop {
+            transform: scale(1.45); /* <--- AUMENTADO A 1.45 (Antes 1.25) */
+        }
+
+        .descripcion { font-size: 0.95rem; line-height: 1.6; flex-grow: 1; }
+        .ver-mas-btn {
+            background: none; border: none; color: var(--green-retro); font-weight: bold; 
+            text-decoration: underline; cursor: pointer; font-family: inherit;
+        }
+
+        /* ESTILO PARA LA TARJETA ESPECIAL (LINK A COLECCION 2) */
+        .special-card {
+            border: 2px dashed var(--ink-color);
+            background: var(--paper-bg);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--ink-color);
+        }
+        .special-card:hover {
+            border: 2px solid var(--accent);
+            transform: scale(1.02);
+        }
+        .special-card .product-image:after {
+            content: "VER GALERÍA ORIGINAL ➜";
+            position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7);
+            color: #fff; padding: 10px; text-align: center; font-weight: bold;
+        }
+
+        /* --- CONTACTO --- */
+        .contact-content { display: flex; gap: 40px; flex-wrap: wrap; }
+        .contact-text, .contact-form-card { flex: 1; min-width: 300px; }
+        input, textarea {
+            width: 100%; background: transparent; border: 2px solid var(--ink-color); padding: 12px;
+            font-family: inherit; margin-bottom: 15px; color: var(--ink-color); font-size: 1rem;
+        }
+        input:focus, textarea:focus { outline: none; background: rgba(255,255,255,0.1); }
+        .modern-btn {
+            background: var(--ink-color); color: var(--paper-bg); border: none; padding: 15px 30px;
+            font-family: inherit; font-weight: bold; cursor: pointer; text-transform: uppercase;
+        }
+        .modern-btn:hover { background: var(--green-retro); }
+
+        /* --- MODAL --- */
+        .modal-overlay-simple {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); z-index: 5000; justify-content: center; align-items: center;
+        }
+        .modal-overlay-simple.active { display: flex; }
+        .modal-gallery-wrapper { position: relative; max-width: 90vw; }
+        .gallery-img { max-height: 80vh; max-width: 90vw; border: 5px solid #fff; object-fit: contain;}
+        .gallery-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: #fff; border: 2px solid #000; color: #000;
+            width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 10;
+        }
+        .gallery-arrow.left { left: -60px; }
+        .gallery-arrow.right { right: -60px; }
+        .gallery-close {
+            position: absolute; top: -50px; right: 0; background: none; border: none; 
+            color: #fff; font-size: 40px; cursor: pointer;
+        }
+
+        /* --- FLOTANTES --- */
+        .float-btn {
+            position: fixed; z-index: 4000; border: 2px solid #000; box-shadow: 4px 4px 0 #000;
+            text-decoration: none; padding: 10px; background: #fff; color: #000; 
+            font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
+            transition: transform 0.2s;
+        }
+        .float-btn:hover { transform: scale(1.05); }
+        .whatsapp-float { bottom: 20px; right: 20px; background: #25d366; color: #fff; border-color: #000; }
+        .collection-float { bottom: 80px; left: 20px; background: #fffae6; }
+        .collection-float img { height: 25px; width: auto; }
+
+        /* --- MOBILE --- */
+        .hamburger { display: none; cursor: pointer; }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; position: absolute; top: 60px; left: 0; width: 100%;
+                background: var(--paper-bg); border-bottom: 2px solid #000;
+                flex-direction: column; padding: 20px; text-align: center;
+            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; font-size: 2rem; }
+            .light-switch-wrapper { top: 70px; right: 10px; transform: scale(0.7); transform-origin: top right; }
+            .gallery-arrow.left { left: 0px; top: unset; bottom: -60px; }
+            .gallery-arrow.right { right: 0px; top: unset; bottom: -60px; }
+            .modal-gallery-wrapper { margin-bottom: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wall-bg"></div>
+    <div class="room-overlay" id="roomOverlay"></div>
+
+    <div class="light-switch-wrapper">
+        <input type="checkbox" id="light-switch" class="switch-input">
+        <label for="light-switch" class="switch-plate" title="Encender/Apagar Luz">
+            <span class="switch-toggle"></span>
+        </label>
+    </div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">Otro Mundo</div>
+            <div class="hamburger" id="hamburger">&#9776;</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#coleccion">Colección</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="inicio">
+            <div class="container hero-content retro-card">
+                <h1>Bienvenido a Otro Mundo</h1>
+                <p>
+                    Descubrí la colección completa de suculentas. Una selección única que combina clásicos y nuevas variedades para llenar tu hogar de vida y frescura.
+                </p>
+                <img src="img/suculentas-hero.png" alt="Colección de suculentas" class="hero-img" onerror="this.style.display='none'">
+                <a href="#coleccion" class="cta-button">VER TODAS LAS PLANTAS</a>
+            </div>
+        </section>
+
+        <section id="coleccion">
+            <div class="container">
+                <h2 class="section-title">Nuestra Colección</h2>
+                <div class="products-grid" id="productsGrid">
+                    <!-- JS inyectará las plantas -->
+                </div>
+            </div>
+        </section>
+
+        <section id="nosotros">
+            <div class="container retro-card">
+                <div class="contact-content">
+                    <div style="flex: 0 0 300px; display: flex; justify-content: center; align-items: center;">
+                        <img src="img/nosotros.png" alt="Equipo" style="max-width: 100%; border: 2px solid var(--ink-color); box-shadow: 4px 4px 0 rgba(0,0,0,0.2);">
+                    </div>
+                    <div style="flex: 1;">
+                        <h2 style="margin-top: 0;">Nosotros</h2>
+                        <p>
+                            En <strong>Otro Mundo</strong> nos dedicamos a cultivar y seleccionar las suculentas más bellas y resistentes. Hemos fusionado nuestras colecciones para ofrecerte una variedad increíble, desde las clásicas Echeverias hasta variedades exóticas como el Senecio Articulatus. Cada planta es seleccionada por su energía positiva y facilidad de cuidado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto">
+            <div class="container">
+                <div class="retro-card">
+                    <h2 class="section-title" style="margin-top:0">Contacto</h2>
+                    <div class="contact-content">
+                        <div class="contact-text">
+                            <h3>Conectate con Otro Mundo</h3>
+                            <p>¿Cuál te gustó más? ¿Querés tenerlas todas? ¿Tenés una consulta para hacernos?</p>
+                            <p>Tel: 094691690</p>
+                            <p>¡Estamos a las órdenes!</p>
+                        </div>
+                        <div class="contact-form-card">
+                            <form id="contactForm" action="https://formspree.io/f/xrbkbzvw" method="POST">
+                                <input type="text" name="nombre" placeholder="NOMBRE *" required>
+                                <input type="email" name="email" placeholder="EMAIL *" required>
+                                <textarea name="comentario" rows="5" placeholder="ESCRIBÍ TU MENSAJE..." required></textarea>
+                                <button type="submit" class="modern-btn">ENVIAR MENSAJE</button>
+                                <p id="formMsg"></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 20px; font-size: 0.8rem;">
+            <p>&copy; 2025 OTRO MUNDO - COLECCIÓN DE SUCULENTAS.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL GALERÍA -->
+    <div id="modalOverlay" class="modal-overlay-simple">
+        <div class="modal-gallery-wrapper">
+            <button class="gallery-close" id="modalCloseBtn">&times;</button>
+            <button class="gallery-arrow left" id="sliderPrev">&lt;</button>
+            <img src="" alt="" class="gallery-img" id="modalSliderImg">
+            <button class="gallery-arrow right" id="sliderNext">&gt;</button>
+            <div style="position: absolute; bottom: -30px; right: 0; color: #fff; font-family: monospace;" id="modalSliderCount"></div>
+        </div>
+    </div>
+
+    <!-- FLOTANTES -->
+    <a href="coleccion2/poe-preview.html" class="float-btn collection-float" target="_blank">
+        <img src="coleccion2.png" alt="Icon" onerror="this.style.display='none'">
+        <span>¡COLECCIÓN 2!</span>
+    </a>
+
+    <a href="https://wa.me/+59894691690?text=¡Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20la%20coleccion%20de%20suculentas" 
+       class="float-btn whatsapp-float" target="_blank">
+       <span>WHATSAPP</span>
+    </a>
+
+    <script>
+        const suculentas = [
+            // --- COLECCIÓN 1 (0-10) ---
+            {nombre: "El Cactus maní", ruta: "img/suculentas/cactuscacahuete.jpg", descripcion: "(Echinopsis chamaecereus) Cactus de tallos delgados que parecen cacahuetes. Flores naranjas vibrantes.", fotos:["img/suculentas/cactuscacahuete.jpg","img/suculentas/cactuscacahuete-2.jpg"]},
+            {nombre: "Echeveria Elegans", ruta: "img/suculentas/echeveria-elegans.jpg", descripcion: "Rosa de Alabastro. Famosa por su belleza simétrica y facilidad de cultivo.", fotos: ["img/suculentas/echeveria-elegans.jpg"]},
+            {nombre: "Graptosedum 'California Sunset'", ruta: "img/suculentas/califonissunset.jpg", descripcion: "Sus hojas cambian de color a tonos naranja y bronce con el sol, como un atardecer.", fotos:["img/suculentas/califonissunset.jpg"]},
+            {nombre: "Huernia (Ojo de Dragón)", ruta: "img/suculentas/ojodedragon.jpg", descripcion: "Pequeña suculenta con flores fascinantes que parecen ojos de dragón.", fotos: ["img/suculentas/ojodedragon.jpg"]},
+            {nombre: "Callisia Navicularis", ruta: "img/suculentas/callisianavicularis.jpg", descripcion: "Hojas carnosas superpuestas como tejas o pequeñas canoas.", fotos:["img/suculentas/callisianavicularis.jpg"]},
+            {nombre: "Cactus Coral", ruta: "img/suculentas/cactuscoral.jpg", descripcion: "Rhipsalis cereuscula. Crece en cascada creando una maraña verde vibrante.", fotos:["img/suculentas/cactuscoral.jpg"]},
+            {nombre: "Madre Perla", ruta: "img/suculentas/madreperla.jpg", descripcion: "Graptopetalum paraguayense. Hojas grisáceas con tono rosado, ideal para colgar.", fotos:["img/suculentas/madreperla.jpg"]},
+            {nombre: "Mammillaria Vetula", ruta: "img/suculentas/mammillariavetula.jpg", descripcion: "Cactus cubierto de espinas blancas que parecen pelusa o nieve.", fotos:["img/suculentas/mammillariavetula.jpg"]},
+            {nombre: "Mammillaria Prolifera", ruta: "img/suculentas/mammillariaprolifera.jpg", descripcion: "Produce muchos hijuelos formando grupos densos rápidamente.", fotos:["img/suculentas/mammillariaprolifera.jpg"]},
+            {nombre: "Crassula Fragilis", ruta: "img/suculentas/crassulafragilis.jpg", descripcion: "Tallos delicados y ramificados, ideal para macetas colgantes.", fotos:["img/suculentas/crassulafragilis.jpg"]},
+            {nombre: "Opuntia Monstruosa", ruta: "img/suculentas/monstruosa.jpg", descripcion: "Variante excepcional de Opuntia, una verdadera joya de colección.", fotos:["img/suculentas/monstruosa.jpg"]},
+
+            // --- COLECCIÓN 2 (11-21) ---
+            {nombre: "Senecio Articulatus", ruta: "img/senecioarticulatus.png", descripcion: "Conocida como 'Planta Vela', tiene tallos tubulares curiosamente segmentados y hojas verdes lobuladas.", fotos: ["img/senecioarticulatus.png", "img/senecioarticulatus_full.png"]},
+            {nombre: "Gasteria Pillansi", ruta: "img/gasteriapillansi.jpg", descripcion: "Pariente del Aloe, sus hojas son gruesas, duras y moteadas, creciendo en forma de abanico.", fotos: ["img/gasteriapillansi.jpg", "img/gasteriapillansi_full.jpg"]},
+            {nombre: "Crassula Pellucida", ruta: "img/crassulapellucida.jpg", descripcion: "Una suculenta rastrera encantadora, con pequeñas hojas en forma de corazón rojizas.", fotos: ["img/crassulapellucida.jpg", "img/crassulapellucida_full.jpg"]},
+            {nombre: "Echeveria Setosa", ruta: "img/echeveriasetosal.jpg", descripcion: "Llamada 'Mexican Firecracker', se distingue por estar cubierta de finos pelitos blancos.", fotos: ["img/echeveriasetosal.jpg", "img/echeveriasetosal_full.jpg"]},
+            {nombre: "Sedum Luteoviride", ruta: "img/sedumluteoviride.jpg", descripcion: "Sedum de crecimiento rápido con hojas verdes brillantes que adquieren tonos anaranjados.", fotos: ["img/sedumluteoviride.jpg", "img/sedumluteoviride_full.jpg"]},
+            {nombre: "Sedum Clavatum", ruta: "img/sedumclavatum.jpg", descripcion: "Forma rosetas compactas y regordetas de color verde pálido. Sus tallos tienden a colgar.", fotos: ["img/sedumclavatum.jpg", "img/sedumclavatum_full.jpg"]},
+            {nombre: "Haworthia Cuspidata", ruta: "img/haworthiacuspidata.jpg", descripcion: "Famosa por sus 'ventanas' translúcidas en las hojas, que permiten pasar la luz.", fotos: ["img/haworthiacuspidata.jpg", "img/haworthiacuspidata_full.jpg"]},
+            {nombre: "Pachyphytum Compactum", ruta: "img/pachyphytumcompactum.jpg", descripcion: "Conocida como 'Little Jewel', sus hojas cilíndricas tienen marcas facetadas blancas.", fotos: ["img/pachyphytumcompactum.jpg", "img/pachyphytumcompactum_full.jpg"]},
+            {nombre: "Corpuscularia Lehmannii", ruta: "img/corpuscularialehmannii.jpg", descripcion: "La 'Planta de Hielo'. Sus hojas grisáceas crecen en pares opuestos como cubos.", fotos: ["img/corpuscularialehmannii.jpg", "img/corpuscularialehmannii_full.jpg"]},
+            {nombre: "Opuntia Microdasys", ruta: "img/opuntiamicrodasys.jpg", descripcion: "Las famosas 'Alas de Ángel'. No tiene espinas largas, sino gloquidios suaves dorados.", fotos: ["img/opuntiamicrodasys.jpg", "img/opuntiamicrodasys_full.jpg"]},
+            {nombre: "Sedum Rubrotinctum", ruta: "img/sedumrubrotinctum.jpg", descripcion: "'Dedos de Dios'. Sus hojas cilíndricas pasan de verde a un rojo intenso con el sol.", fotos: ["img/sedumrubrotinctum.jpg", "img/sedumrubrotinctum_full.jpg"]}
+        ];
+
+        function resumenDescripcion(desc, maxPalabras = 18) {
+            const palabras = desc.split(' ');
+            if (palabras.length <= maxPalabras) return `<span>${desc}</span>`;
+            const corta = palabras.slice(0, maxPalabras).join(' ');
+            const larga = desc;
+            return `<span class="desc-corta">${corta}...</span>
+                <span class="desc-larga" style="display:none;">${larga}</span>
+                <button class="ver-mas-btn" type="button">[+ ver más]</button>`;
+        }
+
+        function renderProductos() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            
+            suculentas.forEach((prod, idx) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                // DETECTAR SI ES DE LA COLECCIÓN 2 (Índice 11 en adelante) PARA APLICAR ZOOM
+                const isCollection2 = idx >= 11;
+                const zoomClass = isCollection2 ? 'zoom-crop' : '';
+
+                card.innerHTML = `
+                    <div class="product-image" tabindex="0" data-idx="${idx}">
+                        <img src="${prod.ruta}" class="${zoomClass}" alt="${prod.nombre}" loading="lazy" onerror="this.src='https://via.placeholder.com/300?text=Imagen+No+Disponible'">
+                    </div>
+                    <h3>${prod.nombre}</h3>
+                    <p class="descripcion">${resumenDescripcion(prod.descripcion)}</p>
+                `;
+                grid.appendChild(card);
+            });
+
+            // TARJETA ESPECIAL (Al final) - También con ZOOM si la foto es de la colección 2
+            const collection2StartIdx = 11;
+            const randomOffset = Math.floor(Math.random() * (suculentas.length - collection2StartIdx));
+            const randomPlant = suculentas[collection2StartIdx + randomOffset];
+
+            const specialCard = document.createElement('a');
+            specialCard.className = 'product-card special-card';
+            specialCard.href = 'coleccion2/poe-preview.html';
+            specialCard.target = '_blank';
+            specialCard.innerHTML = `
+                <div class="product-image">
+                    <img src="${randomPlant.ruta}" class="zoom-crop" alt="Descubre más" style="opacity: 0.8">
+                </div>
+                <h3>¿Querés ver más?</h3>
+                <p class="descripcion">
+                    Hacé clic aquí para visitar la <strong>Galería de la Colección 2</strong> completa con imágenes en alta resolución.
+                    <br><br>
+                    <small>Mostrando: ${randomPlant.nombre}</small>
+                </p>
+                <button class="modern-btn" style="width:100%; margin-top:10px; font-size:0.9rem;">IR A LA GALERÍA ➜</button>
+            `;
+            grid.appendChild(specialCard);
+
+            setupListeners();
+        }
+
+        function setupListeners() {
+            document.querySelectorAll('.ver-mas-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const p = btn.closest('.descripcion');
+                    const corta = p.querySelector('.desc-corta');
+                    const larga = p.querySelector('.desc-larga');
+                    if (btn.textContent.includes("más")) {
+                        corta.style.display = "none";
+                        larga.style.display = "inline";
+                        btn.textContent = "[- ver menos]";
+                    } else {
+                        corta.style.display = "inline";
+                        larga.style.display = "none";
+                        btn.textContent = "[+ ver más]";
+                    }
+                });
+            });
+
+            document.querySelectorAll('.product-image').forEach(imgDiv => {
+                if(!imgDiv.closest('.special-card')) {
+                    imgDiv.addEventListener('click', function() {
+                        openModalGallery(parseInt(imgDiv.dataset.idx, 10));
+                    });
+                }
+            });
+        }
+
+        // --- INTERRUPTOR ---
+        const switchInput = document.getElementById('light-switch');
+        const root = document.documentElement;
+        switchInput.addEventListener('change', function() {
+            if(this.checked) root.setAttribute('data-theme', 'dark');
+            else root.removeAttribute('data-theme');
+        });
+
+        // --- MODAL ---
+        let currentModalIdx = 0;
+        let currentPhotoIdx = 0;
+
+        function openModalGallery(plantaIdx) {
+            const modal = document.getElementById('modalOverlay');
+            currentModalIdx = plantaIdx;
+            currentPhotoIdx = 0;
+            updateModalSlider();
+            modal.classList.add('active');
+            document.body.style.overflow = "hidden";
+        }
+        function closeModalGallery() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = "";
+        }
+        function updateModalSlider() {
+            const planta = suculentas[currentModalIdx];
+            const modalImg = document.getElementById('modalSliderImg');
+            const sliderCount = document.getElementById('modalSliderCount');
+            let fotoSrc = planta.fotos && planta.fotos.length > 0 ? planta.fotos[currentPhotoIdx] : planta.ruta;
+            modalImg.src = fotoSrc;
+            const total = planta.fotos ? planta.fotos.length : 1;
+            sliderCount.textContent = `${currentPhotoIdx + 1} / ${total}`;
+        }
+        document.getElementById('modalCloseBtn').onclick = closeModalGallery;
+        document.getElementById('sliderPrev').onclick = () => {
+            const planta = suculentas[currentModalIdx];
+            const total = planta.fotos ? planta.fotos.length : 1;
+            if(total > 1) { currentPhotoIdx = (currentPhotoIdx - 1 + total) % total; updateModalSlider(); }
+        };
+        document.getElementById('sliderNext').onclick = () => {
+            const planta = suculentas[currentModalIdx];
+            const total = planta.fotos ? planta.fotos.length : 1;
+            if(total > 1) { currentPhotoIdx = (currentPhotoIdx + 1) % total; updateModalSlider(); }
+        };
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProductos();
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+        });
+    </script>
+</body>
+</html>
