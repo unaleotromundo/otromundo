@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación Interactiva de Puntos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d1d5db;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .canvas-wrapper {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 400px;
+            cursor: pointer;
+        }
+
+        .controls {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        .footer {
+            margin-top: 1rem;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Animación Interactiva de Puntos</h1>
+        <p class="subtitle" id="subtitle">Haz clic o toca para activar</p>
+        
+        <div class="canvas-wrapper">
+            <canvas id="canvas"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button id="toggleBtn">Activar Interacción</button>
+        </div>
+        
+        <div class="footer">
+            Inspirado en el modo de voz de Perplexity
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const subtitle = document.getElementById('subtitle');
+        const toggleBtn = document.getElementById('toggleBtn');
+        
+        let isActive = false;
+        let dots = [];
+        let mouse = { x: 0, y: 0 };
+        let animationId;
+
+        // Configurar tamaño del canvas
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            initDots();
+        }
+
+        // Inicializar puntos
+        function initDots() {
+            dots = [];
+            const rows = 8;
+            const cols = 8;
+            const spacingX = canvas.width / (cols + 1);
+            const spacingY = canvas.height / (rows + 1);
+            
+            for (let i = 1; i <= rows; i++) {
+                for (let j = 1; j <= cols; j++) {
+                    dots.push({
+                        x: j * spacingX,
+                        y: i * spacingY,
+                        baseX: j * spacingX,
+                        baseY: i * spacingY,
+                        vx: 0,
+                        vy: 0,
+                        radius: 4,
+                        pulsePhase: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+        }
+
+        // Animación
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const time = Date.now() * 0.001;
+            
+            dots.forEach((dot, i) => {
+                // Calcular distancia al mouse/toque
+                const dx = mouse.x - dot.x;
+                const dy = mouse.y - dot.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const maxDistance = 150;
+                
+                // Si está activo y cerca del mouse, aplicar repulsión
+                if (isActive && distance < maxDistance) {
+                    const force = (1 - distance / maxDistance) * 0.5;
+                    dot.vx -= (dx / distance) * force;
+                    dot.vy -= (dy / distance) * force;
+                }
+                
+                // Volver a la posición original
+                const returnForce = 0.05;
+                dot.vx += (dot.baseX - dot.x) * returnForce;
+                dot.vy += (dot.baseY - dot.y) * returnForce;
+                
+                // Aplicar fricción
+                dot.vx *= 0.9;
+                dot.vy *= 0.9;
+                
+                // Actualizar posición
+                dot.x += dot.vx;
+                dot.y += dot.vy;
+                
+                // Efecto de pulso
+                dot.pulsePhase += 0.05;
+                const pulse = Math.sin(dot.pulsePhase) * 0.5 + 0.5;
+                const currentRadius = dot.radius + pulse * 2;
+                
+                // Calcular color basado en la distancia y actividad
+                let opacity = 0.6;
+                if (isActive && distance < maxDistance) {
+                    opacity = 0.8 + (1 - distance / maxDistance) * 0.2;
+                }
+                
+                // Dibujar punto
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, currentRadius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(99, 102, 241, ${opacity})`;
+                ctx.fill();
+                
+                // Conectar puntos cercanos
+                dots.forEach((otherDot, j) => {
+                    if (i < j) {
+                        const dx2 = otherDot.x - dot.x;
+                        const dy2 = otherDot.y - dot.y;
+                        const dist = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+                        
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(dot.x, dot.y);
+                            ctx.lineTo(otherDot.x, otherDot.y);
+                            const lineOpacity = (1 - dist / 120) * 0.3;
+                            ctx.strokeStyle = `rgba(99, 102, 241, ${lineOpacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                });
+            });
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Manejar interacción
+        function handleInteraction(e) {
+            const rect = canvas.getBoundingClientRect();
+            
+            if (e.type === 'mousemove' || e.type === 'mousedown') {
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            } else if (e.type === 'touchmove' || e.type === 'touchstart') {
+                e.preventDefault();
+                const touch = e.touches[0];
+                mouse.x = touch.clientX - rect.left;
+                mouse.y = touch.clientY - rect.top;
+            }
+        }
+
+        // Activar/desactivar
+        function setActive(active) {
+            isActive = active;
+            subtitle.textContent = isActive ? 'Mueve el cursor o toca la pantalla' : 'Haz clic o toca para activar';
+            toggleBtn.textContent = isActive ? 'Desactivar Interacción' : 'Activar Interacción';
+        }
+
+        // Event listeners
+        canvas.addEventListener('mousedown', () => setActive(true));
+        canvas.addEventListener('mouseup', () => setActive(false));
+        canvas.addEventListener('mouseleave', () => setActive(false));
+        canvas.addEventListener('mousemove', handleInteraction);
+
+        canvas.addEventListener('touchstart', (e) => {
+            setActive(true);
+            handleInteraction(e);
+        });
+        canvas.addEventListener('touchend', () => setActive(false));
+        canvas.addEventListener('touchmove', handleInteraction);
+
+        toggleBtn.addEventListener('click', () => setActive(!isActive));
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // Inicializar
+        resizeCanvas();
+        animate();
+    </script>
+</body>
+</html>

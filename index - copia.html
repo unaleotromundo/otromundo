@@ -125,26 +125,10 @@
             transition: transform 0.1s, box-shadow 0.1s; margin-top: 20px;
         }
         .cta-button:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000; }
-        /* ANTES: */
-.hero-img { 
-    max-width: 300px; border: 2px solid var(--ink-color); box-shadow: var(--hard-shadow); 
-    margin: 20px auto; display: block; filter: grayscale(20%);
-}
-
-/* DESPUÉS: */
-.hero-img-container {
-    max-width: 300px; 
-    margin: 20px auto; 
-    display: block;
-    position: relative;
-    cursor: pointer;
-}
-.hero-img-canvas {
-    width: 100%;
-    height: auto;
-    border: 2px solid var(--ink-color);
-    box-shadow: var(--hard-shadow);
-}
+        .hero-img { 
+            max-width: 300px; border: 2px solid var(--ink-color); box-shadow: var(--hard-shadow); 
+            margin: 20px auto; display: block; filter: grayscale(20%);
+        }
 
         /* --- GRID PRODUCTOS --- */
         .products-grid {
@@ -279,9 +263,9 @@
                 <p>
                     Descubrí la colección completa de suculentas. Una selección única que combina clásicos y nuevas variedades para llenar tu hogar de vida y frescura.
                 </p>
-                <div class="hero-img-container" id="heroImageContainer">
-    <canvas id="heroCanvas" class="hero-img-canvas"></canvas>
-</div>
+                <img src="img/suculentas-hero.png" alt="Colección de suculentas" class="hero-img" onerror="this.style.display='none'">
+                <a href="#coleccion" class="cta-button">VER TODAS LAS PLANTAS</a>
+            </div>
         </section>
 
         <section id="coleccion">
@@ -550,28 +534,6 @@
         // --- MODAL ---
         let currentModalIdx = 0;
         let currentPhotoIdx = 0;
-	let imgWidth, imgHeight, imgOffsetX, imgOffsetY;
-
-function initDots() {
-    dots = [];
-    const rows = 15;
-    const cols = 15;
-    const spacingX = imgWidth / cols;
-    const spacingY = imgHeight / rows;
-    
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            dots.push({
-                x: j * spacingX + imgOffsetX,
-                y: i * spacingY + imgOffsetY,
-                baseX: j * spacingX + imgOffsetX,
-                baseY: i * spacingY + imgOffsetY,
-                vx: 0,
-                vy: 0
-            });
-        }
-    }
-}
 
         function openModalGallery(plantaIdx) {
             const modal = document.getElementById('modalOverlay');
@@ -606,192 +568,7 @@ function initDots() {
             const total = planta.fotos ? planta.fotos.length : 1;
             if(total > 1) { currentPhotoIdx = (currentPhotoIdx + 1) % total; updateModalSlider(); }
         };
-// ==========================================
-// EFECTO INTERACTIVO EN IMAGEN HERO
-// ==========================================
-(function() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    let dots = [];
-    let mouse = { x: 0, y: 0 };
-    let isActive = false;
-    let animationId;
-    let heroImage = new Image();
-    let imageLoaded = false;
 
-    // Cargar imagen
-    heroImage.onload = function() {
-        imageLoaded = true;
-        resizeCanvas();
-        animate();
-    };
-    heroImage.onerror = function() {
-        canvas.style.display = 'none';
-    };
-    heroImage.src = 'img/suculentas-hero.png';
-
-    function resizeCanvas() {
-    if (!imageLoaded) return;
-    const container = canvas.parentElement;
-    const maxWidth = Math.min(300, container.offsetWidth);
-    const aspectRatio = heroImage.height / heroImage.width;
-    
-    // Ajustar para que la imagen se vea completa con padding
-    const padding = 40; // Espacio alrededor de la imagen
-    canvas.width = maxWidth;
-    canvas.height = maxWidth * aspectRatio;
-    
-    // Redimensionar proporcionalmente la imagen dentro del canvas
-    const scale = Math.min(
-        (canvas.width - padding) / heroImage.width,
-        (canvas.height - padding) / heroImage.height
-    );
-    
-    imgWidth = heroImage.width * scale;
-    imgHeight = heroImage.height * scale;
-    imgOffsetX = (canvas.width - imgWidth) / 2;
-    imgOffsetY = (canvas.height - imgHeight) / 2;
-    
-    initDots();
-}
-
-    function initDots() {
-        dots = [];
-        const rows = 15;
-        const cols = 15;
-        const spacingX = canvas.width / cols;
-        const spacingY = canvas.height / rows;
-        
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
-                dots.push({
-                    x: j * spacingX,
-                    y: i * spacingY,
-                    baseX: j * spacingX,
-                    baseY: i * spacingY,
-                    vx: 0,
-                    vy: 0
-                });
-            }
-        }
-    }
-
-    function animate() {
-        if (!imageLoaded) {
-            animationId = requestAnimationFrame(animate);
-            return;
-        }
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        const cols = 15;
-        const rows = 15;
-        
-        // Dibujar imagen distorsionada
-        for (let i = 0; i < rows - 1; i++) {
-            for (let j = 0; j < cols - 1; j++) {
-                const idx = i * cols + j;
-                const dot1 = dots[idx];
-                const dot2 = dots[idx + 1];
-                const dot3 = dots[idx + cols];
-                const dot4 = dots[idx + cols + 1];
-                
-                drawTriangle(
-                    dot1.baseX, dot1.baseY, dot2.baseX, dot2.baseY, dot3.baseX, dot3.baseY,
-                    dot1.x, dot1.y, dot2.x, dot2.y, dot3.x, dot3.y
-                );
-                
-                drawTriangle(
-                    dot2.baseX, dot2.baseY, dot4.baseX, dot4.baseY, dot3.baseX, dot3.baseY,
-                    dot2.x, dot2.y, dot4.x, dot4.y, dot3.x, dot3.y
-                );
-            }
-        }
-        
-        // Actualizar física de puntos
-        dots.forEach((dot) => {
-            const dx = mouse.x - dot.x;
-            const dy = mouse.y - dot.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const maxDistance = 80;
-            
-            if (isActive && distance < maxDistance) {
-                const force = (1 - distance / maxDistance) * 1.2;
-                dot.vx -= (dx / distance) * force * 4;
-                dot.vy -= (dy / distance) * force * 4;
-            }
-            
-            const returnForce = 0.1;
-            dot.vx += (dot.baseX - dot.x) * returnForce;
-            dot.vy += (dot.baseY - dot.y) * returnForce;
-            
-            dot.vx *= 0.82;
-            dot.vy *= 0.82;
-            
-            dot.x += dot.vx;
-            dot.y += dot.vy;
-        });
-        
-        animationId = requestAnimationFrame(animate);
-    }
-
-    function drawTriangle(sx1, sy1, sx2, sy2, sx3, sy3, dx1, dy1, dx2, dy2, dx3, dy3) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(dx1, dy1);
-        ctx.lineTo(dx2, dy2);
-        ctx.lineTo(dx3, dy3);
-        ctx.closePath();
-        ctx.clip();
-        
-        const denom = (sx1 - sx3) * (sy2 - sy3) - (sx2 - sx3) * (sy1 - sy3);
-        if (Math.abs(denom) < 0.0001) {
-            ctx.restore();
-            return;
-        }
-        
-        const m11 = ((dx1 - dx3) * (sy2 - sy3) - (dx2 - dx3) * (sy1 - sy3)) / denom;
-        const m12 = ((dx2 - dx3) * (sx1 - sx3) - (dx1 - dx3) * (sx2 - sx3)) / denom;
-        const m21 = ((dy1 - dy3) * (sy2 - sy3) - (dy2 - dy3) * (sy1 - sy3)) / denom;
-        const m22 = ((dy2 - dy3) * (sx1 - sx3) - (dy1 - dy3) * (sx2 - sx3)) / denom;
-        const dx = dx3 - m11 * sx3 - m12 * sy3;
-        const dy = dy3 - m21 * sx3 - m22 * sy3;
-        
-        ctx.transform(m11, m21, m12, m22, dx, dy);
-        ctx.drawImage(heroImage, imgOffsetX, imgOffsetY, imgWidth, imgHeight);
-        ctx.restore();
-    }
-
-    function handleInteraction(e) {
-        const rect = canvas.getBoundingClientRect();
-        if (e.type === 'mousemove' || e.type === 'mousedown') {
-            mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
-            mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
-        } else if (e.type === 'touchmove' || e.type === 'touchstart') {
-            e.preventDefault();
-            const touch = e.touches[0];
-            mouse.x = (touch.clientX - rect.left) * (canvas.width / rect.width);
-            mouse.y = (touch.clientY - rect.top) * (canvas.height / rect.height);
-        }
-    }
-
-    // Event listeners
-    canvas.addEventListener('mousedown', () => isActive = true);
-    canvas.addEventListener('mouseup', () => isActive = false);
-    canvas.addEventListener('mouseleave', () => isActive = false);
-    canvas.addEventListener('mousemove', handleInteraction);
-    canvas.addEventListener('touchstart', (e) => {
-        isActive = true;
-        handleInteraction(e);
-    });
-    canvas.addEventListener('touchend', () => isActive = false);
-    canvas.addEventListener('touchmove', handleInteraction);
-
-    window.addEventListener('resize', resizeCanvas);
-})();
-// ==========================================
         // --- INICIALIZACIÓN ---
         document.addEventListener('DOMContentLoaded', function() {
             renderProductos();
