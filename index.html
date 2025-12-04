@@ -418,32 +418,242 @@
 
     <script>
         const suculentas = [
-            // --- COLECCIÓN 1 ---
-            {nombre: "El Cactus maní", ruta: "img/suculentas/cactuscacahuete.jpg", descripcion: "(Echinopsis chamaecereus) Cactus de tallos delgados que parecen cacahuetes. Flores naranjas vibrantes.", fotos:["img/suculentas/cactuscacahuete.jpg","img/suculentas/cactuscacahuete-2.jpg"]},
-            {nombre: "Echeveria Elegans", ruta: "img/suculentas/echeveria-elegans.jpg", descripcion: "Rosa de Alabastro. Famosa por su belleza simétrica y facilidad de cultivo.", fotos: ["img/suculentas/echeveria-elegans.jpg"]},
-            {nombre: "Graptosedum 'California Sunset'", ruta: "img/suculentas/califonissunset.jpg", descripcion: "Sus hojas cambian de color a tonos naranja y bronce con el sol, como un atardecer.", fotos:["img/suculentas/califonissunset.jpg"]},
-            {nombre: "Huernia (Ojo de Dragón)", ruta: "img/suculentas/ojodedragon.jpg", descripcion: "Pequeña suculenta con flores fascinantes que parecen ojos de dragón.", fotos: ["img/suculentas/ojodedragon.jpg"]},
-            {nombre: "Callisia Navicularis", ruta: "img/suculentas/callisianavicularis.jpg", descripcion: "Hojas carnosas superpuestas como tejas o pequeñas canoas.", fotos:["img/suculentas/callisianavicularis.jpg"]},
-            {nombre: "Cactus Coral", ruta: "img/suculentas/cactuscoral.jpg", descripcion: "Rhipsalis cereuscula. Crece en cascada creando una maraña verde vibrante.", fotos:["img/suculentas/cactuscoral.jpg"]},
-            {nombre: "Madre Perla", ruta: "img/suculentas/madreperla.jpg", descripcion: "Graptopetalum paraguayense. Hojas grisáceas con tono rosado, ideal para colgar.", fotos:["img/suculentas/madreperla.jpg"]},
-            {nombre: "Mammillaria Vetula", ruta: "img/suculentas/mammillariavetula.jpg", descripcion: "Cactus cubierto de espinas blancas que parecen pelusa o nieve.", fotos:["img/suculentas/mammillariavetula.jpg"]},
-            {nombre: "Mammillaria Prolifera", ruta: "img/suculentas/mammillariaprolifera.jpg", descripcion: "Produce muchos hijuelos formando grupos densos rápidamente.", fotos:["img/suculentas/mammillariaprolifera.jpg"]},
-            {nombre: "Crassula Fragilis", ruta: "img/suculentas/crassulafragilis.jpg", descripcion: "Tallos delicados y ramificados, ideal para macetas colgantes.", fotos:["img/suculentas/crassulafragilis.jpg"]},
-            {nombre: "Opuntia Monstruosa", ruta: "img/suculentas/monstruosa.jpg", descripcion: "Variante excepcional de Opuntia, una verdadera joya de colección.", fotos:["img/suculentas/monstruosa.jpg"]},
+    // --- COLECCIÓN 1 ---
+    {
+        nombre: "El Cactus maní", 
+        ruta: "img/suculentas/cactuscacahuete.jpg", 
+        descripcion: "(Echinopsis chamaecereus) Cactus de tallos delgados que parecen cacahuetes. Flores naranjas vibrantes.", 
+        fotos: [
+            "img/suculentas/cactuscacahuete.jpg",
+            "img/suculentas/cactuscacahuete-2.jpg",
+            "img/suculentas/cactuscacahuete-3.jpg",
+            "img/suculentas/cactuscacahuete-4.jpg"
+        ]
+    },
+    {
+        nombre: "Echeveria Elegans", 
+        ruta: "img/suculentas/echeveria-elegans.jpg", 
+        descripcion: "Rosa de Alabastro. Famosa por su belleza simétrica y facilidad de cultivo.", 
+        fotos: [
+            "img/suculentas/echeveria-elegans.jpg",
+            "img/suculentas/echeveria-elegans-2.jpg",
+            "img/suculentas/echeveria-elegans-3.jpg"
+        ]
+    },
+    {
+        nombre: "Graptosedum 'California Sunset'", 
+        ruta: "img/suculentas/califonissunset.jpg", 
+        descripcion: "Sus hojas cambian de color a tonos naranja y bronce con el sol, como un atardecer.", 
+        fotos: [
+            "img/suculentas/califonissunset.jpg",
+            "img/suculentas/califonissunset-2.jpg",
+            "img/suculentas/califonissunset-3.jpg"
+        ]
+    },
+    {
+        nombre: "Huernia (Ojo de Dragón)", 
+        ruta: "img/suculentas/ojodedragon.jpg", 
+        descripcion: "Pequeña suculenta con flores fascinantes que parecen ojos de dragón.", 
+        fotos: [
+            "img/suculentas/ojodedragon.jpg",
+            "img/suculentas/ojodedragon-2.jpg",
+            "img/suculentas/ojodedragon-3.jpg"
+        ]
+    },
+    {
+        nombre: "Callisia Navicularis", 
+        ruta: "img/suculentas/callisianavicularis.jpg", 
+        descripcion: "Hojas carnosas superpuestas como tejas o pequeñas canoas.", 
+        fotos: [
+            "img/suculentas/callisianavicularis.jpg",
+            "img/suculentas/callisianavicularis-2.jpg",
+            "img/suculentas/callisianavicularis-3.jpg"
+        ]
+    },
+    {
+        nombre: "Cactus Coral", 
+        ruta: "img/suculentas/cactuscoral.jpg", 
+        descripcion: "Rhipsalis cereuscula. Crece en cascada creando una maraña verde vibrante.", 
+        fotos: [
+            "img/suculentas/cactuscoral.jpg",
+            "img/suculentas/cactuscoral-2.jpg",
+            "img/suculentas/cactuscoral-3.jpg"
+        ]
+    },
+    {
+        nombre: "Madre Perla", 
+        ruta: "img/suculentas/madreperla.jpg", 
+        descripcion: "Graptopetalum paraguayense. Hojas grisáceas con tono rosado, ideal para colgar.", 
+        fotos: [
+            "img/suculentas/madreperla.jpg",
+            "img/suculentas/madreperla-2.jpg",
+            "img/suculentas/madreperla-3.jpg"
+        ]
+    },
+    {
+        nombre: "Mammillaria Vetula", 
+        ruta: "img/suculentas/mammillariavetula.jpg", 
+        descripcion: "Cactus cubierto de espinas blancas que parecen pelusa o nieve.", 
+        fotos: [
+            "img/suculentas/mammillariavetula.jpg",
+            "img/suculentas/mammillariavetula-2.jpg",
+            "img/suculentas/mammillariavetula-3.jpg"
+        ]
+    },
+    {
+        nombre: "Mammillaria Prolifera", 
+        ruta: "img/suculentas/mammillariaprolifera.jpg", 
+        descripcion: "Produce muchos hijuelos formando grupos densos rápidamente.", 
+        fotos: [
+            "img/suculentas/mammillariaprolifera.jpg",
+            "img/suculentas/mammillariaprolifera-2.jpg",
+            "img/suculentas/mammillariaprolifera-3.jpg"
+        ]
+    },
+    {
+        nombre: "Crassula Fragilis", 
+        ruta: "img/suculentas/crassulafragilis.jpg", 
+        descripcion: "Tallos delicados y ramificados, ideal para macetas colgantes.", 
+        fotos: [
+            "img/suculentas/crassulafragilis.jpg",
+            "img/suculentas/crassulafragilis-2.jpg",
+            "img/suculentas/crassulafragilis-3.jpg"
+        ]
+    },
+    {
+        nombre: "Opuntia Monstruosa", 
+        ruta: "img/suculentas/monstruosa.jpg", 
+        descripcion: "Variante excepcional de Opuntia, una verdadera joya de colección.", 
+        fotos: [
+            "img/suculentas/monstruosa.jpg",
+            "img/suculentas/monstruosa-2.jpg",
+            "img/suculentas/monstruosa-3.jpg"
+        ]
+    },
 
-            // --- COLECCIÓN 2 (11-21) ---
-            {nombre: "Senecio Articulatus", ruta: "img/senecioarticulatus.png", descripcion: "Conocida como 'Planta Vela', tiene tallos tubulares curiosamente segmentados y hojas verdes lobuladas.", fotos: ["img/senecioarticulatus.png", "img/senecioarticulatus_full.png"]},
-            {nombre: "Gasteria Pillansi", ruta: "img/gasteriapillansi.jpg", descripcion: "Pariente del Aloe, sus hojas son gruesas, duras y moteadas, creciendo en forma de abanico.", fotos: ["img/gasteriapillansi.jpg", "img/gasteriapillansi_full.jpg"]},
-            {nombre: "Crassula Pellucida", ruta: "img/crassulapellucida.jpg", descripcion: "Una suculenta rastrera encantadora, con pequeñas hojas en forma de corazón rojizas.", fotos: ["img/crassulapellucida.jpg", "img/crassulapellucida_full.jpg"]},
-            {nombre: "Echeveria Setosa", ruta: "img/echeveriasetosal.jpg", descripcion: "Llamada 'Mexican Firecracker', se distingue por estar cubierta de finos pelitos blancos.", fotos: ["img/echeveriasetosal.jpg", "img/echeveriasetosal_full.jpg"]},
-            {nombre: "Sedum Luteoviride", ruta: "img/sedumluteoviride.jpg", descripcion: "Sedum de crecimiento rápido con hojas verdes brillantes que adquieren tonos anaranjados.", fotos: ["img/sedumluteoviride.jpg", "img/sedumluteoviride_full.jpg"]},
-            {nombre: "Sedum Clavatum", ruta: "img/sedumclavatum.jpg", descripcion: "Forma rosetas compactas y regordetas de color verde pálido. Sus tallos tienden a colgar.", fotos: ["img/sedumclavatum.jpg", "img/sedumclavatum_full.jpg"]},
-            {nombre: "Haworthia Cuspidata", ruta: "img/haworthiacuspidata.jpg", descripcion: "Famosa por sus 'ventanas' translúcidas en las hojas, que permiten pasar la luz.", fotos: ["img/haworthiacuspidata.jpg", "img/haworthiacuspidata_full.jpg"]},
-            {nombre: "Pachyphytum Compactum", ruta: "img/pachyphytumcompactum.jpg", descripcion: "Conocida como 'Little Jewel', sus hojas cilíndricas tienen marcas facetadas blancas.", fotos: ["img/pachyphytumcompactum.jpg", "img/pachyphytumcompactum_full.jpg"]},
-            {nombre: "Corpuscularia Lehmannii", ruta: "img/corpuscularialehmannii.jpg", descripcion: "La 'Planta de Hielo'. Sus hojas grisáceas crecen en pares opuestos como cubos.", fotos: ["img/corpuscularialehmannii.jpg", "img/corpuscularialehmannii_full.jpg"]},
-            {nombre: "Opuntia Microdasys", ruta: "img/opuntiamicrodasys.jpg", descripcion: "Las famosas 'Alas de Ángel'. No tiene espinas largas, sino gloquidios suaves dorados.", fotos: ["img/opuntiamicrodasys.jpg", "img/opuntiamicrodasys_full.jpg"]},
-            {nombre: "Sedum Rubrotinctum", ruta: "img/sedumrubrotinctum.jpg", descripcion: "'Dedos de Dios'. Sus hojas cilíndricas pasan de verde a un rojo intenso con el sol.", fotos: ["img/sedumrubrotinctum.jpg", "img/sedumrubrotinctum_full.jpg"]}
-        ];
+    // --- COLECCIÓN 2 (11-21) ---
+    {
+        nombre: "Senecio Articulatus", 
+        ruta: "img/senecioarticulatus.png", 
+        descripcion: "Conocida como 'Planta Vela', tiene tallos tubulares curiosamente segmentados y hojas verdes lobuladas.", 
+        fotos: [
+            "img/senecioarticulatus.png", 
+            "img/senecioarticulatus_full.png",
+            "img/senecioarticulatus-2.jpg",
+            "img/senecioarticulatus-3.jpg"
+        ]
+    },
+    {
+        nombre: "Gasteria Pillansi", 
+        ruta: "img/gasteriapillansi.jpg", 
+        descripcion: "Pariente del Aloe, sus hojas son gruesas, duras y moteadas, creciendo en forma de abanico.", 
+        fotos: [
+            "img/gasteriapillansi.jpg", 
+            "img/gasteriapillansi_full.jpg",
+            "img/gasteriapillansi-2.jpg",
+            "img/gasteriapillansi-3.jpg"
+        ]
+    },
+    {
+        nombre: "Crassula Pellucida", 
+        ruta: "img/crassulapellucida.jpg", 
+        descripcion: "Una suculenta rastrera encantadora, con pequeñas hojas en forma de corazón rojizas.", 
+        fotos: [
+            "img/crassulapellucida.jpg", 
+            "img/crassulapellucida_full.jpg",
+            "img/crassulapellucida-2.jpg",
+            "img/crassulapellucida-3.jpg"
+        ]
+    },
+    {
+        nombre: "Echeveria Setosa", 
+        ruta: "img/echeveriasetosal.jpg", 
+        descripcion: "Llamada 'Mexican Firecracker', se distingue por estar cubierta de finos pelitos blancos.", 
+        fotos: [
+            "img/echeveriasetosal.jpg", 
+            "img/echeveriasetosal_full.jpg",
+            "img/echeveriasetosal-2.jpg",
+            "img/echeveriasetosal-3.jpg"
+        ]
+    },
+    {
+        nombre: "Sedum Luteoviride", 
+        ruta: "img/sedumluteoviride.jpg", 
+        descripcion: "Sedum de crecimiento rápido con hojas verdes brillantes que adquieren tonos anaranjados.", 
+        fotos: [
+            "img/sedumluteoviride.jpg", 
+            "img/sedumluteoviride_full.jpg",
+            "img/sedumluteoviride-2.jpg",
+            "img/sedumluteoviride-3.jpg"
+        ]
+    },
+    {
+        nombre: "Sedum Clavatum", 
+        ruta: "img/sedumclavatum.jpg", 
+        descripcion: "Forma rosetas compactas y regordetas de color verde pálido. Sus tallos tienden a colgar.", 
+        fotos: [
+            "img/sedumclavatum.jpg", 
+            "img/sedumclavatum_full.jpg",
+            "img/sedumclavatum-2.jpg",
+            "img/sedumclavatum-3.jpg"
+        ]
+    },
+    {
+        nombre: "Haworthia Cuspidata", 
+        ruta: "img/haworthiacuspidata.jpg", 
+        descripcion: "Famosa por sus 'ventanas' translúcidas en las hojas, que permiten pasar la luz.", 
+        fotos: [
+            "img/haworthiacuspidata.jpg", 
+            "img/haworthiacuspidata_full.jpg",
+            "img/haworthiacuspidata-2.jpg",
+            "img/haworthiacuspidata-3.jpg"
+        ]
+    },
+    {
+        nombre: "Pachyphytum Compactum", 
+        ruta: "img/pachyphytumcompactum.jpg", 
+        descripcion: "Conocida como 'Little Jewel', sus hojas cilíndricas tienen marcas facetadas blancas.", 
+        fotos: [
+            "img/pachyphytumcompactum.jpg", 
+            "img/pachyphytumcompactum_full.jpg",
+            "img/pachyphytumcompactum-2.jpg",
+            "img/pachyphytumcompactum-3.jpg"
+        ]
+    },
+    {
+        nombre: "Corpuscularia Lehmannii", 
+        ruta: "img/corpuscularialehmannii.jpg", 
+        descripcion: "La 'Planta de Hielo'. Sus hojas grisáceas crecen en pares opuestos como cubos.", 
+        fotos: [
+            "img/corpuscularialehmannii.jpg", 
+            "img/corpuscularialehmannii_full.jpg",
+            "img/corpuscularialehmannii-2.jpg",
+            "img/corpuscularialehmannii-3.jpg"
+        ]
+    },
+    {
+        nombre: "Opuntia Microdasys", 
+        ruta: "img/opuntiamicrodasys.jpg", 
+        descripcion: "Las famosas 'Alas de Ángel'. No tiene espinas largas, sino gloquidios suaves dorados.", 
+        fotos: [
+            "img/opuntiamicrodasys.jpg", 
+            "img/opuntiamicrodasys_full.jpg",
+            "img/opuntiamicrodasys-2.jpg",
+            "img/opuntiamicrodasys-3.jpg"
+        ]
+    },
+    {
+        nombre: "Sedum Rubrotinctum", 
+        ruta: "img/sedumrubrotinctum.jpg", 
+        descripcion: "'Dedos de Dios'. Sus hojas cilíndricas pasan de verde a un rojo intenso con el sol.", 
+        fotos: [
+            "img/sedumrubrotinctum.jpg", 
+            "img/sedumrubrotinctum_full.jpg",
+            "img/sedumrubrotinctum-2.jpg",
+            "img/sedumrubrotinctum-3.jpg"
+        ]
+    }
+];
 
         function resumenDescripcion(desc, maxPalabras = 18) {
             const palabras = desc.split(' ');
